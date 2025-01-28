@@ -15,8 +15,9 @@ func _process(_dt):
 
 func test_with_suite() -> VestSuite:
 	return define("Some suite", func():
-		test("Should pass", func(): ok())
-		test("Should fail", func(): fail())
+		test("Should pass", func(): expect(true))
+		test("Should fail", func(): expect(false))
+		test("Should be empty", func(): expect_empty([]))
 		test("Skip", func(): skip())
 
 		define("Sub suite", func():
