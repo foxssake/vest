@@ -1,27 +1,24 @@
 extends Node
 class_name VestTest
 
-var _defined_suite: VestSuite
+var _define_stack: Array[VestSuite] = []
 
 func define(name: String, callback: Callable) -> VestSuite:
-	if _defined_suite:
-		# TODO: Support nested defines
-		push_error("Already defining a suite!")
-		return
-
-	_defined_suite = VestSuite.new()
-	_defined_suite.name = name
+	var suite = VestSuite.new()
+	suite.name = name
+	_define_stack.push_back(suite)
 
 	callback.call()
 
-	var result = _defined_suite
-	_defined_suite = null
+	_define_stack.pop_back()
+	if not _define_stack.is_empty():
+		_define_stack.back().suites.push_back(suite)
 
-	return result
+	return suite
 
 func test(description: String, callback: Callable) -> void:
 	var case := VestCase.new()
 	case.description = description
 	case.callback = callback
 
-	_defined_suite.cases.push_back(case)
+	_define_stack.back().cases.push_back(case)

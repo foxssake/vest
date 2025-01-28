@@ -17,6 +17,10 @@ func run():
 		define("Some suite", func():
 			test("Should pass", func(): return false)
 			test("Some other  test", func(): return false)
+
+			define("Sub suite", func():
+				test("Nested test", func(): return false)
+				)
 			),
 		define("Another suite", func():
 			test("Should return false", func(): return false)
