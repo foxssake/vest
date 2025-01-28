@@ -28,4 +28,6 @@ static func get_status_string(p_status: int) -> String:
 		_: return "?"
 
 func _to_string() -> String:
-	return "VestResult(%s)" % get_status_string(status)
+	return "VestResult(status=%s, message=\"%s\", data=%s, assert_loc=\"%s\":%d)" % [
+		get_status_string(status), message, data, assert_file, assert_line
+	]
