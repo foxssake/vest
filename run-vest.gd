@@ -13,16 +13,18 @@ func _process(_dt):
 		do_run = false
 
 func run():
-	print("Some suites:", [
-		define("Some suite", func():
-			test("Should pass", func(): return false)
-			test("Some other  test", func(): return false)
+	var suite = define("Some suite", func():
+		test("Should pass", func(): ok())
+		test("Should fail", func(): fail())
+		test("Skip", func(): skip())
 
-			define("Sub suite", func():
-				test("Nested test", func(): return false)
-				)
-			),
-		define("Another suite", func():
-			test("Should return false", func(): return false)
-			)
-	])
+		define("Sub suite", func():
+			test("TODO", func(): todo())
+		)
+	)
+
+	var runner := VestRunner.new()
+	var results := runner.run_suite(suite)
+
+	print("Suite: %s" % [suite])
+	print("Results: \n%s" % ["\n".join(results)])

@@ -4,6 +4,7 @@ class_name VestCase
 var description: String = ""
 var callback: Callable
 
+# TODO: Support definition locations
 var definition_file: String = ""
 var definition_line: int = -1
 

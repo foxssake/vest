@@ -2,10 +2,15 @@ extends Node
 class_name VestTest
 
 var _define_stack: Array[VestSuite] = []
+var _result: VestResult
+
+func suite() -> VestSuite:
+	return VestSuite.new()
 
 func define(name: String, callback: Callable) -> VestSuite:
 	var suite = VestSuite.new()
 	suite.name = name
+	suite._owner = self
 	_define_stack.push_back(suite)
 
 	callback.call()
@@ -22,3 +27,26 @@ func test(description: String, callback: Callable) -> void:
 	case.callback = callback
 
 	_define_stack.back().cases.push_back(case)
+
+func todo(message: String = "", data: Dictionary = {}):
+	_with_result(VestResult.TEST_TODO, message, data)
+
+func skip(message: String = "", data: Dictionary = {}):
+	_with_result(VestResult.TEST_SKIP, message, data)
+
+func fail(message: String = "", data: Dictionary = {}):
+	_with_result(VestResult.TEST_FAIL, message, data)
+
+func ok(message: String = "", data: Dictionary = {}):
+	_with_result(VestResult.TEST_PASS, message, data)
+
+func _with_result(status: int, message: String, data: Dictionary):
+	_result.status = status
+	_result.message = message
+	_result.data = data
+
+func _prepare_for_case():
+	_result = VestResult.new()
+
+func _get_result() -> VestResult:
+	return _result
