@@ -29,6 +29,18 @@ func test_something():
 	ok()
 
 func _run():
+	print(YAMLWriter.stringify({
+		"int": 3,
+		"float": 2.4,
+		"string": "Heyoo",
+		"wordy entry": 75,
+		"array": [1, 2, 3],
+		"dictionary": { "foo": 2, "bar": 3 },
+		"nested array": [[1, 2], [3, 4]],
+		"single entry dict": { "foo": 2 }
+	}))
+
+	return
 	var runner := VestRunner.new()
 	var results := runner.run_instance(self)
 	print("Results: \n%s" % ["\n".join(results)])
