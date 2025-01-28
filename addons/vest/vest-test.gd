@@ -2,7 +2,7 @@ extends Node
 class_name VestTest
 
 var _defined_suite: VestSuite
-git
+
 func define(name: String, callback: Callable) -> VestSuite:
 	if _defined_suite:
 		# TODO: Support nested defines

@@ -1,14 +1,6 @@
 extends RefCounted
 class_name VestCase
 
-# Result enums
-enum {
-	TEST_TODO,
-	TEST_FAIL,
-	TEST_SKIP,
-	TEST_PASS
-}
-
 var description: String = ""
 var callback: Callable
 
