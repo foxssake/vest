@@ -13,3 +13,7 @@ config_version=5
 config/name="vest"
 config/features=PackedStringArray("4.0")
 config/icon="res://icon.svg"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/vest/plugin.cfg")
