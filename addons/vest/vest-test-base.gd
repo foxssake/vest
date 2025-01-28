@@ -37,6 +37,10 @@ func ok(message: String = "", data: Dictionary = {}):
 	_with_result(VestResult.TEST_PASS, message, data)
 
 func _with_result(status: int, message: String, data: Dictionary):
+	if _result.status != VestResult.TEST_VOID and status == VestResult.TEST_PASS:
+		# Test already failed, don't override with PASS
+		return
+
 	_result.status = status
 	_result.message = message
 	_result.data = data
