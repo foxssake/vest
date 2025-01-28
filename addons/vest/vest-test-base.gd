@@ -22,6 +22,10 @@ func test(description: String, callback: Callable) -> void:
 	case.description = description
 	case.callback = callback
 
+	var userland_loc := _find_userland_stack_location()
+	case.definition_file = userland_loc[0]
+	case.definition_line = userland_loc[1]
+
 	_define_stack.back().cases.push_back(case)
 
 func todo(message: String = "", data: Dictionary = {}):
@@ -45,6 +49,10 @@ func _with_result(status: int, message: String, data: Dictionary):
 	_result.message = message
 	_result.data = data
 
+	var userland_loc := _find_userland_stack_location()
+	_result.assert_file = userland_loc[0]
+	_result.assert_line = userland_loc[1]
+
 func _prepare_for_case():
 	_result = VestResult.new()
 
@@ -53,3 +61,10 @@ func _get_result() -> VestResult:
 
 func _get_suite() -> VestSuite:
 	return define("OVERRIDE ME", func():)
+
+func _find_userland_stack_location() -> Array:
+	var trimmed_stack := get_stack().filter(func(it): return not it["source"].begins_with("res://addons/vest"))
+	if trimmed_stack.is_empty():
+		return ["<unknown>", -1]
+	else:
+		return [trimmed_stack[0]["source"], trimmed_stack[0]["line"]]
