@@ -20,11 +20,11 @@ func expect_equal(actual: Variant, expected: Variant) -> void:
 	if equals:
 		ok()
 	else:
-		fail("Actual value differs from expected!", { "expected": expected, "got": actual })
+		fail("Actual value differs from expected!", { "expect": expected, "got": actual })
 
 func expect_not_equal(actual: Variant, expected: Variant) -> void:
 	if actual == expected:
-		fail("Actual value equals expected!", { "expected": expected, "got": actual })
+		fail("Actual value equals expected!", { "expect": expected, "got": actual })
 	else:
 		ok()
 

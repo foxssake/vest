@@ -22,6 +22,7 @@ func test_with_suite() -> VestSuite:
 
 		define("Sub suite", func():
 			test("TODO", func(): todo())
+			test("Compare", func(): expect_equal(2, 3))
 		)
 	)
 
