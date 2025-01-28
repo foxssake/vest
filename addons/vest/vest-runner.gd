@@ -36,3 +36,6 @@ func run_suite(suite: VestSuite) -> Array[RunResult]:
 		results.append(run_case(suite, case))
 
 	return results
+
+func run_instance(instance: VestTest) -> Array[RunResult]:
+	return run_suite(instance._get_suite())
