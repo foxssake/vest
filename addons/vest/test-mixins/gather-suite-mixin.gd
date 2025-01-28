@@ -1,5 +1,8 @@
 extends "res://addons/vest/vest-test-base.gd"
 
+func _get_ignored_methods() -> Array[String]:
+	return ["get_suite_name"]
+
 func _get_suite_name() -> String:
 	# Check if callback is implemented
 	if has_method("get_suite_name"):
@@ -20,6 +23,7 @@ func _get_suite() -> VestSuite:
 	var suite := VestSuite.new()
 
 	var script := get_script() as Script
+	var ignored_methods := _get_ignored_methods()
 	var inherited_methods := (script.get_base_script()
 		.get_script_method_list()
 		.map(func(it): return it["name"])
@@ -28,6 +32,7 @@ func _get_suite() -> VestSuite:
 	var methods := (script.get_script_method_list()
 		.filter(func(it): return not it["name"].begins_with("_"))
 		.filter(func(it): return not inherited_methods.has(it["name"]))
+		.filter(func(it): return not ignored_methods.has(it["name"]))
 		)
 
 	var define_methods := (methods
