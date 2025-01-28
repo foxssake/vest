@@ -5,5 +5,7 @@ var name: String = ""
 var cases: Array[VestCase] = []
 var suites: Array[VestSuite] = []
 
+var _owner: VestTest
+
 func _to_string() -> String:
 	return "VestSuite(name=\"%s\", cases=%s, suites=%s)" % [name, cases, suites]
