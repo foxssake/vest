@@ -35,20 +35,41 @@ func _get_suite() -> VestDefs.Suite:
 		.filter(func(it): return not ignored_methods.has(it["name"]))
 		)
 
-	var define_methods := (methods
-		.filter(func(it): return not it["return"]["class_name"].is_empty())
-		.map(func(it): return it["name"])
-	)
+	var define_methods: Array[Dictionary] = []
+	var case_methods: Array[Dictionary] = []
+	var benchmark_methods: Array[Dictionary] = []
 
-	var case_methods := (methods
-		.filter(func(it): return not define_methods.has(it["name"]))
-		.map(func(it): return it["name"])
-	)
+	for method in methods:
+		if not method["return"]["class_name"].is_empty():
+			define_methods.append(method)
+		elif method["name"].begins_with("benchmark"):
+			if (method["args"].any(func(arg): return arg["name"] == "iterations") or \
+				method["args"].any(func(arg): return arg["name"] == "timeout")) and \
+				method["default_args"].size() > 0:
+				benchmark_methods.append(method)
+		else:
+			case_methods.append(method)
 
 	return define(_get_suite_name(), func():
 		for method in define_methods:
-			call(method)
+			call(method["name"])
 
 		for method in case_methods:
-			test(method.capitalize(), func(): call(method))
+			test(method["name"].capitalize(), func(): call(method["name"]))
+
+		for method in benchmark_methods:
+			var max_iterations = -1
+			var timeout = -1.
+
+			for arg_idx in range(method["args"].size()):
+				var arg = method["args"][arg_idx]["name"]
+				var value = method["default_args"][arg_idx]
+
+				match arg:
+					"iterations": max_iterations = value
+					"timeout": timeout = value
+
+			benchmark(method["name"].capitalize(), func(): call(method["name"]))\
+				.with_iterations(max_iterations)\
+				.with_timeout(timeout)
 	)

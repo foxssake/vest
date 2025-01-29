@@ -2,6 +2,7 @@ extends Node
 
 var _define_stack: Array[VestDefs.Suite] = []
 var _result: VestResult.Case
+var _bail: bool = false
 
 func define(name: String, callback: Callable) -> VestDefs.Suite:
 	var suite = VestDefs.Suite.new()
@@ -27,6 +28,22 @@ func test(description: String, callback: Callable) -> void:
 	case.definition_line = userland_loc[1]
 
 	_define_stack.back().cases.push_back(case)
+
+func benchmark(description: String, callback: Callable) -> VestDefs.Benchmark:
+	var benchmark := VestDefs.Benchmark.new()
+	benchmark.description = description
+	benchmark.callback = callback
+
+	var userland_loc := _find_userland_stack_location()
+	benchmark.definition_file = userland_loc[0]
+	benchmark.definition_line = userland_loc[1]
+
+	_define_stack.back().benchmarks.push_back(benchmark)
+
+	return benchmark
+
+func bail() -> void:
+	_bail = true
 
 func todo(message: String = "", data: Dictionary = {}):
 	_with_result(VestResult.TEST_TODO, message, data)
@@ -56,6 +73,12 @@ func _with_result(status: int, message: String, data: Dictionary):
 func _prepare_for_case(case: VestDefs.Case):
 	_result = VestResult.Case.new()
 	_result.case = case
+
+func _prepare_for_benchmark(benchmark: VestDefs.Benchmark):
+	_bail = false
+
+func _is_bailing() -> bool:
+	return _bail
 
 func _get_result() -> VestResult.Case:
 	return _result

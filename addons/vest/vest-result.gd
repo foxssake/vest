@@ -13,6 +13,7 @@ enum {
 class Suite:
 	var suite: VestDefs.Suite
 	var cases: Array[Case] = []
+	var benchmarks: Array[Benchmark] = []
 	var subsuites: Array[Suite] = []
 
 	func get_aggregate_status() -> int:
@@ -55,11 +56,6 @@ class Case:
 	var assert_file: String = ""
 	var assert_line: int = -1
 
-	func _to_string() -> String:
-		return "VestResult(status=%s, message=\"%s\", data=%s, assert_loc=\"%s\":%d)" % [
-			VestResult.get_status_string(status), message, data, assert_file, assert_line
-		]
-
 	func _to_wire() -> Dictionary:
 		return {
 			"case": case._to_wire(),
@@ -79,6 +75,28 @@ class Case:
 		result.data = data["data"]
 		result.assert_file = data["assert_file"]
 		result.assert_line = data["assert_line"]
+
+		return result
+
+class Benchmark:
+	var benchmark: VestDefs.Benchmark
+
+	var duration: float = 0.
+	var iterations: int = 0
+
+	func _to_wire() -> Dictionary:
+		return {
+			"benchmark": benchmark._to_wire(),
+			"duration": duration,
+			"iterations": iterations
+		}
+
+	static func _from_wire(data: Dictionary) -> Benchmark:
+		var result := Benchmark.new()
+
+		result.benchmark = VestDefs.Benchmark._from_wire(data["benchmark"])
+		result.duration = data["duration"]
+		result.iterations = data["iterations"]
 
 		return result
 
