@@ -8,7 +8,7 @@ func _process(_dt):
 	if do_run:
 		_run_daemon()
 		do_run = false
-#
+
 func test_with_suite() -> VestDefs.Suite:
 	return define("Some suite", func():
 		test("Should pass", func(): expect(true))
