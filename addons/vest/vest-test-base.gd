@@ -1,7 +1,7 @@
 extends Node
 
 var _define_stack: Array[VestSuite] = []
-var _result: VestResult
+var _result: VestResult.Case
 
 func define(name: String, callback: Callable) -> VestSuite:
 	var suite = VestSuite.new()
@@ -53,10 +53,11 @@ func _with_result(status: int, message: String, data: Dictionary):
 	_result.assert_file = userland_loc[0]
 	_result.assert_line = userland_loc[1]
 
-func _prepare_for_case():
-	_result = VestResult.new()
+func _prepare_for_case(case: VestCase):
+	_result = VestResult.Case.new()
+	_result.case = case
 
-func _get_result() -> VestResult:
+func _get_result() -> VestResult.Case:
 	return _result
 
 func _get_suite() -> VestSuite:

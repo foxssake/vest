@@ -22,6 +22,7 @@ func test_with_suite() -> VestSuite:
 
 		define("Sub suite", func():
 			test("TODO", func(): todo())
+			test("Compare", func(): expect_equal(2, 3))
 		)
 	)
 
@@ -30,5 +31,7 @@ func test_something():
 
 func _run():
 	var runner := VestRunner.new()
-	var results := runner.run_instance(self)
-	print("Results: \n%s" % ["\n".join(results)])
+	var result := runner.run_instance(self)
+
+	print("Results: \n%s" % [result])
+	print("Report: \n%s" % [TAPReporter.report(result)])
