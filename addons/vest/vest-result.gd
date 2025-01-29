@@ -52,7 +52,6 @@ class Case:
 	var message: String = ""
 	var data: Dictionary = {}
 
-	# TODO: Support assert locations
 	var assert_file: String = ""
 	var assert_line: int = -1
 
@@ -66,7 +65,9 @@ class Case:
 			"case": case._to_wire(),
 			"status": status,
 			"message": message,
-			"data": data
+			"data": data,
+			"assert_file": assert_file,
+			"assert_line": assert_line
 		}
 
 	static func _from_wire(data: Dictionary) -> Case:
@@ -76,6 +77,8 @@ class Case:
 		result.status = data["status"]
 		result.message = data["message"]
 		result.data = data["data"]
+		result.assert_file = data["assert_file"]
+		result.assert_line = data["assert_line"]
 
 		return result
 

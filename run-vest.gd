@@ -45,6 +45,7 @@ func _run_daemon():
 	var runner := VestRunner.new()
 	add_child(runner)
 
-	runner.run_in_background(self)
+	var result = await runner.run_in_background(self)
+	print(TAPReporter.report(result))
 
 #	runner.queue_free()

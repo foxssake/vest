@@ -51,64 +51,11 @@ func run_script_at(path: String) -> VestResult.Suite:
 
 	return run_instance(test_instance)
 
-func run_in_background(instance: VestTest):
-	# Start host
-	var port = 16384
-	var server := TCPServer.new()
+func run_in_background(instance: VestTest) -> VestResult.Suite:
+	var host := VestDaemonHost.new()
+	add_child(host)
 
-	# Find random port for host
-	for i in range(32):
-		port = randi_range(49152, 65535)
-		if server.listen(port) == OK:
-			break
-	if not server.is_listening():
-		print("Failed to find available port!")
-		return
+	var result := await host.run_instance(instance)
+	host.queue_free()
 
-	# Start process
-	var pid := OS.create_instance([
-		"--headless", "-s", "res://addons/vest/vest-daemon.gd",
-		"--vest-port", port,
-		"--vest-file", instance.get_script().resource_path
-	])
-	print("Started process %d" % [pid])
-
-	# Listen for connection
-	print("Waiting for incoming connection...")
-	for i in range(32):
-		if server.is_connection_available():
-			break
-		await get_tree().create_timer(0.2).timeout
-
-	if not server.is_connection_available():
-		print("Timeout!")
-		server.stop()
-		return
-
-	var peer := server.take_connection()
-
-	# Take results
-	print("Waiting for results...")
-	for i in range(32):
-		if peer.get_available_bytes() > 0:
-			break
-		await get_tree().create_timer(0.2).timeout
-
-	var results = peer.get_var()
-
-	if results == null:
-		print("Test run failed!")
-	elif results is Dictionary:
-		var suite_result = VestResult.Suite._from_wire(results)
-		print(TAPReporter.report(suite_result))
-	else:
-		print("Unrecognized test result data! %s" % [results])
-
-	peer.disconnect_from_host()
-	server.stop()
-
-#	print("Waiting before killing %d" % [pid])
-#	await get_tree().create_timer(1.).timeout
-#
-#	print("Killing process %d" % [pid])
-#	OS.kill(pid)
+	return result
