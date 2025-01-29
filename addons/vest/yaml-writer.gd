@@ -14,7 +14,10 @@ static func stringify(what, indent: int = 0) -> String:
 		return str(what)
 
 	if what is String or what is StringName or what is NodePath:
-		return "\"%s\"" % str(what).c_escape()
+		what = str(what)
+		if not what.contains("\n") and not what.contains("\"") and what.strip_edges() == what:
+			return what
+		return "\"%s\"" % what.c_escape()
 
 	if _is_packed_array(what):
 		what = Array(what)

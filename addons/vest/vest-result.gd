@@ -11,9 +11,13 @@ enum {
 }
 
 class Suite:
-	var suite: VestSuite
+	var suite: VestDefs.Suite
 	var cases: Array[Case] = []
+	var benchmarks: Array[Benchmark] = []
 	var subsuites: Array[Suite] = []
+
+	func size() -> int:
+		return cases.size() + benchmarks.size() + subsuites.size()
 
 	func get_aggregate_status() -> int:
 		var result := TEST_PASS
@@ -33,20 +37,22 @@ class Suite:
 		return {
 			"suite": suite._to_wire(),
 			"cases": cases.map(func(it): return it._to_wire()),
+			"benchmarks": benchmarks.map(func(it): return it._to_wire()),
 			"subsuites": subsuites.map(func(it): return it._to_wire())
 		}
 
 	static func _from_wire(data: Dictionary) -> Suite:
 		var result := Suite.new()
 
-		result.suite = VestSuite._from_wire(data["suite"])
+		result.suite = VestDefs.Suite._from_wire(data["suite"])
 		result.cases.assign(data["cases"].map(func(it): return Case._from_wire(it)))
+		result.benchmarks.assign(data["benchmarks"].map(func(it): return Benchmark._from_wire(it)))
 		result.subsuites.assign(data["subsuites"].map(func(it): return Suite._from_wire(it)))
 
 		return result
 
 class Case:
-	var case: VestCase
+	var case: VestDefs.Case
 
 	var status: int = TEST_VOID
 	var message: String = ""
@@ -54,11 +60,6 @@ class Case:
 
 	var assert_file: String = ""
 	var assert_line: int = -1
-
-	func _to_string() -> String:
-		return "VestResult(status=%s, message=\"%s\", data=%s, assert_loc=\"%s\":%d)" % [
-			VestResult.get_status_string(status), message, data, assert_file, assert_line
-		]
 
 	func _to_wire() -> Dictionary:
 		return {
@@ -73,12 +74,34 @@ class Case:
 	static func _from_wire(data: Dictionary) -> Case:
 		var result := Case.new()
 
-		result.case = VestCase._from_wire(data["case"])
+		result.case = VestDefs.Case._from_wire(data["case"])
 		result.status = data["status"]
 		result.message = data["message"]
 		result.data = data["data"]
 		result.assert_file = data["assert_file"]
 		result.assert_line = data["assert_line"]
+
+		return result
+
+class Benchmark:
+	var benchmark: VestDefs.Benchmark
+
+	var duration: float = 0.
+	var iterations: int = 0
+
+	func _to_wire() -> Dictionary:
+		return {
+			"benchmark": benchmark._to_wire(),
+			"duration": duration,
+			"iterations": iterations
+		}
+
+	static func _from_wire(data: Dictionary) -> Benchmark:
+		var result := Benchmark.new()
+
+		result.benchmark = VestDefs.Benchmark._from_wire(data["benchmark"])
+		result.duration = data["duration"]
+		result.iterations = data["iterations"]
 
 		return result
 
