@@ -59,14 +59,13 @@ static func _report_case(test_id: int, case: VestResult.Case, lines: PackedStrin
 static func _report_subsuite_results(test_id: int, subsuite: VestResult.Suite, lines: PackedStringArray, indent: int = 0):
 	var indent_prefix := " ".repeat(indent)
 
-	var test_status := subsuite.get_aggregate_status()
 	var test_point = "ok"
-	if test_status != VestResult.TEST_PASS:
+	if subsuite.get_count_by_status(VestResult.TEST_FAIL) > 0:
 		test_point = "not ok"
 
 	lines.append(indent_prefix + "%s %d - %s" % [test_point, test_id, subsuite.suite.name])
 
-	if test_status != VestResult.TEST_PASS:
+	if test_point != "ok":
 		var yaml_data = {
 			"pass": subsuite.get_count_by_status(VestResult.TEST_PASS),
 			"fail": subsuite.get_count_by_status(VestResult.TEST_FAIL),

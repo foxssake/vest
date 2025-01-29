@@ -64,7 +64,11 @@ func _get_suite() -> VestSuite:
 	return define("OVERRIDE ME", func():)
 
 func _find_userland_stack_location() -> Array:
-	var trimmed_stack := get_stack().filter(func(it): return not it["source"].begins_with("res://addons/vest"))
+	var stack := get_stack()
+	if stack.is_empty():
+		return [(get_script() as Script).resource_path, -1]
+
+	var trimmed_stack := stack.filter(func(it): return not it["source"].begins_with("res://addons/vest"))
 	if trimmed_stack.is_empty():
 		return ["<unknown>", -1]
 	else:

@@ -38,3 +38,24 @@ func run_suite(suite: VestSuite) -> VestResult.Suite:
 
 func run_instance(instance: VestTest) -> VestResult.Suite:
 	return run_suite(instance._get_suite())
+
+func run_script_at(path: String) -> VestResult.Suite:
+	var test_script := load(path)
+
+	if not test_script or not test_script is Script:
+		return null
+
+	var test_instance = test_script.new()
+	if not test_instance is VestTest:
+		return null
+
+	return run_instance(test_instance)
+
+func run_in_background(instance: VestTest) -> VestResult.Suite:
+	var host := VestDaemonHost.new()
+	add_child(host)
+
+	var result := await host.run_instance(instance)
+	host.queue_free()
+
+	return result
