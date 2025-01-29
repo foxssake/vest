@@ -12,3 +12,11 @@ grow_vertical = 2
 
 [node name="Run Vest" type="Node" parent="."]
 script = ExtResource("1_onlth")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Run Daemon"
+
+[connection signal="pressed" from="Button" to="Run Vest" method="_run_daemon"]
