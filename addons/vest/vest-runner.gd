@@ -17,25 +17,24 @@ class RunResult:
 	func _to_string() -> String:
 		return "RunResult(suite=%s, case=%s, result=%s)" % [suite.name, case, result]
 
-func run_case(suite: VestSuite, case: VestCase) -> RunResult:
+func run_case(suite: VestSuite, case: VestCase) -> VestResult.Case:
 	var test_instance := suite._owner
-	test_instance._prepare_for_case()
+	test_instance._prepare_for_case(case)
 
 	case.callback.call()
-	var result := test_instance._get_result()
+	return test_instance._get_result()
 
-	return RunResult.of(suite, case, result)
-
-func run_suite(suite: VestSuite) -> Array[RunResult]:
-	var results: Array[RunResult] = []
+func run_suite(suite: VestSuite) -> VestResult.Suite:
+	var result := VestResult.Suite.new()
+	result.suite = suite
 
 	for subsuite in suite.suites:
-		results.append_array(run_suite(subsuite))
+		result.subsuites.append(run_suite(subsuite))
 
 	for case in suite.cases:
-		results.append(run_case(suite, case))
+		result.cases.append(run_case(suite, case))
 
-	return results
+	return result
 
-func run_instance(instance: VestTest) -> Array[RunResult]:
+func run_instance(instance: VestTest) -> VestResult.Suite:
 	return run_suite(instance._get_suite())

@@ -31,7 +31,7 @@ func test_something():
 
 func _run():
 	var runner := VestRunner.new()
-	var results := runner.run_instance(self)
+	var result := runner.run_instance(self)
 
-	print("Results: \n%s" % ["\n".join(results)])
-	print("Report: \n%s" % [TAPReporter.report(results)])
+	print("Results: \n%s" % [result])
+	print("Report: \n%s" % [TAPReporter.report(result)])
