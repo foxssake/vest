@@ -15,7 +15,7 @@ func _process(_dt):
 		_run_daemon()
 		do_run = false
 
-func test_with_suite() -> VestSuite:
+func test_with_suite() -> VestDefs.Suite:
 	return define("Some suite", func():
 		test("Should pass", func(): expect(true))
 		test("Should fail", func(): expect(false))

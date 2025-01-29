@@ -1,10 +1,10 @@
 extends Node
 
-var _define_stack: Array[VestSuite] = []
+var _define_stack: Array[VestDefs.Suite] = []
 var _result: VestResult.Case
 
-func define(name: String, callback: Callable) -> VestSuite:
-	var suite = VestSuite.new()
+func define(name: String, callback: Callable) -> VestDefs.Suite:
+	var suite = VestDefs.Suite.new()
 	suite.name = name
 	suite._owner = self
 	_define_stack.push_back(suite)
@@ -18,7 +18,7 @@ func define(name: String, callback: Callable) -> VestSuite:
 	return suite
 
 func test(description: String, callback: Callable) -> void:
-	var case := VestCase.new()
+	var case := VestDefs.Case.new()
 	case.description = description
 	case.callback = callback
 
@@ -53,14 +53,14 @@ func _with_result(status: int, message: String, data: Dictionary):
 	_result.assert_file = userland_loc[0]
 	_result.assert_line = userland_loc[1]
 
-func _prepare_for_case(case: VestCase):
+func _prepare_for_case(case: VestDefs.Case):
 	_result = VestResult.Case.new()
 	_result.case = case
 
 func _get_result() -> VestResult.Case:
 	return _result
 
-func _get_suite() -> VestSuite:
+func _get_suite() -> VestDefs.Suite:
 	return define("OVERRIDE ME", func():)
 
 func _find_userland_stack_location() -> Array:

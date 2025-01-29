@@ -19,8 +19,8 @@ func _get_suite_name() -> String:
 	# Fall back to script path
 	return script.resource_path
 
-func _get_suite() -> VestSuite:
-	var suite := VestSuite.new()
+func _get_suite() -> VestDefs.Suite:
+	var suite := VestDefs.Suite.new()
 
 	var script := get_script() as Script
 	var ignored_methods := _get_ignored_methods()

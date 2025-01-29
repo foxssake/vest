@@ -11,7 +11,7 @@ enum {
 }
 
 class Suite:
-	var suite: VestSuite
+	var suite: VestDefs.Suite
 	var cases: Array[Case] = []
 	var subsuites: Array[Suite] = []
 
@@ -39,14 +39,14 @@ class Suite:
 	static func _from_wire(data: Dictionary) -> Suite:
 		var result := Suite.new()
 
-		result.suite = VestSuite._from_wire(data["suite"])
+		result.suite = VestDefs.Suite._from_wire(data["suite"])
 		result.cases.assign(data["cases"].map(func(it): return Case._from_wire(it)))
 		result.subsuites.assign(data["subsuites"].map(func(it): return Suite._from_wire(it)))
 
 		return result
 
 class Case:
-	var case: VestCase
+	var case: VestDefs.Case
 
 	var status: int = TEST_VOID
 	var message: String = ""
@@ -73,7 +73,7 @@ class Case:
 	static func _from_wire(data: Dictionary) -> Case:
 		var result := Case.new()
 
-		result.case = VestCase._from_wire(data["case"])
+		result.case = VestDefs.Case._from_wire(data["case"])
 		result.status = data["status"]
 		result.message = data["message"]
 		result.data = data["data"]

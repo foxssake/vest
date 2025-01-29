@@ -2,11 +2,11 @@ extends Node
 class_name VestRunner
 
 class RunResult:
-	var suite: VestSuite
-	var case: VestCase
+	var suite: VestDefs.Suite
+	var case: VestDefs.Case
 	var result: VestResult
 
-	static func of(p_suite: VestSuite, p_case: VestCase, p_result: VestResult) -> RunResult:
+	static func of(p_suite: VestDefs.Suite, p_case: VestDefs.Case, p_result: VestResult) -> RunResult:
 		var result := RunResult.new()
 		result.suite = p_suite
 		result.case = p_case
@@ -17,14 +17,14 @@ class RunResult:
 	func _to_string() -> String:
 		return "RunResult(suite=%s, case=%s, result=%s)" % [suite.name, case, result]
 
-func run_case(suite: VestSuite, case: VestCase) -> VestResult.Case:
+func run_case(suite: VestDefs.Suite, case: VestDefs.Case) -> VestResult.Case:
 	var test_instance := suite._owner
 	test_instance._prepare_for_case(case)
 
 	case.callback.call()
 	return test_instance._get_result()
 
-func run_suite(suite: VestSuite) -> VestResult.Suite:
+func run_suite(suite: VestDefs.Suite) -> VestResult.Suite:
 	var result := VestResult.Suite.new()
 	result.suite = suite
 
