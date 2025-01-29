@@ -9,8 +9,11 @@ class Suite:
 
 	var _owner: VestTest
 
+	func size() -> int:
+		return cases.size() + benchmarks.size() + suites.size()
+
 	func _to_string() -> String:
-		return "VestDefs.Suite(name=\"%s\", cases=%s, suites=%s)" % [name, cases, suites]
+		return "VestDefs.Suite(name=\"%s\", cases=%s, benchmarks=%s suites=%s)" % [name, cases, benchmarks, suites]
 
 	func _to_wire() -> Dictionary:
 		return { "name": name }

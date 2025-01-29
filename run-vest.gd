@@ -8,7 +8,7 @@ func _process(_dt):
 	if do_run:
 		_run_daemon()
 		do_run = false
-
+#
 func test_with_suite() -> VestDefs.Suite:
 	return define("Some suite", func():
 		test("Should pass", func(): expect(true))
@@ -33,12 +33,10 @@ func benchmark_rng(iterations: int = 1000, timeout: float = 1.0):
 	randi()
 
 func _run_daemon():
-	print(JSON.stringify((get_script() as Script).get_script_method_list()))
-
 	var runner := VestRunner.new()
 	add_child(runner)
 
-	var result = await runner.run_instance(self)
+	var result = await runner.run_in_background(self)
 	print(TAPReporter.report(result))
 
-#	runner.queue_free()
+	runner.queue_free()

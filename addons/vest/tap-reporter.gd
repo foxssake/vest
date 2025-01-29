@@ -14,7 +14,7 @@ static func report(suite: VestResult.Suite) -> String:
 
 static func _report_suite(suite: VestResult.Suite, lines: PackedStringArray, indent: int = 0):
 	var indent_prefix := " ".repeat(indent)
-	var test_count := suite.cases.size() + suite.subsuites.size() + suite.benchmarks.size()
+	var test_count := suite.size()
 	var test_id := 1
 
 	lines.append(indent_prefix + "1..%d" % [test_count])

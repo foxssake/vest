@@ -16,6 +16,9 @@ class Suite:
 	var benchmarks: Array[Benchmark] = []
 	var subsuites: Array[Suite] = []
 
+	func size() -> int:
+		return cases.size() + benchmarks.size() + subsuites.size()
+
 	func get_aggregate_status() -> int:
 		var result := TEST_PASS
 		if not cases.is_empty():
@@ -34,6 +37,7 @@ class Suite:
 		return {
 			"suite": suite._to_wire(),
 			"cases": cases.map(func(it): return it._to_wire()),
+			"benchmarks": benchmarks.map(func(it): return it._to_wire()),
 			"subsuites": subsuites.map(func(it): return it._to_wire())
 		}
 
@@ -42,6 +46,7 @@ class Suite:
 
 		result.suite = VestDefs.Suite._from_wire(data["suite"])
 		result.cases.assign(data["cases"].map(func(it): return Case._from_wire(it)))
+		result.benchmarks.assign(data["benchmarks"].map(func(it): return Benchmark._from_wire(it)))
 		result.subsuites.assign(data["subsuites"].map(func(it): return Suite._from_wire(it)))
 
 		return result

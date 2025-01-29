@@ -39,8 +39,8 @@ func run_benchmark(suite: VestDefs.Suite, benchmark: VestDefs.Benchmark) -> Vest
 		benchmark.callback.call()
 		iterations += 1
 
-		if (benchmark.max_iterations > 0 and iterations > benchmark.max_iterations) or \
-			(benchmark.timeout > 0.) and (_get_time() - start_time > benchmark.timeout) or \
+		if (benchmark.max_iterations > 0 and iterations >= benchmark.max_iterations) or \
+			(benchmark.timeout > 0.) and (_get_time() - start_time >= benchmark.timeout) or \
 			test_instance._is_bailing():
 				break
 	result.duration = _get_time() - start_time
