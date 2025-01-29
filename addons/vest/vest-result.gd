@@ -29,6 +29,22 @@ class Suite:
 			subsuites.filter(func(it): return it.get_aggregate_status() == p_status).size()
 		)
 
+	func _to_wire() -> Dictionary:
+		return {
+			"suite": suite._to_wire(),
+			"cases": cases.map(func(it): return it._to_wire()),
+			"subsuites": subsuites.map(func(it): return it._to_wire())
+		}
+
+	static func _from_wire(data: Dictionary) -> Suite:
+		var result := Suite.new()
+
+		result.suite = VestSuite._from_wire(data["suite"])
+		result.cases.assign(data["cases"].map(func(it): return Case._from_wire(it)))
+		result.subsuites.assign(data["subsuites"].map(func(it): return Suite._from_wire(it)))
+
+		return result
+
 class Case:
 	var case: VestCase
 
@@ -44,6 +60,24 @@ class Case:
 		return "VestResult(status=%s, message=\"%s\", data=%s, assert_loc=\"%s\":%d)" % [
 			VestResult.get_status_string(status), message, data, assert_file, assert_line
 		]
+
+	func _to_wire() -> Dictionary:
+		return {
+			"case": case._to_wire(),
+			"status": status,
+			"message": message,
+			"data": data
+		}
+
+	static func _from_wire(data: Dictionary) -> Case:
+		var result := Case.new()
+
+		result.case = VestCase._from_wire(data["case"])
+		result.status = data["status"]
+		result.message = data["message"]
+		result.data = data["data"]
+
+		return result
 
 static func get_status_string(p_status: int) -> String:
 	match p_status:

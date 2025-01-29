@@ -46,9 +46,9 @@ func _send_results(results: VestResult.Suite):
 		return
 
 	if results:
-		peer.put_utf8_string(TAPReporter.report(results))
+		peer.put_var(results._to_wire(), true)
 	else:
-		peer.put_utf8_string("<invalid script!>")
+		peer.put_var(null)
 
 	peer.disconnect_from_host()
 

@@ -94,9 +94,15 @@ func run_in_background(instance: VestTest):
 			break
 		await get_tree().create_timer(0.2).timeout
 
-	var results := peer.get_utf8_string()
+	var results = peer.get_var()
 
-	print(results)
+	if results == null:
+		print("Test run failed!")
+	elif results is Dictionary:
+		var suite_result = VestResult.Suite._from_wire(results)
+		print(TAPReporter.report(suite_result))
+	else:
+		print("Unrecognized test result data! %s" % [results])
 
 	peer.disconnect_from_host()
 	server.stop()
