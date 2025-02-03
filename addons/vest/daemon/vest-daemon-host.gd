@@ -6,6 +6,9 @@ var _port: int
 var _peer: StreamPeerTCP
 
 func run_instance(instance: VestTest) -> VestResult.Suite:
+	return await run_script(instance.get_script() as Script)
+
+func run_script(script: Script) -> VestResult.Suite:
 	# Start host
 	if _start() != OK:
 		print("Couldn't start host!")
@@ -16,7 +19,7 @@ func run_instance(instance: VestTest) -> VestResult.Suite:
 		"--headless",
 		"-s", "res://addons/vest/daemon/vest-daemon-agent.gd",
 		"--vest-port", _port,
-		"--vest-file", instance.get_script().resource_path
+		"--vest-file", script.resource_path
 	])
 	print("Started process %d, listening on port %d" % [pid, _port])
 

@@ -36,7 +36,7 @@ func _run_daemon():
 	var runner := VestRunner.new()
 	add_child(runner)
 
-	var result = await runner.run_in_background(self)
+	var result = await runner.run_script_in_background(load("res://tests/mocks.test.gd"))
 	print(TAPReporter.report(result))
 
 	runner.queue_free()
