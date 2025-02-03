@@ -79,3 +79,16 @@ func test_should_answer_default_on_wrong_args():
 
 	# Then
 	expect_equal(actual, expected)
+
+func test_should_record_calls():
+	# Given
+	var math_mock := mock(SimpleMath) as SimpleMath
+	when(math_mock.times).then_return(0.)
+
+	# When
+	math_mock.times(1, 2)
+	math_mock.times(3, 4)
+	math_mock.times(5, 6)
+
+	# Then
+	expect_equal(get_calls_of(math_mock.times), [[1., 2.], [3., 4.], [5., 6.]])

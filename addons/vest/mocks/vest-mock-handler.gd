@@ -11,6 +11,12 @@ func take_over(what: Object):
 func add_answer(answer: VestMockDefs.Answer):
 	_answers.append(answer)
 
+func get_calls() -> Array[VestMockDefs.Call]:
+	return _calls
+
+func get_unhandled_calls() -> Array[VestMockDefs.Call]:
+	return _unhandled_calls
+
 func _handle(method: Callable, args: Array):
 	var call := VestMockDefs.Call.new()
 	call.method = method

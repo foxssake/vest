@@ -1,5 +1,7 @@
 extends "res://addons/vest/test-mixins/assert-mixin.gd"
 
+# TODO: Fail test case if there's unhandled calls
+
 var _mock_generator := VestMockGenerator.new()
 var _mock_handler := VestMockHandler.new()
 
@@ -12,6 +14,16 @@ func mock(script: Script):
 	
 	_mock_handler.take_over(mocked_object)
 	return mocked_object
+
+func get_calls_of(method: Callable) -> Array[Array]:
+	var result: Array[Array] = []
+
+	for call in _mock_handler.get_calls():
+		if call.method != method:
+			continue
+		result.append(call.args)
+
+	return result
 
 func when(method: Callable) -> AnswerBuilder:
 	return AnswerBuilder.of(method, self)
