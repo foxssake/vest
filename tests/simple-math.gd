@@ -1,6 +1,13 @@
 extends RefCounted
 class_name SimpleMath
 
+var some_property:
+	get:
+		print("Getting property!")
+		return 8
+	set(v):
+		print("Seting property! %s" % [v])
+
 func times(a: float, b: float) -> float:
 	return a * b
 

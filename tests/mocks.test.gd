@@ -91,4 +91,5 @@ func test_should_record_calls():
 	math_mock.times(5, 6)
 
 	# Then
+	expect_contains(get_calls_of(math_mock.times), [1., 2.])
 	expect_equal(get_calls_of(math_mock.times), [[1., 2.], [3., 4.], [5., 6.]])

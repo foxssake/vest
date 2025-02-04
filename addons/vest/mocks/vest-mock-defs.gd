@@ -6,7 +6,7 @@ class Answer:
 	var expected_args: Array = []
 	var answer_value: Variant
 	var answer_method: Callable
-	
+
 	func get_specificity() -> int:
 		return expected_args.size()
 

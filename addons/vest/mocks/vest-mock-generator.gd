@@ -1,6 +1,8 @@
 extends RefCounted
 class_name VestMockGenerator
 
+# TODO: Support getters and setters
+
 func generate_mock_script(script: Script) -> Script:
 	var dummy_script := preload("res://addons/vest/mocks/vest-mock-dummy.gd") as Script
 	var mock_script := dummy_script.duplicate() as Script
@@ -16,9 +18,13 @@ func generate_mock_source(script: Script) -> String:
 	mock_source.append("var __vest_mock_handler: VestMockHandler\n\n")
 
 	for method in script.get_script_method_list():
-		var method_name = method["name"]
+		var method_name := method["name"] as String
 		var method_args = method["args"]
 		var method_defaults = method["default_args"]
+
+		if method_name.begins_with("@"):
+			# Getter or setter, don't generate as method
+			continue
 
 		var arg_defs := []
 		
