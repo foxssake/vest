@@ -27,7 +27,6 @@ class Answer:
 
 	func get_answer(args: Array) -> Variant:
 		if answer_method:
-			answer_method.get_bound_arguments_count()
 			return answer_method.call(args)
 		else:
 			return answer_value
