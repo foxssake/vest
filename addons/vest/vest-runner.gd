@@ -78,11 +78,20 @@ func run_script_at(path: String) -> VestResult.Suite:
 
 	return run_instance(test_instance)
 
-func run_in_background(instance: VestTest) -> VestResult.Suite:
+func run_instance_in_background(instance: VestTest) -> VestResult.Suite:
 	var host := VestDaemonHost.new()
 	add_child(host)
 
 	var result := await host.run_instance(instance)
+	host.queue_free()
+
+	return result
+
+func run_script_in_background(script: Script) -> VestResult.Suite:
+	var host := VestDaemonHost.new()
+	add_child(host)
+
+	var result := await host.run_script(script)
 	host.queue_free()
 
 	return result
