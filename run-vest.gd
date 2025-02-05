@@ -33,6 +33,9 @@ func benchmark_rng(iterations: int = 1000, timeout: float = 1.0):
 	randi()
 
 func _run_daemon():
+	VestMixins._generate_mixin_chain([])
+	return
+	
 	var runner := VestRunner.new()
 	add_child(runner)
 

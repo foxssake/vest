@@ -1,0 +1,2 @@
+extends _VestTestBase
+class_name VestTestMixin

@@ -1,4 +1,4 @@
-extends "res://addons/vest/test-mixins/assert-mixin.gd"
+extends VestTestMixin
 
 # TODO: Fail test case if there's unhandled calls
 
