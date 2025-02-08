@@ -1,4 +1,4 @@
-extends "res://addons/vest/test-mixins/gather-suite-mixin.gd"
+extends VestTestMixin
 
 func expect(condition: bool, p_message: String = "") -> void:
 	if condition:

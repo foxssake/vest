@@ -27,12 +27,16 @@ func test_with_suite() -> VestDefs.Suite:
 	)
 
 func test_something():
+	haha()
 	ok()
 
 func benchmark_rng(iterations: int = 1000, timeout: float = 1.0):
 	randi()
 
 func _run_daemon():
+	VestMixins.add(preload("res://example-mixin.gd"))
+	return
+	
 	var runner := VestRunner.new()
 	add_child(runner)
 
