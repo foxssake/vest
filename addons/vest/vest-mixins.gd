@@ -1,19 +1,19 @@
 extends Object
 class_name VestMixins
 
-static func get_mixins() -> Array[Script]:
+static func list() -> Array[Script]:
 	var result: Array[Script] = []
 	result.assign((VestTest.new()).__vest_mixins)
 	return result
 
-static func add_mixin(mixin: Script):
-	var active_mixins := get_mixins()
+static func add(mixin: Script):
+	var active_mixins := list()
 	if not active_mixins.has(mixin):
 		active_mixins.append(mixin)
 		_generate_mixin_chain(active_mixins)
 
-static func remove_mixin(mixin: Script):
-	var active_mixins := get_mixins()
+static func remove(mixin: Script):
+	var active_mixins := list()
 	if active_mixins.has(mixin):
 		active_mixins.erase(mixin)
 		_generate_mixin_chain(active_mixins)
@@ -40,7 +40,7 @@ static func _generate_mixin_chain(mixins: Array[Script]):
 
 	mixin_chain.append(VestTest)
 
-	# Generate chain
+	# Generate scripts
 	_clean_mixin_directory()
 	DirAccess.make_dir_recursive_absolute(_get_mixin_directory())
 	var extends_pattern := RegEx.create_from_string("^extends.*")

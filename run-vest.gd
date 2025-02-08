@@ -34,7 +34,7 @@ func benchmark_rng(iterations: int = 1000, timeout: float = 1.0):
 	randi()
 
 func _run_daemon():
-	VestMixins.add_mixin(preload("res://example-mixin.gd"))
+	VestMixins.add(preload("res://example-mixin.gd"))
 	return
 	
 	var runner := VestRunner.new()
