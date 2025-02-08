@@ -5,7 +5,11 @@ extends "res://addons/vest/test/vest-test-base.gd"
 
 
 func _get_ignored_methods() -> Array[String]:
-	return ["get_suite_name"]
+	return [
+		"get_suite_name",
+		"before_suite", "before_case", "before_benchmark", "before_each",
+		"after_suite", "after_case", "after_benchmark", "after_each"
+	]
 
 func _get_suite_name() -> String:
 	# Check if callback is implemented
@@ -41,17 +45,20 @@ func _get_suite() -> VestDefs.Suite:
 
 	var define_methods: Array[Dictionary] = []
 	var case_methods: Array[Dictionary] = []
+	var parametric_methods: Array[Dictionary] = []
 	var benchmark_methods: Array[Dictionary] = []
 
 	for method in methods:
-		if not method["return"]["class_name"].is_empty():
+		if method["name"].begins_with("suite") and not method["return"]["class_name"].is_empty():
 			define_methods.append(method)
 		elif method["name"].begins_with("benchmark"):
 			if (method["args"].any(func(arg): return arg["name"] == "iterations") or \
 				method["args"].any(func(arg): return arg["name"] == "timeout")) and \
 				method["default_args"].size() > 0:
 				benchmark_methods.append(method)
-		else:
+		elif method["name"].begins_with("test") and not method["default_args"].is_empty() and method["default_args"][0] is String:
+			parametric_methods.append(method)
+		elif method["name"].begins_with("test"):
 			case_methods.append(method)
 
 	return define(_get_suite_name(), func():
@@ -59,7 +66,28 @@ func _get_suite() -> VestDefs.Suite:
 			call(method["name"])
 
 		for method in case_methods:
-			test(method["name"].capitalize(), func(): call(method["name"]))
+			test(method["name"].trim_prefix("test").capitalize(), func(): call(method["name"]))
+
+		for method in parametric_methods:
+			var param_provider_name := method["default_args"][0] as String
+			if not has_method(param_provider_name):
+				push_warning(
+					"Can't run parametrized test \"%s\", provider method \"%s\" is missing!" % \
+					[method["name"], param_provider_name]
+				)
+
+			var params = call(param_provider_name)
+			if not params is Array or not params.all(func(it): return it is Array):
+				push_warning(
+					"Can't run parametrized test \"%s\", provider \"%s\" didn't return array or arrays: %s" % \
+					[method["name"], param_provider_name, params]
+				)
+
+			for i in range(params.size()):
+				test(
+					"%s#%d %s" % [method["name"].trim_prefix("test").capitalize(), i+1, params[i]],
+					func(): callv(method["name"], params[i])
+				)
 
 		for method in benchmark_methods:
 			var max_iterations = -1
@@ -73,7 +101,7 @@ func _get_suite() -> VestDefs.Suite:
 					"iterations": max_iterations = value
 					"timeout": timeout = value
 
-			benchmark(method["name"].capitalize(), func(): call(method["name"]))\
+			benchmark(method["name"].trim_prefix("benchmark").capitalize(), func(): call(method["name"]))\
 				.with_iterations(max_iterations)\
 				.with_timeout(timeout)
 	)

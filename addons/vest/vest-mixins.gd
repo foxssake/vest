@@ -10,15 +10,18 @@ static func add(mixin: Script):
 	var active_mixins := list()
 	if not active_mixins.has(mixin):
 		active_mixins.append(mixin)
-		_generate_mixin_chain(active_mixins)
+		refresh(active_mixins)
 
 static func remove(mixin: Script):
 	var active_mixins := list()
 	if active_mixins.has(mixin):
 		active_mixins.erase(mixin)
-		_generate_mixin_chain(active_mixins)
+		refresh(active_mixins)
 
-static func _generate_mixin_chain(mixins: Array[Script]):
+static func refresh(mixins: Array[Script] = []):
+	if mixins.is_empty():
+		mixins = list()
+
 	# Generate mixin chain
 	var mixin_chain: Array[Script] = []
 	mixin_chain.append(_get_test_base())
