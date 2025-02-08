@@ -1,14 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://bp8g7j7774mwi"]
+[gd_scene load_steps=2 format=3 uid="uid://bp8g7j7774mwi"]
 
 [ext_resource type="Script" path="res://addons/vest/ui/vest-ui.gd" id="1_cct3x"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xpauq"]
-bg_color = Color(0, 0, 0, 0.501961)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_blend = true
 
 [node name="Vest UI" type="Control"]
 custom_minimum_size = Vector2(0, 144)
@@ -56,21 +48,26 @@ text = "Clear"
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/VBoxContainer"]
+[node name="Panel" type="Panel" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_xpauq")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/VBoxContainer/PanelContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/VBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Results" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/PanelContainer/ScrollContainer"]
+[node name="Results Tree" type="Tree" parent="HBoxContainer/VBoxContainer/Panel/PanelContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+columns = 2
+column_titles_visible = true
+hide_root = true
 
 [node name="Summary Container" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
