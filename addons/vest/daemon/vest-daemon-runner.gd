@@ -1,5 +1,5 @@
-extends Node
-class_name VestDaemonHost
+extends "res://addons/vest/runner/vest-base-runner.gd"
+class_name VestDaemonRunner
 
 var _server: TCPServer
 var _port: int
@@ -9,23 +9,29 @@ func run_instance(instance: VestTest) -> VestResult.Suite:
 	return await run_script(instance.get_script() as Script)
 
 func run_script(script: Script) -> VestResult.Suite:
+	return await _run_with_args(["--vest-script", script.resource_path])
+
+func run_glob(glob: String) -> VestResult.Suite:
+	return await _run_with_args(["--vest-glob", glob])
+
+func _run_with_args(args: Array[String]) -> VestResult.Suite:
 	# Start host
 	if _start() != OK:
-		print("Couldn't start host!")
+		push_error("Couldn't start vest host!")
 		return null
 
 	# Start process
-	var pid := OS.create_instance([
+	var instance_args = [
 		"--headless",
-		"-s", "res://addons/vest/daemon/vest-daemon-agent.gd",
-		"--vest-port", _port,
-		"--vest-file", script.resource_path
-	])
-	print("Started process %d, listening on port %d" % [pid, _port])
+		"-s", "res://addons/vest/daemon/vest-daemon.gd",
+		"--vest-port", _port
+	] + args
+	var pid := OS.create_instance(instance_args)
+	print("Started process %d, listening on port %d, with args %s" % [pid, _port, instance_args])
 
 	# Wait for agent to connect
 	if await _await_agent() != OK:
-		print("Agent didn't connect!")
+		push_error("Vest agent didn't connect!")
 		return null
 
 	# Take results
@@ -40,13 +46,13 @@ func run_script(script: Script) -> VestResult.Suite:
 	_stop()
 
 	if results == null:
-		print("Test run failed!")
+		push_error("Test run failed!")
 		return null
 	elif results is Dictionary:
 		var suite_result = VestResult.Suite._from_wire(results)
 		return suite_result
 	else:
-		print("Unrecognized test result data! %s" % [results])
+		push_error("Unrecognized test result data! %s" % [results])
 		return null
 
 func _start(port: int = -1):

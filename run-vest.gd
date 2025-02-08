@@ -61,15 +61,13 @@ func params_provider():
 	]
 
 func _run_daemon():
-	if Engine.is_editor_hint():
-		VestMixins.refresh()
-		return
-
-	var runner := VestRunner.new()
+	var runner := VestDaemonRunner.new()
 	add_child(runner)
+	
+	print(runner._glob("res://*.test.gd"))
+	return
 
-	var result = await runner.run_script_in_background(get_script())
-#	var result = runner.run_script_at("res://tests/parameterized.test.gd")
+	var result = runner.run_script_at("res://tests/parameterized.test.gd")
 	print(TAPReporter.report(result))
 
 	runner.queue_free()
