@@ -2,6 +2,7 @@ extends SceneTree
 
 var port := 0
 var file := ""
+var glob := ""
 
 func _init():
 	_parse_cmdline()
@@ -17,14 +18,21 @@ func _parse_cmdline():
 
 		if arg == "--vest-port":
 			port = int(args[i+1])
-		elif arg == "--vest-file":
+		elif arg == "--vest-script":
 			file = args[i+1]
+		elif arg == "--vest-glob":
+			glob = args[i+1]
 
 func _run_tests() -> VestResult.Suite:
-	var runner := VestRunner.new()
+	var runner := VestLocalRunner.new()
 	root.add_child(runner)
 
-	var results := runner.run_script_at(file)
+	var results: VestResult.Suite
+
+	if file:
+		results = runner.run_script_at(file)
+	elif glob:
+		results = runner.run_glob(glob)
 
 	runner.free()
 
@@ -34,7 +42,7 @@ func _send_results(results: VestResult.Suite):
 	var peer := StreamPeerTCP.new()
 	var err := peer.connect_to_host("0.0.0.0", port)
 	if err != OK:
-		OS.alert("Couldn't connect on port %d! %s" % [port, error_string(err)])
+		_warn("Couldn't connect on port %d! %s" % [port, error_string(err)])
 		return
 
 	_await(func():
@@ -42,7 +50,7 @@ func _send_results(results: VestResult.Suite):
 		return peer.get_status() != StreamPeerTCP.STATUS_CONNECTING
 		, 4.)
 	if peer.get_status() != StreamPeerTCP.STATUS_CONNECTED:
-		OS.alert("Connection timed out! Socket status: %d" % [peer.get_status()])
+		_warn("Connection timed out! Socket status: %d" % [peer.get_status()])
 		return
 
 	if results:
@@ -60,3 +68,6 @@ func _await(condition: Callable, timeout: float = 8., interval: float = .2) -> E
 		OS.delay_msec(interval * 1000)
 		timeout -= interval
 	return ERR_TIMEOUT
+
+func _warn(message: String):
+	OS.alert(message, "vest")

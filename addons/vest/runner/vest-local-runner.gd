@@ -1,5 +1,5 @@
-extends Node
-class_name VestRunner
+extends "res://addons/vest/runner/vest-base-runner.gd"
+class_name VestLocalRunner
 
 func run_case(suite: VestDefs.Suite, case: VestDefs.Case) -> VestResult.Case:
 	var test_instance := suite._owner
@@ -58,36 +58,25 @@ func run_suite(suite: VestDefs.Suite) -> VestResult.Suite:
 
 	return result
 
-func run_instance(instance: VestTest) -> VestResult.Suite:
-	return run_suite(instance._get_suite())
-
-func run_script_at(path: String) -> VestResult.Suite:
-	var test_script := load(path)
-
-	if not test_script or not test_script is Script:
+func run_script(script: Script) -> VestResult.Suite:
+	if not script:
 		return null
 
-	var test_instance = test_script.new()
+	var test_instance = script.new()
 	if not test_instance is VestTest:
 		return null
 
-	return run_instance(test_instance)
+	return run_suite(test_instance._get_suite())
 
-func run_instance_in_background(instance: VestTest) -> VestResult.Suite:
-	var host := VestDaemonHost.new()
-	add_child(host)
+func run_glob(glob: String) -> VestResult.Suite:
+	var result := VestResult.Suite.new()
+	result.suite = VestDefs.Suite.new()
+	result.suite.name = "Glob suite \"%s\"" % [glob]
 
-	var result := await host.run_instance(instance)
-	host.queue_free()
-
-	return result
-
-func run_script_in_background(script: Script) -> VestResult.Suite:
-	var host := VestDaemonHost.new()
-	add_child(host)
-
-	var result := await host.run_script(script)
-	host.queue_free()
+	for test_file in _glob(glob):
+		var suite_result := run_script_at(test_file)
+		if suite_result:
+			result.subsuites.append(suite_result)
 
 	return result
 

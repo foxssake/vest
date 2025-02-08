@@ -1,4 +1,5 @@
 extends VestTest
+class_name MocksTest
 
 func test_should_return_default():
 	# Given

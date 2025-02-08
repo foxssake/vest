@@ -17,7 +17,7 @@ class Suite:
 	var subsuites: Array[Suite] = []
 
 	func size() -> int:
-		return cases.size() + benchmarks.size() + subsuites.size()
+		return cases.size() + benchmarks.size() + subsuites.reduce(func(acc, it): return acc + it.size(), 0)
 
 	func get_aggregate_status() -> int:
 		var result := TEST_PASS
@@ -26,6 +26,9 @@ class Suite:
 		if not subsuites.is_empty():
 			result = mini(result, subsuites.map(func(it): return it.get_aggregate_status()).min())
 		return result
+	
+	func get_aggregate_status_string() -> String:
+		return VestResult.get_status_string(get_aggregate_status())
 
 	func get_count_by_status(p_status: int) -> int:
 		return (
@@ -60,6 +63,9 @@ class Case:
 
 	var assert_file: String = ""
 	var assert_line: int = -1
+
+	func get_status_string() -> String:
+		return VestResult.get_status_string(status)
 
 	func _to_wire() -> Dictionary:
 		return {
