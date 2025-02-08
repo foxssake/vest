@@ -9,7 +9,7 @@ func _process(_dt):
 		_run_daemon()
 		do_run = false
 
-func test_with_suite() -> VestDefs.Suite:
+func suite() -> VestDefs.Suite:
 	return define("Some suite", func():
 		test("Should pass", func(): expect(true))
 		test("Should fail", func(): expect(false))
@@ -29,6 +29,9 @@ func test_with_suite() -> VestDefs.Suite:
 func test_something():
 	haha()
 	ok()
+
+func test_with_params(a, b, expected, params = "params_provider"):
+	expect_equal(a + b, expected)
 
 func benchmark_rng(iterations: int = 1000, timeout: float = 1.0):
 	randi()
@@ -51,12 +54,22 @@ func after_case(what):
 func after_benchmark(what):
 	print("After Benchmark: %s" % [what])
 
+func params_provider():
+	return [
+		[1, 3, 2, 4],
+		["foo", "bar", "foobar"]
+	]
+
 func _run_daemon():
+	if Engine.is_editor_hint():
+		VestMixins.refresh()
+		return
+
 	var runner := VestRunner.new()
 	add_child(runner)
 
-#	var result = await runner.run_script_in_background(load("res://tests/mocks.test.gd"))
-	var result = runner.run_instance(self)
+	var result = await runner.run_script_in_background(get_script())
+#	var result = runner.run_script_at("res://tests/parameterized.test.gd")
 	print(TAPReporter.report(result))
 
 	runner.queue_free()
