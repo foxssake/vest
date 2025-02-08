@@ -34,11 +34,28 @@ func _exit_tree():
 
 func _create_ui() -> VestUI:
 	var ui := (preload("res://addons/vest/ui/vest-ui.tscn") as PackedScene).instantiate() as VestUI
+
 	ui.on_navigate.connect(func(file, line):
 		if file:
 			get_editor_interface().edit_script(load(file), line)
 	)
+
+	ui.on_debug.connect(func():
+		var debugger := _create_debugger()
+		debugger.editor_interface = get_editor_interface()
+
+		var runner := VestDebugRunner.new()
+		runner.editor_interface = get_editor_interface()
+		
+		add_debugger_plugin(debugger)
+		await runner._run()
+		remove_debugger_plugin(debugger)
+	)
+
 	return ui
+
+func _create_debugger() -> EditorDebuggerPlugin:
+	return load("res://addons/vest/debug/vest-debugger-plugin.gd").new()
 
 func add_setting(setting: Dictionary):
 	if ProjectSettings.has_setting(setting.name):

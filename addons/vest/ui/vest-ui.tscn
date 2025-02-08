@@ -31,6 +31,13 @@ text = "Run"
 icon = ExtResource("2_q3lni")
 expand_icon = true
 
+[node name="Debug Button" type="Button" parent="HBoxContainer/Controls"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Debug"
+icon = ExtResource("2_q3lni")
+expand_icon = true
+
 [node name="Run On Save Container" type="HBoxContainer" parent="HBoxContainer/Controls"]
 layout_mode = 2
 
