@@ -1,29 +1,32 @@
 extends Object
 class_name VestMixins
 
-static func get_mixins() -> Array[String]:
-	return (VestTest.new()).__vest_mixins
+static func get_mixins() -> Array[Script]:
+	var result: Array[Script] = []
+	result.assign((VestTest.new()).__vest_mixins)
+	return result
 
 static func add_mixin(mixin: Script):
-	pass
+	var active_mixins := get_mixins()
+	if not active_mixins.has(mixin):
+		active_mixins.append(mixin)
+		_generate_mixin_chain(active_mixins)
 
 static func remove_mixin(mixin: Script):
-	pass
+	var active_mixins := get_mixins()
+	if active_mixins.has(mixin):
+		active_mixins.erase(mixin)
+		_generate_mixin_chain(active_mixins)
 
-static func _generate_mixin_chain(mixins: Array[String]):
+static func _generate_mixin_chain(mixins: Array[Script]):
 	# Generate mixin chain
 	var mixin_chain: Array[Script] = []
-	mixin_chain.append(_VestTestBase)
+	mixin_chain.append(_get_test_base())
 	mixin_chain.append_array(_get_builtin_mixins())
 
 	var active_mixins: Array[Script] = []
 
-	for mixin_path in mixins:
-		if not ResourceLoader.exists(mixin_path, "Script"):
-			# Script doesn't exist
-			continue
-
-		var mixin_script := load(mixin_path) as Script
+	for mixin_script in mixins:
 		if not mixin_script:
 			# Not script?
 			continue
@@ -73,14 +76,14 @@ static func _generate_mixin_chain(mixins: Array[String]):
 				.map(func(it): return "preload(\"%s\")" % it)
 
 			mixin_fragments = ", ".join(mixin_fragments)
-			target_source += "var __vest_mixins := [%s]" % [mixin_fragments]
+			target_source += "var __vest_mixins: Array = [%s]" % [mixin_fragments]
 
 		var target_file := FileAccess.open(target_path, FileAccess.WRITE)
 		target_file.store_string(target_source)
 		target_file.close()
 
 static func _get_generated_mixin_name(script: Script, idx: int) -> String:
-	return "%d-%x.gd" % [idx, hash(script)]
+	return "%d-%x.gd" % [idx, hash(script.resource_path.get_file())]
 
 static func _get_generated_mixin_path(script: Script, idx: int) -> String:
 	return _get_mixin_directory() + _get_generated_mixin_name(script, idx)
@@ -98,3 +101,6 @@ static func _get_mixin_directory() -> String:
 static func _clean_mixin_directory():
 	for file in DirAccess.get_files_at(_get_mixin_directory()):
 		DirAccess.remove_absolute(_get_mixin_directory() + file)
+
+static func _get_test_base() -> Script:
+	return preload("res://addons/vest/test/vest-test-base.gd") as Script

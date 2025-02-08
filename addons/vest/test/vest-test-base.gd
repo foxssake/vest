@@ -1,5 +1,4 @@
 extends Node
-class_name _VestTestBase
 
 var _define_stack: Array[VestDefs.Suite] = []
 var _result: VestResult.Case
