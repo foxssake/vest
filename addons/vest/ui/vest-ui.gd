@@ -9,6 +9,7 @@ class_name VestUI
 @onready var results_tree := %"Results Tree" as Tree
 @onready var summary_label := %"Tests Summary Label" as Label
 @onready var results_label := %"Tests Result Label" as Label
+@onready var glob_line_edit := %"Glob LineEdit" as LineEdit
 
 var _run_on_save: bool = false
 
@@ -28,14 +29,16 @@ func run_all():
 	get_tree().root.add_child(runner)
 
 	clear_results()
+	var placeholder_root := results_tree.create_item()
+	results_tree.create_item(placeholder_root).set_text(0, "Waiting for results...")
 
 	var test_start := _time()
-	var results := await runner.run_glob("res://*.test.gd") # TODO: Support custom glob
+	var results := await runner.run_glob(glob_line_edit.text)
 	var test_duration := _time() - test_start
 
 	# Render individual results
+	clear_results()
 	_render_result(results, results_tree)
-	var item := results_tree.create_item()
 
 	# Render summaries
 	summary_label.text = "Ran %d tests in %.2fms" % [results.size(), test_duration * 1000.]
@@ -58,6 +61,14 @@ func _ready():
 	)
 	clear_button.pressed.connect(clear_results)
 	refresh_mixins_button.pressed.connect(func(): VestMixins.refresh())
+
+	glob_line_edit.text = VestEditorPlugin.get_test_glob()
+	glob_line_edit.text_changed.connect(func(text: String):
+		VestEditorPlugin.set_test_glob(text)
+	)
+	draw.connect(func():
+		glob_line_edit.text = VestEditorPlugin.get_test_glob()
+	)
 
 func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 	if what is VestResult.Suite:
@@ -116,7 +127,7 @@ func _render_data(case: VestResult.Case, tree: Tree, parent: TreeItem):
 
 	if case.message:
 		var item := tree.create_item(parent)
-		item.set_text(0, case.message)
+		item.set_text(0, case.message.replace("\n", "  "))
 		
 		tree.item_activated.connect(func():
 			if tree.get_selected() == item:

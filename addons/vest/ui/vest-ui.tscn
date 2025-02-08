@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bp8g7j7774mwi"]
+[gd_scene load_steps=3 format=3 uid="uid://bp8g7j7774mwi"]
 
 [ext_resource type="Script" path="res://addons/vest/ui/vest-ui.gd" id="1_cct3x"]
+[ext_resource type="Texture2D" uid="uid://r4y6ihamgino" path="res://addons/vest/icons/run.svg" id="2_q3lni"]
 
 [node name="Vest UI" type="Control"]
 custom_minimum_size = Vector2(0, 144)
@@ -26,7 +27,9 @@ layout_mode = 2
 [node name="Run All Button" type="Button" parent="HBoxContainer/Controls"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Run Tests"
+text = "Run"
+icon = ExtResource("2_q3lni")
+expand_icon = true
 
 [node name="Run On Save Container" type="HBoxContainer" parent="HBoxContainer/Controls"]
 layout_mode = 2
@@ -53,11 +56,11 @@ text = "Refresh Mixins"
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Panel" type="Panel" parent="HBoxContainer/VBoxContainer"]
+[node name="Results Panel" type="Panel" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/VBoxContainer/Panel"]
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/VBoxContainer/Results Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -65,7 +68,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Results Tree" type="Tree" parent="HBoxContainer/VBoxContainer/Panel/PanelContainer"]
+[node name="Results Tree" type="Tree" parent="HBoxContainer/VBoxContainer/Results Panel/PanelContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -90,3 +93,16 @@ text = "Result:"
 [node name="Tests Result Label" type="Label" parent="HBoxContainer/VBoxContainer/Summary Container"]
 unique_name_in_owner = true
 layout_mode = 2
+
+[node name="VSeparator2" type="VSeparator" parent="HBoxContainer/VBoxContainer/Summary Container"]
+layout_mode = 2
+
+[node name="Glob Label" type="Label" parent="HBoxContainer/VBoxContainer/Summary Container"]
+layout_mode = 2
+text = "Test glob:"
+
+[node name="Glob LineEdit" type="LineEdit" parent="HBoxContainer/VBoxContainer/Summary Container"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "res://*.test.gd"
