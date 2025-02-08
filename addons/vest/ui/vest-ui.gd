@@ -33,9 +33,6 @@ func run_all():
 	var results := await runner.run_glob("res://*.test.gd") # TODO: Support custom glob
 	var test_duration := _time() - test_start
 
-	var success_row = load("res://addons/vest/ui/success-row.tscn") as PackedScene
-	var fail_row = load("res://addons/vest/ui/fail-row.tscn") as PackedScene
-
 	# Render individual results
 	_render_result(results, results_tree)
 	var item := results_tree.create_item()
@@ -43,6 +40,8 @@ func run_all():
 	# Render summaries
 	summary_label.text = "Ran %d tests in %.2fms" % [results.size(), test_duration * 1000.]
 	results_label.text = ("%s" % [results.get_aggregate_status_string()]).capitalize()
+
+	queue_redraw()
 
 func clear_results():
 	results_tree.clear()
@@ -88,6 +87,8 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 		item.set_icon(0, _get_status_icon(what.status))
 		item.set_icon_max_width(0, tree.get_theme_font_size(""))
 
+		_render_data(what, tree, item)
+
 		tree.item_activated.connect(func():
 			if tree.get_selected() == item:
 				on_navigate.emit(what.case.definition_file, what.case.definition_line)
@@ -109,6 +110,46 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 		)
 	else:
 		push_error("Rendering unknown object: %s" % [what])
+
+func _render_data(case: VestResult.Case, tree: Tree, parent: TreeItem):
+	var data := case.data.duplicate()
+
+	if case.message:
+		var item := tree.create_item(parent)
+		item.set_text(0, case.message)
+		
+		tree.item_activated.connect(func():
+			if tree.get_selected() == item:
+				add_child(VestMessagePopup.of(case.message).window)
+		)
+
+	if data == null or data.is_empty():
+		return
+
+	if data.has("expect") and data.has("got"):
+		var header_item := tree.create_item(parent)
+		header_item.set_text(0, "Got:")
+		header_item.set_text(1, "Expected:")
+		
+		var got_string := JSON.stringify(data["got"], "  ")
+		var expect_string := JSON.stringify(data["expect"], "  ")
+
+		var comparison_item := tree.create_item(header_item)
+		comparison_item.set_text(0, got_string)
+		comparison_item.set_text(1, expect_string)
+		
+		tree.item_activated.connect(func():
+			if tree.get_selected() in [header_item, comparison_item]:
+				add_child(VestComparisonPopup.of(expect_string, got_string).window)
+		)
+
+		data.erase("got")
+		data.erase("expect")
+
+	for key in data:
+		var item := tree.create_item(parent)
+		item.set_text(0, var_to_str(key))
+		item.set_text(1, var_to_str(data[key]))
 
 func _get_status_icon(status: int) -> Texture2D:
 	match(status):
