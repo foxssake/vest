@@ -4,6 +4,15 @@ var _define_stack: Array[VestDefs.Suite] = []
 var _result: VestResult.Case
 var _bail: bool = false
 
+signal on_suite_begin(suite: VestDefs.Suite)
+signal on_case_begin(case: VestDefs.Case)
+signal on_benchmark_begin(benchmark: VestDefs.Benchmark)
+signal on_any_begin()
+signal on_any_finish()
+signal on_benchmark_finish(benchmark: VestDefs.Benchmark)
+signal on_case_finish(case: VestDefs.Case)
+signal on_suite_finish(case: VestDefs.Case)
+
 func define(name: String, callback: Callable) -> VestDefs.Suite:
 	var suite = VestDefs.Suite.new()
 	suite.name = name
@@ -57,6 +66,30 @@ func fail(message: String = "", data: Dictionary = {}):
 func ok(message: String = "", data: Dictionary = {}):
 	_with_result(VestResult.TEST_PASS, message, data)
 
+func before_suite(suite: VestDefs.Suite):
+	pass
+
+func before_case(case: VestDefs.Case):
+	pass
+
+func before_benchmark(benchmark: VestDefs.Benchmark):
+	pass
+
+func before_each():
+	pass
+
+func after_each():
+	pass
+
+func after_benchmark(benchmark: VestDefs.Benchmark):
+	pass
+
+func after_case(case: VestDefs.Case):
+	pass
+
+func after_suite(suite: VestDefs.Suite):
+	pass
+
 func _with_result(status: int, message: String, data: Dictionary):
 	if _result.status != VestResult.TEST_VOID and status == VestResult.TEST_PASS:
 		# Test already failed, don't override with PASS
@@ -69,6 +102,48 @@ func _with_result(status: int, message: String, data: Dictionary):
 	var userland_loc := _find_userland_stack_location()
 	_result.assert_file = userland_loc[0]
 	_result.assert_line = userland_loc[1]
+
+func _begin(what: Object):
+	if what is VestDefs.Suite:
+		on_suite_begin.emit(what)
+		before_suite(what)
+	elif what is VestDefs.Case:
+		_prepare_for_case(what)
+
+		on_any_begin.emit()
+		on_case_begin.emit(what)
+
+		before_each()
+		before_case(what)
+	elif what is VestDefs.Benchmark:
+		_prepare_for_benchmark(what)
+
+		on_any_begin.emit()
+		on_benchmark_begin.emit(what)
+
+		before_each()
+		before_benchmark(what)
+	else:
+		push_error("Beginning unknown object: %s" % [what])
+
+func _finish(what: Object):
+	if what is VestDefs.Suite:
+		on_suite_finish.emit(what)
+		after_suite(what)
+	elif what is VestDefs.Case:
+		on_any_finish.emit()
+		on_case_finish.emit(what)
+
+		after_each()
+		after_case(what)
+	elif what is VestDefs.Benchmark:
+		on_any_finish.emit()
+		on_benchmark_finish.emit(what)
+
+		after_each()
+		after_benchmark(what)
+	else:
+		push_error("Finishing unknown object: %s" % [what])
 
 func _prepare_for_case(case: VestDefs.Case):
 	_result = VestResult.Case.new()

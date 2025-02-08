@@ -33,14 +33,30 @@ func test_something():
 func benchmark_rng(iterations: int = 1000, timeout: float = 1.0):
 	randi()
 
+func before_suite(what):
+	print("Before Suite: %s" % [what])
+
+func before_case(what):
+	print("Before Case: %s" % [what])
+
+func before_benchmark(what):
+	print("Before Benchmark: %s" % [what])
+
+func after_suite(what):
+	print("After Suite: %s" % [what])
+
+func after_case(what):
+	print("After Case: %s" % [what])
+
+func after_benchmark(what):
+	print("After Benchmark: %s" % [what])
+
 func _run_daemon():
-	VestMixins.add(preload("res://example-mixin.gd"))
-	return
-	
 	var runner := VestRunner.new()
 	add_child(runner)
 
-	var result = await runner.run_script_in_background(load("res://tests/mocks.test.gd"))
+#	var result = await runner.run_script_in_background(load("res://tests/mocks.test.gd"))
+	var result = runner.run_instance(self)
 	print(TAPReporter.report(result))
 
 	runner.queue_free()
