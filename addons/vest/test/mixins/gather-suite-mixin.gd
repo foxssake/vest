@@ -45,7 +45,7 @@ func _get_suite() -> VestDefs.Suite:
 	var benchmark_methods: Array[Dictionary] = []
 
 	for method in methods:
-		if method["name"].begins_with("suite") and not method["return"]["class_name"].is_empty():
+		if method["name"].begins_with("suite"):
 			define_methods.append(method)
 		elif method["name"].begins_with("benchmark"):
 			if (method["args"].any(func(arg): return arg["name"] == "iterations") or \
