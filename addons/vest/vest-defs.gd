@@ -7,6 +7,9 @@ class Suite:
 	var benchmarks: Array[VestDefs.Benchmark] = []
 	var suites: Array[VestDefs.Suite] = []
 
+	var definition_file: String = ""
+	var definition_line: int = -1
+
 	var _owner: VestTest
 
 	func size() -> int:

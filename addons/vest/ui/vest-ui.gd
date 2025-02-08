@@ -14,6 +14,8 @@ var _run_on_save: bool = false
 
 const PASS_ICON := preload("res://addons/vest/icons/pass.svg")
 
+signal on_navigate(path: String, line: int)
+
 func handle_resource_saved(resource: Resource):
 	if not resource is Script or not visible:
 		return
@@ -44,6 +46,9 @@ func run_all():
 
 func clear_results():
 	results_tree.clear()
+	for connection in results_tree.item_activated.get_connections():
+		connection["signal"].disconnect(connection["callable"])
+
 	summary_label.text = ""
 	results_label.text = ""
 
@@ -64,6 +69,11 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 		item.set_icon(0, _get_status_icon(what.get_aggregate_status()))
 		item.set_icon_max_width(0, tree.get_theme_font_size(""))
 
+		tree.item_activated.connect(func():
+			if tree.get_selected() == item:
+				on_navigate.emit(what.suite.definition_file, what.suite.definition_line)
+		)
+
 		for subsuite in what.subsuites:
 			_render_result(subsuite, tree, item)
 		for case in what.cases:
@@ -77,6 +87,11 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 		
 		item.set_icon(0, _get_status_icon(what.status))
 		item.set_icon_max_width(0, tree.get_theme_font_size(""))
+
+		tree.item_activated.connect(func():
+			if tree.get_selected() == item:
+				on_navigate.emit(what.case.definition_file, what.case.definition_line)
+		)
 	elif what is VestResult.Benchmark:
 		var item := tree.create_item(parent)
 		item.set_text(0, what.benchmark.description)
@@ -87,6 +102,11 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 		
 		item.set_icon(0, _get_benchmark_icon())
 		item.set_icon_max_width(0, tree.get_theme_font_size(""))
+
+		tree.item_activated.connect(func():
+			if tree.get_selected() == item:
+				on_navigate.emit(what.benchmark.definition_file, what.benchmark.definition_line)
+		)
 	else:
 		push_error("Rendering unknown object: %s" % [what])
 

@@ -19,6 +19,10 @@ func define(name: String, callback: Callable) -> VestDefs.Suite:
 	suite._owner = self
 	_define_stack.push_back(suite)
 
+	var userland_loc := _find_userland_stack_location()
+	suite.definition_file = userland_loc[0]
+	suite.definition_line = userland_loc[1]
+
 	callback.call()
 
 	_define_stack.pop_back()
