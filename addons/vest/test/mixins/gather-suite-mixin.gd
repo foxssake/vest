@@ -1,7 +1,11 @@
 extends VestTestMixin
 
 func _get_ignored_methods() -> Array[String]:
-	return ["get_suite_name"]
+	return [
+		"get_suite_name",
+		"before_suite", "before_case", "before_benchmark", "before_each",
+		"after_suite", "after_case", "after_benchmark", "after_each"
+	]
 
 func _get_suite_name() -> String:
 	# Check if callback is implemented

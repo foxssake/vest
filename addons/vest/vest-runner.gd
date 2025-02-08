@@ -1,27 +1,13 @@
 extends Node
 class_name VestRunner
 
-class RunResult:
-	var suite: VestDefs.Suite
-	var case: VestDefs.Case
-	var result: VestResult
-
-	static func of(p_suite: VestDefs.Suite, p_case: VestDefs.Case, p_result: VestResult) -> RunResult:
-		var result := RunResult.new()
-		result.suite = p_suite
-		result.case = p_case
-		result.result = p_result
-
-		return result
-
-	func _to_string() -> String:
-		return "RunResult(suite=%s, case=%s, result=%s)" % [suite.name, case, result]
-
 func run_case(suite: VestDefs.Suite, case: VestDefs.Case) -> VestResult.Case:
 	var test_instance := suite._owner
-	test_instance._prepare_for_case(case)
 
+	test_instance._begin(case)
 	case.callback.call()
+	test_instance._finish(case)
+
 	return test_instance._get_result()
 
 func run_benchmark(suite: VestDefs.Suite, benchmark: VestDefs.Benchmark) -> VestResult.Benchmark:
@@ -33,24 +19,31 @@ func run_benchmark(suite: VestDefs.Suite, benchmark: VestDefs.Benchmark) -> Vest
 	if not benchmark.is_valid():
 		return result
 
-	var start_time := _get_time()
-	var iterations := 0
-	while true:
-		benchmark.callback.call()
-		iterations += 1
+	test_instance._begin(benchmark)
 
-		if (benchmark.max_iterations > 0 and iterations >= benchmark.max_iterations) or \
-			(benchmark.timeout > 0.) and (_get_time() - start_time >= benchmark.timeout) or \
+	while true:
+		var t_start := _get_time()
+		benchmark.callback.call()
+		var t_finish := _get_time()
+
+		result.iterations += 1
+		result.duration += t_finish - t_start
+
+		if (benchmark.max_iterations > 0 and result.iterations >= benchmark.max_iterations) or \
+			(benchmark.timeout > 0.) and (result.duration >= benchmark.timeout) or \
 			test_instance._is_bailing():
 				break
-	result.duration = _get_time() - start_time
-	result.iterations = iterations
+
+	test_instance._finish(benchmark)
 
 	return result
 
 func run_suite(suite: VestDefs.Suite) -> VestResult.Suite:
+	var test_instance := suite._owner
 	var result := VestResult.Suite.new()
 	result.suite = suite
+
+	test_instance._begin(suite)
 
 	for subsuite in suite.suites:
 		result.subsuites.append(run_suite(subsuite))
@@ -60,6 +53,8 @@ func run_suite(suite: VestDefs.Suite) -> VestResult.Suite:
 
 	for benchmark in suite.benchmarks:
 		result.benchmarks.append(run_benchmark(suite, benchmark))
+
+	test_instance._finish(suite)
 
 	return result
 
