@@ -59,7 +59,7 @@ func run_suite(suite: VestDefs.Suite) -> VestResult.Suite:
 	return result
 
 func run_script(script: Script) -> VestResult.Suite:
-	if not script or not script is Script:
+	if not script:
 		return null
 
 	var test_instance = script.new()

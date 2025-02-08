@@ -13,8 +13,6 @@ class_name VestUI
 
 var _run_on_save: bool = false
 
-const PASS_ICON := preload("res://addons/vest/icons/pass.svg")
-
 signal on_navigate(path: String, line: int)
 
 func handle_resource_saved(resource: Resource):
@@ -66,9 +64,10 @@ func _ready():
 	glob_line_edit.text_changed.connect(func(text: String):
 		VestEditorPlugin.set_test_glob(text)
 	)
-	draw.connect(func():
+
+func _notification(what):
+	if what == NOTIFICATION_DRAW:
 		glob_line_edit.text = VestEditorPlugin.get_test_glob()
-	)
 
 func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 	if what is VestResult.Suite:
