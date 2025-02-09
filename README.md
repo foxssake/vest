@@ -16,3 +16,7 @@ A unit testing library for Godot.
 
 **Must have:** Tests must be ran without leaving the editor. This also means 
 preferably no windows popping up, or launching a game window.
+
+## Compatibility
+
+Godot v4.1.4 and up

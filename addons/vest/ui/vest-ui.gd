@@ -145,6 +145,15 @@ func _render_data(case: VestResult.Case, tree: Tree, parent: TreeItem):
 	if data == null or data.is_empty():
 		return
 
+	if data.has("messages"):
+		var header_item := tree.create_item(parent)
+		header_item.set_text(0, "Messages")
+
+		for message in data["messages"]:
+			tree.create_item(header_item).set_text(0, message)
+
+		data.erase("messages")
+
 	if data.has("expect") and data.has("got"):
 		var header_item := tree.create_item(parent)
 		header_item.set_text(0, "Got:")
