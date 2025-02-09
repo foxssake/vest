@@ -9,11 +9,6 @@ const SETTINGS = [
 		"name": "vest/general/test_glob",
 		"value": "res://*.test.gd",
 		"type": TYPE_STRING
-	},
-	{
-		"name": "vest/runner/debug_port",
-		"value": 0,
-		"type": TYPE_INT
 	}
 ]
 
@@ -54,24 +49,10 @@ func _create_ui() -> VestUI:
 	)
 
 	ui.on_debug.connect(func():
-#		var debugger := _create_debugger()
-#		debugger.editor_interface = get_editor_interface()
-
-		var runner := VestDebugRunner.new()
-		add_child(runner)
-		runner.editor_interface = get_editor_interface()
-		
-#		add_debugger_plugin(debugger)
-		await runner._run()
-#		remove_debugger_plugin(debugger)
-
-		runner.queue_free()
+		get_editor_interface().play_custom_scene(preload("res://addons/vest/debug/vest-debug-scene.tscn").resource_path)
 	)
 
 	return ui
-
-func _create_debugger() -> EditorDebuggerPlugin:
-	return load("res://addons/vest/debug/vest-debugger-plugin.gd").new()
 
 func add_settings(settings: Array):
 	for setting in settings:
