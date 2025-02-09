@@ -96,7 +96,8 @@ static func _get_builtin_mixins() -> Array[Script]:
 		preload("res://addons/vest/test/mixins/gather-suite-mixin.gd"),
 		preload("res://addons/vest/test/mixins/assert-mixin.gd"),
 		preload("res://addons/vest/test/mixins/mock-mixin.gd"),
-		preload("res://addons/vest/test/mixins/capture-signal-mixin.gd")
+		preload("res://addons/vest/test/mixins/capture-signal-mixin.gd"),
+		preload("res://addons/vest/test/mixins/logging-mixin.gd")
 	]
 
 static func _get_mixin_directory() -> String:

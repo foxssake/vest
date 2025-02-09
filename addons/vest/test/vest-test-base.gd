@@ -94,6 +94,9 @@ func after_case(case: VestDefs.Case):
 func after_suite(suite: VestDefs.Suite):
 	pass
 
+func _init():
+	pass
+
 func _with_result(status: int, message: String, data: Dictionary):
 	if _result.status != VestResult.TEST_VOID and status == VestResult.TEST_PASS:
 		# Test already failed, don't override with PASS
