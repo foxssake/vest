@@ -1,26 +1,14 @@
 extends Node
 
 func _ready():
-	print("Creating runner")
-	var runner := VestLocalRunner.new()
-	add_child(runner)
+	var port := VestEditorPlugin._get_debug_port()
+	port = 51372
+	print("Running client with debug port %d" % [port])
 
-	print("Registering message handlers")
+	var client := VestRemoteClient.new()
+	add_child(client)
+	await client.connect_to_host(port)
+	await client.poll_commands()
+	client.disconnect_from_host()
 
-	EngineDebugger.register_message_capture("vest:file", func(message: String, data: Array):
-		print("Running file!")
-		var file := data[0] as String
-		var results := await runner.run_script_at(file)
-		EngineDebugger.send_message("vest:result", [results._to_wire()])
-		get_tree().quit(0)
-		return true
-	)
-
-	EngineDebugger.register_message_capture("vest:glob", func(message: String, data: Array):
-		print("Running glob!")
-		var glob := data[0] as String
-		var results := await runner.run_glob(glob)
-		EngineDebugger.send_message("vest:result", [results._to_wire()])
-		get_tree().quit(0)
-		return true
-	)
+	get_tree().quit()

@@ -14,16 +14,29 @@ func run_glob(glob: String) -> VestResult.Suite:
 	return VestResult.Suite.new()
 
 func _run():
+	# Start host
+	var remote_host := VestRemoteHost.new()
+	add_child(remote_host)
+	remote_host.start(51372)
+
+	# Start scene
 	# TODO: Figure out why not work
 	var original_settings := _override_settings({
-		"display/window/size/mode": DisplayServer.WINDOW_MODE_MINIMIZED
+		"display/window/size/mode": DisplayServer.WINDOW_MODE_MINIMIZED,
+		"vest/runner/debug_port": remote_host.get_port()
 	})
 
 	editor_interface.play_custom_scene(_debug_scene.resource_path)
+	print("Remote host listening on port %d" % [remote_host.get_port()])
 	
-	while editor_interface.is_playing_scene():
-		await editor_interface.get_tree().create_timer(0.1).timeout
+	# Wait for agent to connect
+	print("Waiting for client")
+	await remote_host.await_client()
 
+	# Run tests
+	var results := await remote_host.run_glob("res://*.test.gd")
+	print(TAPReporter.report(results))
+	
 	_restore_settings(original_settings)
 
 func _override_settings(overrides: Dictionary) -> Dictionary:
