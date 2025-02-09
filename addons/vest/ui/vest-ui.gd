@@ -3,7 +3,8 @@ extends Control
 class_name VestUI
 
 @onready var run_all_button := %"Run All Button" as Button
-@onready var run_on_save_checkbox := %"Run On Save CheckBox" as CheckBox
+@onready var debug_button := %"Debug Button" as Button
+@onready var run_on_save_checkbutton := %"Run on Save CheckButton" as CheckButton
 @onready var clear_button := %"Clear Button" as Button
 @onready var refresh_mixins_button := %"Refresh Mixins Button" as Button
 @onready var results_tree := %"Results Tree" as Tree
@@ -14,6 +15,7 @@ class_name VestUI
 var _run_on_save: bool = false
 
 signal on_navigate(path: String, line: int)
+signal on_debug()
 
 func handle_resource_saved(resource: Resource):
 	if not resource is Script or not visible:
@@ -54,7 +56,7 @@ func clear_results():
 
 func _ready():
 	run_all_button.pressed.connect(run_all)
-	run_on_save_checkbox.toggled.connect(func(toggled):
+	run_on_save_checkbutton.toggled.connect(func(toggled):
 		_run_on_save = toggled
 	)
 	clear_button.pressed.connect(clear_results)
@@ -64,6 +66,8 @@ func _ready():
 	glob_line_edit.text_changed.connect(func(text: String):
 		VestEditorPlugin.set_test_glob(text)
 	)
+
+	debug_button.pressed.connect(func(): on_debug.emit())
 
 func _notification(what):
 	if what == NOTIFICATION_DRAW:
