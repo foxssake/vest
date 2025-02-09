@@ -6,7 +6,7 @@ var some_property:
 		print("Getting property!")
 		return 8
 	set(v):
-		print("Seting property! %s" % [v])
+		print("Setting property! %s" % [v])
 
 func times(a: float, b: float) -> float:
 	return a * b

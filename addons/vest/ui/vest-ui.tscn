@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://bp8g7j7774mwi"]
+[gd_scene load_steps=5 format=3 uid="uid://bp8g7j7774mwi"]
 
 [ext_resource type="Script" path="res://addons/vest/ui/vest-ui.gd" id="1_cct3x"]
 [ext_resource type="Texture2D" uid="uid://r4y6ihamgino" path="res://addons/vest/icons/run.svg" id="2_q3lni"]
+[ext_resource type="Texture2D" uid="uid://dwhlyf5eyiect" path="res://addons/vest/icons/debug.svg" id="3_mcbjt"]
+[ext_resource type="Texture2D" uid="uid://ctdipwc8sklwo" path="res://addons/vest/icons/clear.svg" id="4_rjham"]
 
 [node name="Vest UI" type="Control"]
 custom_minimum_size = Vector2(0, 144)
@@ -24,40 +26,48 @@ grow_vertical = 2
 [node name="Controls" type="VBoxContainer" parent="HBoxContainer"]
 layout_mode = 2
 
-[node name="Run All Button" type="Button" parent="HBoxContainer/Controls"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/Controls"]
+layout_mode = 2
+
+[node name="Run All Button" type="Button" parent="HBoxContainer/Controls/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Run"
+size_flags_horizontal = 3
+tooltip_text = "Run tests"
+text = " "
 icon = ExtResource("2_q3lni")
+icon_alignment = 1
 expand_icon = true
 
-[node name="Debug Button" type="Button" parent="HBoxContainer/Controls"]
+[node name="Debug Button" type="Button" parent="HBoxContainer/Controls/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Debug"
-icon = ExtResource("2_q3lni")
+size_flags_horizontal = 3
+tooltip_text = "Debug tests"
+text = " "
+icon = ExtResource("3_mcbjt")
+icon_alignment = 1
 expand_icon = true
 
-[node name="Run On Save Container" type="HBoxContainer" parent="HBoxContainer/Controls"]
-layout_mode = 2
-
-[node name="Run On Save CheckBox" type="CheckBox" parent="HBoxContainer/Controls/Run On Save Container"]
+[node name="Clear Button" type="Button" parent="HBoxContainer/Controls/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-
-[node name="Run On Save Label" type="Label" parent="HBoxContainer/Controls/Run On Save Container"]
-layout_mode = 2
-text = "Run on Save"
-
-[node name="Clear Button" type="Button" parent="HBoxContainer/Controls"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Clear"
+size_flags_horizontal = 3
+tooltip_text = "Clear results"
+text = " "
+icon = ExtResource("4_rjham")
+icon_alignment = 1
+expand_icon = true
 
 [node name="Refresh Mixins Button" type="Button" parent="HBoxContainer/Controls"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Refresh Mixins"
+
+[node name="Run on Save CheckButton" type="CheckButton" parent="HBoxContainer/Controls"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Run on Save"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
 layout_mode = 2
@@ -112,4 +122,4 @@ text = "Test glob:"
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-text = "res://tests/*.test.gd"
+text = "res://*.test.gd"

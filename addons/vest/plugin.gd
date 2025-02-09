@@ -18,12 +18,6 @@ static func set_test_glob(glob: String):
 static func get_test_glob() -> String:
 	return ProjectSettings.get_setting("vest/general/test_glob", "res://*.test.gd")
 
-static func _set_debug_port(port: int):
-	ProjectSettings.set_setting("vest/runner/debug_port", port)
-
-static func _get_debug_port() -> int:
-	return ProjectSettings.get_setting("vest/runner/debug_port", -1)
-
 func _enter_tree():
 	print("Test glob: %s" % [ProjectSettings.get_setting("vest/general/test_glob", null)])
 	bottom_control = _create_ui()

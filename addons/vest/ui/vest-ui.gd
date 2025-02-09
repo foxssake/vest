@@ -4,7 +4,7 @@ class_name VestUI
 
 @onready var run_all_button := %"Run All Button" as Button
 @onready var debug_button := %"Debug Button" as Button
-@onready var run_on_save_checkbox := %"Run On Save CheckBox" as CheckBox
+@onready var run_on_save_checkbutton := %"Run on Save CheckButton" as CheckButton
 @onready var clear_button := %"Clear Button" as Button
 @onready var refresh_mixins_button := %"Refresh Mixins Button" as Button
 @onready var results_tree := %"Results Tree" as Tree
@@ -56,7 +56,7 @@ func clear_results():
 
 func _ready():
 	run_all_button.pressed.connect(run_all)
-	run_on_save_checkbox.toggled.connect(func(toggled):
+	run_on_save_checkbutton.toggled.connect(func(toggled):
 		_run_on_save = toggled
 	)
 	clear_button.pressed.connect(clear_results)

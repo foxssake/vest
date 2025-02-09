@@ -6,6 +6,6 @@ func _ready():
 	var runner := VestLocalRunner.new()
 	add_child(runner)
 
-	var results := runner.run_glob("res://*.test.gd")
+	var results := runner.run_glob(VestEditorPlugin.get_test_glob())
 
 	get_tree().quit()
