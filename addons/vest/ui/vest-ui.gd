@@ -10,7 +10,6 @@ class_name VestUI
 @onready var results_tree := %"Results Tree" as Tree
 @onready var summary_label := %"Tests Summary Label" as Label
 @onready var summary_icon := %"Test Summary Icon" as TextureRect
-@onready var results_label := %"Tests Result Label" as Label
 @onready var glob_line_edit := %"Glob LineEdit" as LineEdit
 
 var _run_on_save: bool = false
@@ -46,7 +45,6 @@ func run_all():
 	summary_icon.visible = true
 	summary_icon.texture = _get_status_icon(results.get_aggregate_status())
 	summary_icon.custom_minimum_size = Vector2i.ONE * get_theme_font("").get_height(get_theme_font_size(""))
-	results_label.text = ("%s" % [results.get_aggregate_status_string()]).capitalize()
 
 	queue_redraw()
 
@@ -57,7 +55,6 @@ func clear_results():
 
 	summary_label.text = ""
 	summary_icon.visible = false
-	results_label.text = ""
 
 func _ready():
 	run_all_button.pressed.connect(run_all)
@@ -102,6 +99,7 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 		var item := tree.create_item(parent)
 		item.set_text(0, what.case.description)
 		item.set_text(1, what.get_status_string().capitalize())
+		item.collapsed = what.status == VestResult.TEST_PASS
 		
 		item.set_icon(0, _get_status_icon(what.status))
 		item.set_icon_max_width(0, tree.get_theme_font_size(""))
@@ -115,7 +113,7 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 	elif what is VestResult.Benchmark:
 		var item := tree.create_item(parent)
 		item.set_text(0, what.benchmark.description)
-		item.set_collapsed_recursive(true)
+		item.collapsed = true
 
 		tree.create_item(item).set_text(0, "Duration: %.2fms" % [what.duration * 1000.])
 		tree.create_item(item).set_text(0, "Iterations: %d" % [what.iterations])
@@ -135,7 +133,7 @@ func _render_data(case: VestResult.Case, tree: Tree, parent: TreeItem):
 
 	if case.message:
 		var item := tree.create_item(parent)
-		item.set_text(0, case.message.replace("\n", "  "))
+		item.set_text(0, case.message)
 		
 		tree.item_activated.connect(func():
 			if tree.get_selected() == item:
