@@ -15,4 +15,4 @@ func sum(a, b):
 	return a + b
 
 func accept(value) -> void:
-	pass
+	print(value)

@@ -4,11 +4,12 @@ class_name VestUI
 
 @onready var run_all_button := %"Run All Button" as Button
 @onready var debug_button := %"Debug Button" as Button
-@onready var run_on_save_checkbutton := %"Run on Save CheckButton" as CheckButton
+@onready var run_on_save_button := %"Run on Save Button" as Button
 @onready var clear_button := %"Clear Button" as Button
 @onready var refresh_mixins_button := %"Refresh Mixins Button" as Button
 @onready var results_tree := %"Results Tree" as Tree
 @onready var summary_label := %"Tests Summary Label" as Label
+@onready var summary_icon := %"Test Summary Icon" as TextureRect
 @onready var results_label := %"Tests Result Label" as Label
 @onready var glob_line_edit := %"Glob LineEdit" as LineEdit
 
@@ -42,6 +43,9 @@ func run_all():
 
 	# Render summaries
 	summary_label.text = "Ran %d tests in %.2fms" % [results.size(), test_duration * 1000.]
+	summary_icon.visible = true
+	summary_icon.texture = _get_status_icon(results.get_aggregate_status())
+	summary_icon.custom_minimum_size = Vector2i.ONE * get_theme_font("").get_height(get_theme_font_size(""))
 	results_label.text = ("%s" % [results.get_aggregate_status_string()]).capitalize()
 
 	queue_redraw()
@@ -52,11 +56,12 @@ func clear_results():
 		connection["signal"].disconnect(connection["callable"])
 
 	summary_label.text = ""
+	summary_icon.visible = false
 	results_label.text = ""
 
 func _ready():
 	run_all_button.pressed.connect(run_all)
-	run_on_save_checkbutton.toggled.connect(func(toggled):
+	run_on_save_button.toggled.connect(func(toggled):
 		_run_on_save = toggled
 	)
 	clear_button.pressed.connect(clear_results)
