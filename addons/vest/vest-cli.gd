@@ -1,4 +1,5 @@
 extends SceneTree
+class_name VestCLI
 
 class Params:
 	var run_file: String = ""
@@ -18,6 +19,18 @@ class Params:
 			result.append("Specified port %d is invalid!" % port)
 		return result
 
+	func to_args() -> Array[String]:
+		var result: Array[String] = []
+
+		if run_file: result.append_array(["--vest-file", run_file])
+		if run_glob: result.append_array(["--vest-glob", run_glob])
+		if report_format: result.append_array(["--vest-report-format", report_format])
+		if report_file: result.append_array(["--vest-report-file", report_file])
+		if host: result.append_array(["--vest-host", host])
+		if port != -1: result.append_array(["--vest-port", str(port)])
+
+		return result
+
 	static func parse(args: Array[String]) -> Params:
 		var result := Params.new()
 
@@ -25,20 +38,19 @@ class Params:
 			var arg := args[i]
 			var val := args[i+1] if i+1 < args.size() else ""
 
-			if arg == "--vest-file":
-				result.run_file = val
-			elif arg == "--vest-glob":
-				result.run_glob = val
-			elif arg == "--vest-report-file":
-				result.report_file = val
-			elif arg == "--vest-report-format":
-				result.report_format = val
-			elif arg == "--vest-port":
-				result.port = val.to_int()
-			elif arg == "--vest-host":
-				result.host = val
+			if arg == "--vest-file": result.run_file = val
+			elif arg == "--vest-glob": result.run_glob = val
+			elif arg == "--vest-report-file": result.report_file = val
+			elif arg == "--vest-report-format": result.report_format = val
+			elif arg == "--vest-port": result.port = val.to_int()
+			elif arg == "--vest-host": result.host = val
 
 		return result
+
+static func run(params: Params) -> int:
+	var args = ["--headless", "-s", (VestCLI as Script).resource_path]
+	print("Running CLI with args: %s" % [" ".join(args + params.to_args())])
+	return OS.create_instance(args + params.to_args())
 
 func _init():
 	Vest._register_scene_tree(self)
@@ -47,7 +59,8 @@ func _init():
 	var validation_errors := params.validate()
 	if not validation_errors.is_empty():
 		for error in validation_errors:
-			push_error(validation_errors)
+			OS.alert(error)
+			push_error(error)
 		quit(1)
 		return
 
@@ -98,15 +111,18 @@ func _send_results_over_network(params: Params, results: VestResult.Suite):
 	if port == -1: port = 54932
 
 	var peer := StreamPeerTCP.new()
-	var err := peer.connect_to_host("0.0.0.0", port)
+	var err := peer.connect_to_host(host, port)
 	if err != OK:
 		push_warning("Couldn't connect on port %d! %s" % [port, error_string(err)])
 		return
 
-	await Vest.until(func(): return peer.get_status() != StreamPeerTCP.STATUS_CONNECTING)
+	await Vest.until(func(): return peer.poll(); peer.get_status() != StreamPeerTCP.STATUS_CONNECTING, 5., 0.05)
 	if peer.get_status() != StreamPeerTCP.STATUS_CONNECTED:
-		push_warning("Connection timed out! Socket status: %d" % [peer.get_status()])
+		push_warning("Connection failed! Socket status: %d" % [peer.get_status()])
 		return
 
+	# Spam results until host disconnects
+	print("Sending results...")
 	peer.put_var(results._to_wire(), true)
+
 	peer.disconnect_from_host()

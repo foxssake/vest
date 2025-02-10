@@ -190,4 +190,4 @@ func _get_benchmark_icon() -> Texture2D:
 	return preload("res://addons/vest/icons/benchmark.svg") as Texture2D
 
 func _time() -> float:
-	return Time.get_unix_time_from_system() / 1000.
+	return Time.get_unix_time_from_system()

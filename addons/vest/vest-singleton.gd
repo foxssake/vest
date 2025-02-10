@@ -12,15 +12,13 @@ static func until(condition: Callable, timeout: float = 5., interval: float = 0.
 		push_warning("Missing reference to SceneTree, will return immediately!")
 		return ERR_UNAVAILABLE
 
-	while timeout > 0.:
+	while timeout >= 0.:
 		if condition.call():
-			break
+			return OK
 		await _scene_tree.create_timer(interval).timeout
 		timeout -= interval
 
-	if not condition.call():
-		return ERR_TIMEOUT
-	return OK
+	return ERR_TIMEOUT
 
 static func _clear_messages():
 	_messages.clear()
