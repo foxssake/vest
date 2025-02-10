@@ -47,7 +47,7 @@ func _run_with_params(params: VestCLI.Params) -> VestResult.Suite:
 		_stop()
 		return null
 
-	var results = _peer.get_var()
+	var results = _peer.get_var(true)
 	_stop()
 
 	if results == null:
