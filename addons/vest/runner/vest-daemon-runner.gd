@@ -32,23 +32,22 @@ func _run_with_params(params: VestCLI.Params) -> VestResult.Suite:
 	params.host = "0.0.0.0"
 	params.port = _port
 	var pid := VestCLI.run(params)
-	print("Started process %d, listening on port %d, with args %s" % [pid, _port, params.to_args()])
 
 	# Wait for agent to connect
-	if await _await_agent() != OK:
-		push_error("Vest agent didn't connect!")
+	if await Vest.until(func(): return _server.is_connection_available()) != OK:
+		push_error("Agent didn't connect in time!")
 		return null
+
+	_peer = _server.take_connection()
 
 	# Take results
 	# TODO: Configurable timeouts
-	print("Waiting for results...")
-	if await Vest.until(func(): return _peer.get_available_bytes() > 0, 5., 0.05) != OK:
+	if await Vest.until(func(): return _peer.get_available_bytes() > 0) != OK:
 		push_error("Didn't receive results in time! Available bytes: %d" % [_peer.get_available_bytes()])
 		_stop()
 		return null
 
 	var results = _peer.get_var()
-	print("Got results!")
 	_stop()
 
 	if results == null:
@@ -76,24 +75,9 @@ func _start(port: int = -1):
 	_port = port
 
 	if not _server.is_listening():
-		print("Failed to find available port!")
+		push_error("Failed to find available port!")
 		return ERR_CANT_CREATE
 
-	return OK
-
-func _await_agent(timeout: float = 8.) -> Error:
-	if not _server or not _server.is_listening():
-		push_error("Server is not listening!")
-		return ERR_UNCONFIGURED
-
-	# Listen for connection
-	print("Waiting for incoming connection...")
-	if await Vest.until(func(): return _server.is_connection_available(), timeout, 0.05) != OK:
-		push_error("Agent didn't connect in time!")
-		return ERR_TIMEOUT
-
-	_peer = _server.take_connection()
-	print("Agent connected!")
 	return OK
 
 func _stop():

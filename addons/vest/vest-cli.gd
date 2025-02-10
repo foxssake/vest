@@ -49,7 +49,6 @@ class Params:
 
 static func run(params: Params) -> int:
 	var args = ["--headless", "-s", (VestCLI as Script).resource_path]
-	print("Running CLI with args: %s" % [" ".join(args + params.to_args())])
 	return OS.create_instance(args + params.to_args())
 
 func _init():
@@ -116,13 +115,10 @@ func _send_results_over_network(params: Params, results: VestResult.Suite):
 		push_warning("Couldn't connect on port %d! %s" % [port, error_string(err)])
 		return
 
-	await Vest.until(func(): return peer.poll(); peer.get_status() != StreamPeerTCP.STATUS_CONNECTING, 5., 0.05)
+	await Vest.until(func(): peer.poll(); return peer.get_status() != StreamPeerTCP.STATUS_CONNECTING)
 	if peer.get_status() != StreamPeerTCP.STATUS_CONNECTED:
 		push_warning("Connection failed! Socket status: %d" % [peer.get_status()])
 		return
 
-	# Spam results until host disconnects
-	print("Sending results...")
 	peer.put_var(results._to_wire(), true)
-
 	peer.disconnect_from_host()

@@ -32,9 +32,9 @@ func run_all():
 	var placeholder_root := results_tree.create_item()
 	results_tree.create_item(placeholder_root).set_text(0, "Waiting for results...")
 
-	var test_start := _time()
+	var test_start := Vest.time()
 	var results := await runner.run_glob(glob_line_edit.text)
-	var test_duration := _time() - test_start
+	var test_duration := Vest.time() - test_start
 
 	# Render individual results
 	clear_results()
@@ -188,6 +188,3 @@ func _get_status_icon(status: int) -> Texture2D:
 
 func _get_benchmark_icon() -> Texture2D:
 	return preload("res://addons/vest/icons/benchmark.svg") as Texture2D
-
-func _time() -> float:
-	return Time.get_unix_time_from_system()

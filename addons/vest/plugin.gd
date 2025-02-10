@@ -19,7 +19,6 @@ static func get_test_glob() -> String:
 	return ProjectSettings.get_setting("vest/general/test_glob", "res://*.test.gd")
 
 func _enter_tree():
-	print("Test glob: %s" % [ProjectSettings.get_setting("vest/general/test_glob", null)])
 	bottom_control = _create_ui()
 	resource_saved.connect(bottom_control.handle_resource_saved)
 
