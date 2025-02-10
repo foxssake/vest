@@ -63,6 +63,8 @@ func run_script(script: Script) -> VestResult.Suite:
 		return null
 
 	var test_instance = script.new()
+	add_child(test_instance)
+
 	if not test_instance is VestTest:
 		return null
 

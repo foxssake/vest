@@ -9,40 +9,45 @@ func run_instance(instance: VestTest) -> VestResult.Suite:
 	return await run_script(instance.get_script() as Script)
 
 func run_script(script: Script) -> VestResult.Suite:
-	return await _run_with_args(["--vest-script", script.resource_path])
+	var params := VestCLI.Params.new()
+	params.run_file = script.resource_path
+
+	return await _run_with_params(params)
 
 func run_glob(glob: String) -> VestResult.Suite:
-	return await _run_with_args(["--vest-glob", glob])
+	var params := VestCLI.Params.new()
+	params.run_glob = glob
 
-func _run_with_args(args: Array[String]) -> VestResult.Suite:
+	return await _run_with_params(params)
+
+func _run_with_params(params: VestCLI.Params) -> VestResult.Suite:
+	Vest._register_scene_tree(get_tree())
+
 	# Start host
 	if _start() != OK:
 		push_error("Couldn't start vest host!")
 		return null
 
 	# Start process
-	var instance_args = [
-		"--headless",
-		"-s", "res://addons/vest/daemon/vest-daemon.gd",
-		"--vest-port", _port
-	] + args
-	var pid := OS.create_instance(instance_args)
-	print("Started process %d, listening on port %d, with args %s" % [pid, _port, instance_args])
+	params.host = "0.0.0.0"
+	params.port = _port
+	var pid := VestCLI.run(params)
 
 	# Wait for agent to connect
-	if await _await_agent() != OK:
-		push_error("Vest agent didn't connect!")
+	if await Vest.until(func(): return _server.is_connection_available()) != OK:
+		push_error("Agent didn't connect in time!")
 		return null
+
+	_peer = _server.take_connection()
 
 	# Take results
 	# TODO: Configurable timeouts
-	print("Waiting for results...")
-	for i in range(32):
-		if _peer.get_available_bytes() > 0:
-			break
-		await get_tree().create_timer(0.2).timeout
+	if await Vest.until(func(): return _peer.get_available_bytes() > 0) != OK:
+		push_error("Didn't receive results in time! Available bytes: %d" % [_peer.get_available_bytes()])
+		_stop()
+		return null
 
-	var results = _peer.get_var()
+	var results = _peer.get_var(true)
 	_stop()
 
 	if results == null:
@@ -70,30 +75,9 @@ func _start(port: int = -1):
 	_port = port
 
 	if not _server.is_listening():
-		print("Failed to find available port!")
+		push_error("Failed to find available port!")
 		return ERR_CANT_CREATE
 
-	return OK
-
-func _await_agent(timeout: float = 8., interval: float = 0.2) -> Error:
-	if not _server or not _server.is_listening():
-		print("Server is not listening!")
-		return ERR_UNCONFIGURED
-
-	# Listen for connection
-	print("Waiting for incoming connection...")
-	while timeout > 0.:
-		if _server.is_connection_available():
-			break
-
-		await get_tree().create_timer(interval).timeout
-		timeout -= interval
-
-	if not _server.is_connection_available():
-		print("Timeout!")
-		return ERR_TIMEOUT
-
-	_peer = _server.take_connection()
 	return OK
 
 func _stop():
