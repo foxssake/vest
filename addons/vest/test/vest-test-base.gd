@@ -1,4 +1,4 @@
-extends Node
+extends Object
 
 var _define_stack: Array[VestDefs.Suite] = []
 var _result: VestResult.Case
@@ -16,7 +16,6 @@ signal on_suite_finish(case: VestDefs.Case)
 func define(name: String, callback: Callable) -> VestDefs.Suite:
 	var suite = VestDefs.Suite.new()
 	suite.name = name
-	suite._owner = self
 	_define_stack.push_back(suite)
 
 	var userland_loc := _find_userland_stack_location()

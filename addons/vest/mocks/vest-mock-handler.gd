@@ -25,7 +25,7 @@ func _handle(method: Callable, args: Array):
 	var possible_answers = _answers\
 		.filter(func(it): return it.is_answering(method, args))
 	possible_answers.sort_custom(func(a, b): return a.get_specificity() > b.get_specificity())
-	
+
 	if possible_answers.is_empty():
 		_unhandled_calls.append(call)
 		return

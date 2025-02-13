@@ -1,6 +1,5 @@
 @tool
 extends Control
-class_name VestUI
 
 @onready var run_all_button := %"Run All Button" as Button
 @onready var debug_button := %"Debug Button" as Button
@@ -26,7 +25,6 @@ func handle_resource_saved(resource: Resource):
 
 func run_all():
 	var runner := VestDaemonRunner.new()
-	get_tree().root.add_child(runner)
 
 	clear_results()
 	var placeholder_root := results_tree.create_item()
@@ -64,16 +62,16 @@ func _ready():
 	clear_button.pressed.connect(clear_results)
 	refresh_mixins_button.pressed.connect(func(): VestMixins.refresh())
 
-	glob_line_edit.text = VestEditorPlugin.get_test_glob()
+	glob_line_edit.text = Vest.get_test_glob()
 	glob_line_edit.text_changed.connect(func(text: String):
-		VestEditorPlugin.set_test_glob(text)
+		Vest.set_test_glob(text)
 	)
 
 	debug_button.pressed.connect(func(): on_debug.emit())
 
 func _notification(what):
 	if what == NOTIFICATION_DRAW:
-		glob_line_edit.text = VestEditorPlugin.get_test_glob()
+		glob_line_edit.text = Vest.get_test_glob()
 
 func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 	if what is VestResult.Suite:
@@ -100,7 +98,7 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 		item.set_text(0, what.case.description)
 		item.set_text(1, what.get_status_string().capitalize())
 		item.collapsed = what.status == VestResult.TEST_PASS
-		
+
 		item.set_icon(0, _get_status_icon(what.status))
 		item.set_icon_max_width(0, tree.get_theme_font_size(""))
 
@@ -117,7 +115,7 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 
 		tree.create_item(item).set_text(0, "Duration: %.2fms" % [what.duration * 1000.])
 		tree.create_item(item).set_text(0, "Iterations: %d" % [what.iterations])
-		
+
 		item.set_icon(0, _get_benchmark_icon())
 		item.set_icon_max_width(0, tree.get_theme_font_size(""))
 
@@ -134,7 +132,7 @@ func _render_data(case: VestResult.Case, tree: Tree, parent: TreeItem):
 	if case.message:
 		var item := tree.create_item(parent)
 		item.set_text(0, case.message)
-		
+
 		tree.item_activated.connect(func():
 			if tree.get_selected() == item:
 				add_child(VestMessagePopup.of(case.message).window)
@@ -156,14 +154,14 @@ func _render_data(case: VestResult.Case, tree: Tree, parent: TreeItem):
 		var header_item := tree.create_item(parent)
 		header_item.set_text(0, "Got:")
 		header_item.set_text(1, "Expected:")
-		
+
 		var got_string := JSON.stringify(data["got"], "  ")
 		var expect_string := JSON.stringify(data["expect"], "  ")
 
 		var comparison_item := tree.create_item(header_item)
 		comparison_item.set_text(0, got_string)
 		comparison_item.set_text(1, expect_string)
-		
+
 		tree.item_activated.connect(func():
 			if tree.get_selected() in [header_item, comparison_item]:
 				add_child(VestComparisonPopup.of(expect_string, got_string).window)

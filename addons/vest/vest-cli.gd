@@ -64,27 +64,26 @@ func _init():
 		return
 
 	var results := _run_tests(params)
-	_report(params, results)
-	await _send_results_over_network(params, results)
-
-	if results.get_aggregate_status() == VestResult.TEST_PASS:
-		print_rich("All tests [color=green]passed[/color]!")
-		quit(0)
-	else:
-		push_error("There are test failures!")
-		quit(1)
+	await process_frame
+	quit(1)
+#	_report(params, results)
+#	await _send_results_over_network(params, results)
+#
+#	if results.get_aggregate_status() == VestResult.TEST_PASS:
+#		print_rich("All tests [color=green]passed[/color]!")
+#		quit(0)
+#	else:
+#		push_error("There are test failures!")
+#		quit(1)
 
 func _run_tests(params: Params) -> VestResult.Suite:
 	var runner := VestLocalRunner.new()
-	root.add_child(runner)
 
 	var results: VestResult.Suite
 	if params.run_file:
 		results = runner.run_script_at(params.run_file)
 	elif params.run_glob:
 		results = runner.run_glob(params.run_glob)
-
-	runner.free()
 
 	return results
 

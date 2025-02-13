@@ -15,7 +15,7 @@ var _mock_script_cache := {}
 func mock(script: Script):
 	var mocked_script := _get_mock_script(script)
 	var mocked_object = mocked_script.new()
-	
+
 	_mock_handler.take_over(mocked_object)
 	return mocked_object
 

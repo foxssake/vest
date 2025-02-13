@@ -21,8 +21,6 @@ func run_glob(glob: String) -> VestResult.Suite:
 	return await _run_with_params(params)
 
 func _run_with_params(params: VestCLI.Params) -> VestResult.Suite:
-	Vest._register_scene_tree(get_tree())
-
 	# Start host
 	if _start() != OK:
 		push_error("Couldn't start vest host!")

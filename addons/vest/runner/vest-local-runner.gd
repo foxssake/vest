@@ -1,18 +1,15 @@
 extends "res://addons/vest/runner/vest-base-runner.gd"
 class_name VestLocalRunner
 
-func run_case(suite: VestDefs.Suite, case: VestDefs.Case) -> VestResult.Case:
-	var test_instance := suite._owner
-
+func run_case(suite: VestDefs.Suite, case: VestDefs.Case, test_instance: VestTest) -> VestResult.Case:
 	test_instance._begin(case)
 	case.callback.call()
 	test_instance._finish(case)
 
 	return test_instance._get_result()
 
-func run_benchmark(suite: VestDefs.Suite, benchmark: VestDefs.Benchmark) -> VestResult.Benchmark:
+func run_benchmark(suite: VestDefs.Suite, benchmark: VestDefs.Benchmark, test_instance: VestTest) -> VestResult.Benchmark:
 	var result := VestResult.Benchmark.new()
-	var test_instance := suite._owner
 
 	result.benchmark = benchmark
 
@@ -38,21 +35,20 @@ func run_benchmark(suite: VestDefs.Suite, benchmark: VestDefs.Benchmark) -> Vest
 
 	return result
 
-func run_suite(suite: VestDefs.Suite) -> VestResult.Suite:
-	var test_instance := suite._owner
+func run_suite(suite: VestDefs.Suite, test_instance: VestTest) -> VestResult.Suite:
 	var result := VestResult.Suite.new()
 	result.suite = suite
 
 	test_instance._begin(suite)
 
 	for subsuite in suite.suites:
-		result.subsuites.append(run_suite(subsuite))
+		result.subsuites.append(run_suite(subsuite, test_instance))
 
 	for case in suite.cases:
-		result.cases.append(run_case(suite, case))
+		result.cases.append(run_case(suite, case, test_instance))
 
 	for benchmark in suite.benchmarks:
-		result.benchmarks.append(run_benchmark(suite, benchmark))
+		result.benchmarks.append(run_benchmark(suite, benchmark, test_instance))
 
 	test_instance._finish(suite)
 
@@ -63,12 +59,13 @@ func run_script(script: Script) -> VestResult.Suite:
 		return null
 
 	var test_instance = script.new()
-	add_child(test_instance)
 
-	if not test_instance is VestTest:
-		return null
+	var results: VestResult.Suite = null
+	if test_instance is VestTest:
+		results = run_suite(test_instance._get_suite(), test_instance)
+	test_instance.free()
 
-	return run_suite(test_instance._get_suite())
+	return results
 
 func run_glob(glob: String) -> VestResult.Suite:
 	var result := VestResult.Suite.new()
