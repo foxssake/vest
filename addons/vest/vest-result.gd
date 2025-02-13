@@ -1,4 +1,3 @@
-extends RefCounted
 class_name VestResult
 
 # Result enums
@@ -26,7 +25,7 @@ class Suite:
 		if not subsuites.is_empty():
 			result = mini(result, subsuites.map(func(it): return it.get_aggregate_status()).min())
 		return result
-	
+
 	func get_aggregate_status_string() -> String:
 		return VestResult.get_status_string(get_aggregate_status())
 

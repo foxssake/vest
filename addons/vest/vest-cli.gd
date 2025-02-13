@@ -76,15 +76,12 @@ func _init():
 
 func _run_tests(params: Params) -> VestResult.Suite:
 	var runner := VestLocalRunner.new()
-	root.add_child(runner)
 
 	var results: VestResult.Suite
 	if params.run_file:
 		results = runner.run_script_at(params.run_file)
 	elif params.run_glob:
 		results = runner.run_glob(params.run_glob)
-
-	runner.free()
 
 	return results
 

@@ -27,7 +27,7 @@ func generate_mock_source(script: Script) -> String:
 			continue
 
 		var arg_defs := []
-		
+
 		for arg in method_args:
 			var arg_name = arg["name"]
 			arg_defs.append(arg_name)
@@ -35,7 +35,7 @@ func generate_mock_source(script: Script) -> String:
 		var arg_def_string := ", ".join(arg_defs)
 
 		mock_source.append(
-			("func %s(%s):\n" + 
+			("func %s(%s):\n" +
 			"\treturn __vest_mock_handler._handle(%s, [%s])\n\n") %
 			[method_name, arg_def_string, method_name, arg_def_string]
 		)

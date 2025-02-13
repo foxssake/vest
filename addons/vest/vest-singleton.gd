@@ -23,6 +23,12 @@ static func until(condition: Callable, timeout: float = 5., interval: float = 0.
 
 	return ERR_TIMEOUT
 
+static func set_test_glob(glob: String):
+	ProjectSettings.set_setting("vest/general/test_glob", glob)
+
+static func get_test_glob() -> String:
+	return ProjectSettings.get_setting("vest/general/test_glob", "res://*.test.gd")
+
 static func time() -> float:
 	return Time.get_unix_time_from_system()
 

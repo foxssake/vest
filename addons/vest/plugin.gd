@@ -1,8 +1,7 @@
 @tool
 extends EditorPlugin
-class_name VestEditorPlugin
 
-var bottom_control: VestUI
+var bottom_control: Control
 
 const SETTINGS = [
 	{
@@ -12,13 +11,9 @@ const SETTINGS = [
 	}
 ]
 
-static func set_test_glob(glob: String):
-	ProjectSettings.set_setting("vest/general/test_glob", glob)
-
-static func get_test_glob() -> String:
-	return ProjectSettings.get_setting("vest/general/test_glob", "res://*.test.gd")
-
 func _enter_tree():
+	Vest._register_scene_tree(get_tree())
+
 	bottom_control = _create_ui()
 	resource_saved.connect(bottom_control.handle_resource_saved)
 
@@ -33,8 +28,8 @@ func _exit_tree():
 
 	remove_settings(SETTINGS)
 
-func _create_ui() -> VestUI:
-	var ui := (preload("res://addons/vest/ui/vest-ui.tscn") as PackedScene).instantiate() as VestUI
+func _create_ui() -> Control:
+	var ui := (preload("res://addons/vest/ui/vest-ui.tscn") as PackedScene).instantiate() as Control
 
 	ui.on_navigate.connect(func(file, line):
 		if file:

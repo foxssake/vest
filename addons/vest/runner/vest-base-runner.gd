@@ -1,6 +1,6 @@
-extends Node
+extends RefCounted
 
-# TODO: Evenetually support re-running single tests
+# TODO: Eventually support re-running single tests
 
 func run_script(script: Script) -> VestResult.Suite:
 	# OVERRIDE
@@ -35,7 +35,7 @@ func _glob(pattern: String) -> Array[String]:
 		if dir_queue.is_empty():
 			break
 
-		var dir_at := dir_queue.pop_front()
+		var dir_at := dir_queue.pop_front() as String
 		da.change_dir(dir_at)
 		dir_history.append(dir_at)
 

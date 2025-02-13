@@ -10,8 +10,6 @@ class Suite:
 	var definition_file: String = ""
 	var definition_line: int = -1
 
-	var _owner: VestTest
-
 	func size() -> int:
 		return cases.size() + benchmarks.size() + suites.size()
 
