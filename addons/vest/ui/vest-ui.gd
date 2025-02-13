@@ -83,7 +83,7 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 
 		tree.item_activated.connect(func():
 			if tree.get_selected() == item:
-				Vest._get_editor_interface().edit_script(load(what.suite.definition_file), what.suite.definition_line)
+				_navigate(what.suite.definition_file, what.suite.definition_line)
 		)
 
 		for subsuite in what.subsuites:
@@ -105,7 +105,7 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 
 		tree.item_activated.connect(func():
 			if tree.get_selected() == item:
-				Vest._get_editor_interface().edit_script(load(what.case.definition_file), what.case.definition_line)
+				_navigate(what.case.definition_file, what.case.definition_line)
 		)
 	elif what is VestResult.Benchmark:
 		var item := tree.create_item(parent)
@@ -120,7 +120,7 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 
 		tree.item_activated.connect(func():
 			if tree.get_selected() == item:
-				Vest._get_editor_interface().edit_script(load(what.benchmark.definition_file), what.benchmark.definition_line)
+				_navigate(what.benchmark.definition_file, what.benchmark.definition_line)
 		)
 	else:
 		push_error("Rendering unknown object: %s" % [what])
@@ -184,6 +184,9 @@ func _set_placeholder_text(text: String):
 	results_tree.clear()
 	var placeholder_root := results_tree.create_item()
 	results_tree.create_item(placeholder_root).set_text(0, text)
+
+func _navigate(file: String, line: int):
+	Vest._get_editor_interface().edit_script(load(file), line)
 
 func _get_status_icon(status: int) -> Texture2D:
 	match(status):
