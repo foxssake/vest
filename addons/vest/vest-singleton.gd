@@ -3,6 +3,7 @@ class_name Vest
 
 static var _messages: Array[String] = []
 static var _scene_tree: SceneTree
+static var _editor_interface: EditorInterface
 
 static func print(message: String):
 	_messages.append(message)
@@ -29,6 +30,9 @@ static func set_test_glob(glob: String):
 static func get_test_glob() -> String:
 	return ProjectSettings.get_setting("vest/general/test_glob", "res://*.test.gd")
 
+static func get_debug_port() -> int:
+	return ProjectSettings.get_setting("vest/general/debug_port", 59432)
+
 static func time() -> float:
 	return Time.get_unix_time_from_system()
 
@@ -40,3 +44,9 @@ static func _get_messages() -> Array[String]:
 
 static func _register_scene_tree(scene_tree: SceneTree):
 	_scene_tree = scene_tree
+
+static func _get_editor_interface() -> EditorInterface:
+	return _editor_interface
+
+static func _register_editor_interface(editor_interface: EditorInterface):
+	_editor_interface = editor_interface

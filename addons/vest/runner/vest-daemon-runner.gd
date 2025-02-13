@@ -5,6 +5,12 @@ var _server: TCPServer
 var _port: int
 var _peer: StreamPeerTCP
 
+var _is_debug_run := false
+
+func with_debug() -> VestDaemonRunner:
+	_is_debug_run = true
+	return self
+
 func run_instance(instance: VestTest) -> VestResult.Suite:
 	return await run_script(instance.get_script() as Script)
 
@@ -21,15 +27,22 @@ func run_glob(glob: String) -> VestResult.Suite:
 	return await _run_with_params(params)
 
 func _run_with_params(params: VestCLI.Params) -> VestResult.Suite:
+	var is_debug = _is_debug_run
+	_is_debug_run = false
+
 	# Start host
-	if _start() != OK:
+	var port := Vest.get_debug_port() if is_debug else -1
+	if _start(port) != OK:
 		push_error("Couldn't start vest host!")
 		return null
 
 	# Start process
 	params.host = "0.0.0.0"
 	params.port = _port
-	var pid := VestCLI.run(params)
+	if not is_debug:
+		VestCLI.run(params)
+	else:
+		VestCLI.debug()
 
 	# Wait for agent to connect
 	if await Vest.until(func(): return _server.is_connection_available()) != OK:

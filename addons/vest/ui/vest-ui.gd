@@ -13,7 +13,6 @@ extends Control
 
 var _run_on_save: bool = false
 
-signal on_navigate(path: String, line: int)
 signal on_debug()
 
 func handle_resource_saved(resource: Resource):
@@ -23,28 +22,28 @@ func handle_resource_saved(resource: Resource):
 	if _run_on_save:
 		run_all()
 
-func run_all():
+func run_all(is_debug: bool = false):
 	var runner := VestDaemonRunner.new()
 
 	clear_results()
-	var placeholder_root := results_tree.create_item()
-	results_tree.create_item(placeholder_root).set_text(0, "Waiting for results...")
+	_set_placeholder_text("Waiting for results...")
 
 	var test_start := Vest.time()
-	var results := await runner.run_glob(glob_line_edit.text)
+	var results: VestResult.Suite
+	if not is_debug:
+		results = await runner.run_glob(glob_line_edit.text)
+	else:
+		results = await runner.with_debug().run_glob(glob_line_edit.text)
+
 	var test_duration := Vest.time() - test_start
 
 	# Render individual results
 	clear_results()
-	_render_result(results, results_tree)
-
-	# Render summaries
-	summary_label.text = "Ran %d tests in %.2fms" % [results.size(), test_duration * 1000.]
-	summary_icon.visible = true
-	summary_icon.texture = _get_status_icon(results.get_aggregate_status())
-	summary_icon.custom_minimum_size = Vector2i.ONE * get_theme_font("").get_height(get_theme_font_size(""))
-
-	queue_redraw()
+	if results:
+		_render_result(results, results_tree)
+		_render_summary(results, test_duration)
+	else:
+		_set_placeholder_text("Test run failed!")
 
 func clear_results():
 	results_tree.clear()
@@ -67,7 +66,7 @@ func _ready():
 		Vest.set_test_glob(text)
 	)
 
-	debug_button.pressed.connect(func(): on_debug.emit())
+	debug_button.pressed.connect(func(): run_all(true))
 
 func _notification(what):
 	if what == NOTIFICATION_DRAW:
@@ -84,7 +83,7 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 
 		tree.item_activated.connect(func():
 			if tree.get_selected() == item:
-				on_navigate.emit(what.suite.definition_file, what.suite.definition_line)
+				Vest._get_editor_interface().edit_script(load(what.suite.definition_file), what.suite.definition_line)
 		)
 
 		for subsuite in what.subsuites:
@@ -106,7 +105,7 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 
 		tree.item_activated.connect(func():
 			if tree.get_selected() == item:
-				on_navigate.emit(what.case.definition_file, what.case.definition_line)
+				Vest._get_editor_interface().edit_script(load(what.case.definition_file), what.case.definition_line)
 		)
 	elif what is VestResult.Benchmark:
 		var item := tree.create_item(parent)
@@ -121,10 +120,16 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 
 		tree.item_activated.connect(func():
 			if tree.get_selected() == item:
-				on_navigate.emit(what.benchmark.definition_file, what.benchmark.definition_line)
+				Vest._get_editor_interface().edit_script(load(what.benchmark.definition_file), what.benchmark.definition_line)
 		)
 	else:
 		push_error("Rendering unknown object: %s" % [what])
+
+func _render_summary(results: VestResult.Suite, test_duration: float):
+	summary_label.text = "Ran %d tests in %.2fms" % [results.size(), test_duration * 1000.]
+	summary_icon.visible = true
+	summary_icon.texture = _get_status_icon(results.get_aggregate_status())
+	summary_icon.custom_minimum_size = Vector2i.ONE * get_theme_font("").get_height(get_theme_font_size(""))
 
 func _render_data(case: VestResult.Case, tree: Tree, parent: TreeItem):
 	var data := case.data.duplicate()
@@ -174,6 +179,11 @@ func _render_data(case: VestResult.Case, tree: Tree, parent: TreeItem):
 		var item := tree.create_item(parent)
 		item.set_text(0, var_to_str(key))
 		item.set_text(1, var_to_str(data[key]))
+
+func _set_placeholder_text(text: String):
+	results_tree.clear()
+	var placeholder_root := results_tree.create_item()
+	results_tree.create_item(placeholder_root).set_text(0, text)
 
 func _get_status_icon(status: int) -> Texture2D:
 	match(status):
