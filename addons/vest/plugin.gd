@@ -8,13 +8,21 @@ const SETTINGS = [
 		"name": "vest/general/test_glob",
 		"value": "res://*.test.gd",
 		"type": TYPE_STRING
+	},
+	{
+		"name": "vest/general/debug_port",
+		"value": 59432,
+		"type": TYPE_INT,
+		"hint": PROPERTY_HINT_RANGE,
+		"hint_string": "0,65535"
 	}
 ]
 
 func _enter_tree():
 	Vest._register_scene_tree(get_tree())
+	Vest._register_editor_interface(get_editor_interface())
 
-	bottom_control = _create_ui()
+	bottom_control = (preload("res://addons/vest/ui/vest-ui.tscn") as PackedScene).instantiate()
 	resource_saved.connect(bottom_control.handle_resource_saved)
 
 	add_control_to_bottom_panel(bottom_control, "Vest")
@@ -27,20 +35,6 @@ func _exit_tree():
 	bottom_control.queue_free()
 
 	remove_settings(SETTINGS)
-
-func _create_ui() -> Control:
-	var ui := (preload("res://addons/vest/ui/vest-ui.tscn") as PackedScene).instantiate() as Control
-
-	ui.on_navigate.connect(func(file, line):
-		if file:
-			get_editor_interface().edit_script(load(file), line)
-	)
-
-	ui.on_debug.connect(func():
-		get_editor_interface().play_custom_scene(preload("res://addons/vest/debug/vest-debug-scene.tscn").resource_path)
-	)
-
-	return ui
 
 func add_settings(settings: Array):
 	for setting in settings:
