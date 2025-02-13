@@ -1,0 +1,19 @@
+site_name: vest
+site_url: 'https://foxssake.github.io/vest/'
+theme:
+  name: readthedocs
+plugins:
+  - plantuml:
+      puml_url: https://www.plantuml.com/plantuml/
+      theme:
+        enabled: false
+      interaction:
+        enabled: false
+markdown_extensions:
+  - admonition
+  - def_list
+  - pymdownx.details
+  - pymdownx.highlight
+  - pymdownx.superfences
+nav:
+  - 'index.md'
