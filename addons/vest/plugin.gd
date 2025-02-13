@@ -22,7 +22,7 @@ func _enter_tree():
 	Vest._register_scene_tree(get_tree())
 	Vest._register_editor_interface(get_editor_interface())
 
-	bottom_control = _create_ui()
+	bottom_control = (preload("res://addons/vest/ui/vest-ui.tscn") as PackedScene).instantiate()
 	resource_saved.connect(bottom_control.handle_resource_saved)
 
 	add_control_to_bottom_panel(bottom_control, "Vest")
@@ -35,9 +35,6 @@ func _exit_tree():
 	bottom_control.queue_free()
 
 	remove_settings(SETTINGS)
-
-func _create_ui() -> Control:
-	return (preload("res://addons/vest/ui/vest-ui.tscn") as PackedScene).instantiate() as Control
 
 func add_settings(settings: Array):
 	for setting in settings:
