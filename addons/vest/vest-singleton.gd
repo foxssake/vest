@@ -5,8 +5,8 @@ static var _messages: Array[String] = []
 static var _scene_tree: SceneTree
 static var _editor_interface: EditorInterface
 
-static func print(message: String):
-	_messages.append(message)
+static func message(p_message: String):
+	_messages.append(p_message)
 
 static func until(condition: Callable, timeout: float = 5., interval: float = 0.0) -> Error:
 	var deadline := time() + timeout

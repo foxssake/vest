@@ -11,17 +11,17 @@ var _mock_script_cache := {}
 func mock(script: Script):
 	var mocked_script := _get_mock_script(script)
 	var mocked_object = mocked_script.new()
-	
+
 	_mock_handler.take_over(mocked_object)
 	return mocked_object
 
 func get_calls_of(method: Callable) -> Array[Array]:
 	var result: Array[Array] = []
 
-	for call in _mock_handler.get_calls():
-		if call.method != method:
+	for call_data in _mock_handler.get_calls():
+		if call_data.method != method:
 			continue
-		result.append(call.args)
+		result.append(call_data.args)
 
 	return result
 

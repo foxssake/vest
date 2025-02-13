@@ -23,6 +23,7 @@ func handle_resource_saved(resource: Resource):
 		run_all()
 
 func run_all(is_debug: bool = false):
+	Vest._register_scene_tree(get_tree())
 	var runner := VestDaemonRunner.new()
 
 	clear_results()

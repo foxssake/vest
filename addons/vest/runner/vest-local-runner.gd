@@ -1,14 +1,14 @@
 extends "res://addons/vest/runner/vest-base-runner.gd"
 class_name VestLocalRunner
 
-func run_case(suite: VestDefs.Suite, case: VestDefs.Case, test_instance: VestTest) -> VestResult.Case:
+func run_case(case: VestDefs.Case, test_instance: VestTest) -> VestResult.Case:
 	test_instance._begin(case)
 	case.callback.call()
 	test_instance._finish(case)
 
 	return test_instance._get_result()
 
-func run_benchmark(suite: VestDefs.Suite, benchmark: VestDefs.Benchmark, test_instance: VestTest) -> VestResult.Benchmark:
+func run_benchmark(benchmark: VestDefs.Benchmark, test_instance: VestTest) -> VestResult.Benchmark:
 	var result := VestResult.Benchmark.new()
 
 	result.benchmark = benchmark
@@ -45,10 +45,10 @@ func run_suite(suite: VestDefs.Suite, test_instance: VestTest) -> VestResult.Sui
 		result.subsuites.append(run_suite(subsuite, test_instance))
 
 	for case in suite.cases:
-		result.cases.append(run_case(suite, case, test_instance))
+		result.cases.append(run_case(case, test_instance))
 
 	for benchmark in suite.benchmarks:
-		result.benchmarks.append(run_benchmark(suite, benchmark, test_instance))
+		result.benchmarks.append(run_benchmark(benchmark, test_instance))
 
 	test_instance._finish(suite)
 

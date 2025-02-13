@@ -20,7 +20,6 @@ func generate_mock_source(script: Script) -> String:
 	for method in script.get_script_method_list():
 		var method_name := method["name"] as String
 		var method_args = method["args"]
-		var method_defaults = method["default_args"]
 
 		if method_name.begins_with("@"):
 			# Getter or setter, don't generate as method

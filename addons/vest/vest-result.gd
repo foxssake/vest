@@ -19,7 +19,7 @@ class Suite:
 		return cases.size() + benchmarks.size() + subsuites.reduce(func(acc, it): return acc + it.size(), 0)
 
 	func get_aggregate_status() -> int:
-		var result := TEST_PASS
+		var result: int = TEST_PASS
 		if not cases.is_empty():
 			result = mini(result, cases.map(func(it): return it.status).min())
 		if not subsuites.is_empty():
@@ -76,15 +76,15 @@ class Case:
 			"assert_line": assert_line
 		}
 
-	static func _from_wire(data: Dictionary) -> Case:
+	static func _from_wire(p_data: Dictionary) -> Case:
 		var result := Case.new()
 
-		result.case = VestDefs.Case._from_wire(data["case"])
-		result.status = data["status"]
-		result.message = data["message"]
-		result.data = data["data"]
-		result.assert_file = data["assert_file"]
-		result.assert_line = data["assert_line"]
+		result.case = VestDefs.Case._from_wire(p_data["case"])
+		result.status = p_data["status"]
+		result.message = p_data["message"]
+		result.data = p_data["data"]
+		result.assert_file = p_data["assert_file"]
+		result.assert_line = p_data["assert_line"]
 
 		return result
 
