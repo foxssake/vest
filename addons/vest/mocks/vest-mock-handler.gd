@@ -18,18 +18,18 @@ func get_unhandled_calls() -> Array[VestMockDefs.Call]:
 	return _unhandled_calls
 
 func _handle(method: Callable, args: Array):
-	var call := VestMockDefs.Call.new()
-	call.method = method
-	call.args = args
+	var call_data := VestMockDefs.Call.new()
+	call_data.method = method
+	call_data.args = args
 
 	var possible_answers = _answers\
 		.filter(func(it): return it.is_answering(method, args))
 	possible_answers.sort_custom(func(a, b): return a.get_specificity() > b.get_specificity())
 
 	if possible_answers.is_empty():
-		_unhandled_calls.append(call)
+		_unhandled_calls.append(call_data)
 		return
 
 	var answer := possible_answers.front() as VestMockDefs.Answer
-	_calls.append(call)
+	_calls.append(call_data)
 	return answer.get_answer(args)

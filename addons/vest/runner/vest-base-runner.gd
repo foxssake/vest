@@ -2,11 +2,11 @@ extends RefCounted
 
 # TODO: Eventually support re-running single tests
 
-func run_script(script: Script) -> VestResult.Suite:
+func run_script(_script: Script) -> VestResult.Suite:
 	# OVERRIDE
 	return VestResult.Suite.new()
 
-func run_glob(glob: String) -> VestResult.Suite:
+func run_glob(_p_glob: String) -> VestResult.Suite:
 	# OVERRIDE
 	return VestResult.Suite.new()
 

@@ -31,51 +31,51 @@ func define(name: String, callback: Callable) -> VestDefs.Suite:
 	return suite
 
 func test(description: String, callback: Callable) -> void:
-	var case := VestDefs.Case.new()
-	case.description = description
-	case.callback = callback
+	var case_def := VestDefs.Case.new()
+	case_def.description = description
+	case_def.callback = callback
 
 	var userland_loc := _find_userland_stack_location()
-	case.definition_file = userland_loc[0]
-	case.definition_line = userland_loc[1]
+	case_def.definition_file = userland_loc[0]
+	case_def.definition_line = userland_loc[1]
 
-	_define_stack.back().cases.push_back(case)
+	_define_stack.back().cases.push_back(case_def)
 
 func benchmark(description: String, callback: Callable) -> VestDefs.Benchmark:
-	var benchmark := VestDefs.Benchmark.new()
-	benchmark.description = description
-	benchmark.callback = callback
+	var benchmark_def := VestDefs.Benchmark.new()
+	benchmark_def.description = description
+	benchmark_def.callback = callback
 
 	var userland_loc := _find_userland_stack_location()
-	benchmark.definition_file = userland_loc[0]
-	benchmark.definition_line = userland_loc[1]
+	benchmark_def.definition_file = userland_loc[0]
+	benchmark_def.definition_line = userland_loc[1]
 
-	_define_stack.back().benchmarks.push_back(benchmark)
+	_define_stack.back().benchmarks.push_back(benchmark_def)
 
-	return benchmark
+	return benchmark_def
 
 func bail() -> void:
 	_bail = true
 
-func todo(message: String = "", data: Dictionary = {}):
+func todo(message: String = "", data: Dictionary = {}) -> void:
 	_with_result(VestResult.TEST_TODO, message, data)
 
-func skip(message: String = "", data: Dictionary = {}):
+func skip(message: String = "", data: Dictionary = {}) -> void:
 	_with_result(VestResult.TEST_SKIP, message, data)
 
-func fail(message: String = "", data: Dictionary = {}):
+func fail(message: String = "", data: Dictionary = {}) -> void:
 	_with_result(VestResult.TEST_FAIL, message, data)
 
-func ok(message: String = "", data: Dictionary = {}):
+func ok(message: String = "", data: Dictionary = {}) -> void:
 	_with_result(VestResult.TEST_PASS, message, data)
 
-func before_suite(suite: VestDefs.Suite):
+func before_suite(_suite_def: VestDefs.Suite):
 	pass
 
-func before_case(case: VestDefs.Case):
+func before_case(_case_def: VestDefs.Case):
 	pass
 
-func before_benchmark(benchmark: VestDefs.Benchmark):
+func before_benchmark(_benchmark_def: VestDefs.Benchmark):
 	pass
 
 func before_each():
@@ -84,13 +84,13 @@ func before_each():
 func after_each():
 	pass
 
-func after_benchmark(benchmark: VestDefs.Benchmark):
+func after_benchmark(_benchmark_def: VestDefs.Benchmark):
 	pass
 
-func after_case(case: VestDefs.Case):
+func after_case(_case_def: VestDefs.Case):
 	pass
 
-func after_suite(suite: VestDefs.Suite):
+func after_suite(_suite_def: VestDefs.Suite):
 	pass
 
 func _init():
@@ -151,11 +151,11 @@ func _finish(what: Object):
 	else:
 		push_error("Finishing unknown object: %s" % [what])
 
-func _prepare_for_case(case: VestDefs.Case):
+func _prepare_for_case(case_def: VestDefs.Case):
 	_result = VestResult.Case.new()
-	_result.case = case
+	_result.case = case_def
 
-func _prepare_for_benchmark(benchmark: VestDefs.Benchmark):
+func _prepare_for_benchmark(_benchmark_def: VestDefs.Benchmark):
 	_bail = false
 
 func _is_bailing() -> bool:
