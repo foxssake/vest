@@ -1,11 +1,11 @@
-# vest
+# Index
 
-A unit testing library for Godot.
+*Vest* is a unit testing library for Godot.
 
 ## Features
 
 * Define test suites
-  * Both with `define()` and with class methods
+    * Both with `define()` and with class methods
 * Assert library
 * Parametrized tests
 * Mocks

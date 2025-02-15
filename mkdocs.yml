@@ -1,7 +1,9 @@
 site_name: vest
 site_url: 'https://foxssake.github.io/vest/'
 theme:
-  name: readthedocs
+  name: material
+  palette:
+    scheme: slate
 plugins:
   - plantuml:
       puml_url: https://www.plantuml.com/plantuml/
@@ -15,5 +17,9 @@ markdown_extensions:
   - pymdownx.details
   - pymdownx.highlight
   - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
 nav:
   - 'index.md'
+  - 'User Guide':
+    - 'user-guide/writing-tests.md'
