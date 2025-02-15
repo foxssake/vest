@@ -1,7 +1,7 @@
 # Writing tests
 
 *Vest* defines tests as a set of *suites*. Each *suite* may contain test
-*cases*, *benchmark*, and even nested *suites*.
+*cases*, *benchmarks*, and even nested *suites*.
 
 For example, the suite could cover the class ( unit )  being tested, with each
 method receiving its own suite of requirements, each being covered by a test
@@ -26,7 +26,8 @@ In this example, the `Set` suite has 3 subsuites, each with their own test cases
 ## Defining suites
 
 *Vest* considers classes extending the `VestTest` base class as tests. Each
-example in the documentation will present both styles:
+example in the documentation will present both styles of suite definitions
+supported:
 
 === "define()"
 
@@ -83,11 +84,12 @@ test case name is derived from the method name, e.g.
 
 The function body contains the test case implementation.
 
+Methods don't support nested suites.
+
 ### Suite name
 
-Each suite and test case defined inside the class is part of the suite that
-belongs to the test class. There's different ways to set the suite name. In
-order of precedence:
+Test classes are represented as test suites. There's different ways to set this
+suite's name. In order of precedence:
 
 1. Implement `get_suite_name()`:
     ```gdscript
