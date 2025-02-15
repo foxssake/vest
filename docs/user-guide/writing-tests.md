@@ -106,5 +106,9 @@ suite's name. In order of precedence:
 1. If none of the above are present, *vest* will use the script's path, e.g.
    `res://tests/example_test.gd`
 
-To find out how to set test outcomes, continue reading about assertions and
-test results!
+To find out how to set test outcomes, continue reading about [test outcomes]
+and [assertions].
+
+
+[test outcomes]: ./test-outcomes.md
+[assertions]: ./assertions.md
