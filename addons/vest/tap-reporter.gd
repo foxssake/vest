@@ -48,16 +48,16 @@ static func _report_case(test_id: int, case: VestResult.Case, lines: PackedStrin
 
 	lines.append(indent_prefix + "%s %d - %s%s" % [test_point, test_id, description, directive])
 
+	var yaml_data = {}
+
 	if case.status == VestResult.TEST_FAIL:
-		var yaml_data = {
-			"severity": "fail",
-			"assert_source": case.assert_file,
-			"assert_line": case.assert_line
-		}
+		yaml_data["severity"] = "fail"
+		yaml_data["assert_source"] = case.assert_file
+		yaml_data["assert_line"] = case.assert_line
+	if case.message: yaml_data["message"] = case.message
+	if case.data: yaml_data["data"] = case.data
 
-		if case.message: yaml_data["message"] = case.message
-		if case.data: yaml_data["data"] = case.data
-
+	if not yaml_data.is_empty():
 		_report_yaml(yaml_data, lines, indent + INDENT_SIZE)
 
 static func _report_benchmark(test_id: int, benchmark: VestResult.Benchmark, lines: PackedStringArray, indent: int = 0):

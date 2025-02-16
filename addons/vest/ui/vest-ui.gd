@@ -156,6 +156,24 @@ func _render_data(case: VestResult.Case, tree: Tree, parent: TreeItem):
 
 		data.erase("messages")
 
+	if data.has("benchmarks"):
+		var header_item := tree.create_item(parent)
+		header_item.set_text(0, "Benchmarks")
+
+		for benchmark in data["benchmarks"]:
+			var benchmark_item = tree.create_item(header_item)
+			benchmark_item.set_text(0, benchmark["name"])
+			benchmark_item.set_text(1, benchmark["duration"])
+
+			for measurement in benchmark.keys():
+				if measurement == "name": continue
+
+				var measurement_item := tree.create_item(benchmark_item)
+				measurement_item.set_text(0, str(measurement).capitalize())
+				measurement_item.set_text(1, str(benchmark[measurement]))
+
+		data.erase("benchmarks")
+
 	if data.has("expect") and data.has("got"):
 		var header_item := tree.create_item(parent)
 		header_item.set_text(0, "Got:")

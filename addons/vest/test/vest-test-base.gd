@@ -177,3 +177,72 @@ func _find_userland_stack_location() -> Array:
 		return ["<unknown>", -1]
 	else:
 		return [trimmed_stack[0]["source"], trimmed_stack[0]["line"]]
+
+# --------------------------------------------------------------------------------------------------
+
+func measure(name: String, callback: Callable) -> Measurement:
+	var result := Measurement.new()
+	result.name = name
+	result.callback = callback
+	result._test = self
+	return result
+
+class Measurement:
+	var callback: Callable
+	var name: String = ""
+	var iterations: int = 0
+	var duration: float = 0.0
+
+	var max_iterations: int = -1
+	var max_duration: float = -1.0
+
+	var _test: VestTest
+
+	func with_iterations(p_iterations: int) -> Measurement:
+		max_iterations = p_iterations
+		return self
+
+	func with_duration(p_duration: float) -> Measurement:
+		max_duration = p_duration
+		return self
+
+	func once() -> Measurement:
+		max_iterations = 1
+		max_duration = 0.0
+		return run()
+
+	func run() -> Measurement:
+		# Run benchmark
+		while is_within_limits():
+			var t_start := Vest.time()
+			callback.call()
+
+			duration += Vest.time() - t_start
+			iterations += 1
+
+		# Report
+		var result_data := _test._get_result().data
+		var benchmarks := result_data.get("benchmarks", []) as Array
+		benchmarks.append(to_data())
+		result_data["benchmarks"] = benchmarks
+
+		# Set test to pass by default if no asserts are added
+		_test.ok("", result_data)
+
+		return self
+
+	func is_within_limits():
+		if max_iterations >= 0 and iterations > max_iterations:
+			return false
+		if max_duration >= 0.0 and duration > max_duration:
+			return false
+		return true
+
+	func to_data() -> Dictionary:
+		var result := {}
+		result["name"] = name
+		result["iterations"] = iterations
+		result["duration"] = "%.4fms" % [duration * 1000.0]
+		result["iters/sec"] = iterations / duration
+		result["average iteration time"] = "%.4fms" % [duration / iterations * 1000.0]
+		return result
