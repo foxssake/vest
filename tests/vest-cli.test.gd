@@ -28,7 +28,7 @@ func suite_params():
 			# Then
 			expect_equal(actual, expected)
 		)
-		
+
 		test("should parse", func():
 			# Given
 			var args: Array[String] = [
