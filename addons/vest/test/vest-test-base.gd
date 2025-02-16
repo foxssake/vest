@@ -85,7 +85,7 @@ func _with_result(status: int, message: String, data: Dictionary):
 
 	_result.status = status
 	_result.message = message
-	_result.data = data
+	_result.data.merge(data, true)
 
 	var userland_loc := _find_userland_stack_location()
 	_result.assert_file = userland_loc[0]

@@ -93,6 +93,12 @@ class Benchmark:
 
 		return self
 
+	func get_iters_per_sec() -> float:
+		return iterations / duration
+
+	func get_avg_iteration_time() -> float:
+		return duration / iterations
+
 	func _is_within_limits():
 		if max_iterations >= 0 and iterations >= max_iterations:
 			return false
@@ -105,6 +111,6 @@ class Benchmark:
 		result["name"] = name
 		result["iterations"] = iterations
 		result["duration"] = "%.4fms" % [duration * 1000.0]
-		result["iters/sec"] = iterations / duration
-		result["average iteration time"] = "%.4fms" % [duration / iterations * 1000.0]
+		result["iters/sec"] = get_iters_per_sec()
+		result["average iteration time"] = "%.4fms" % [get_avg_iteration_time() * 1000.0]
 		return result
