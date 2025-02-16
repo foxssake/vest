@@ -25,3 +25,4 @@ nav:
     - 'user-guide/writing-tests.md'
     - 'user-guide/test-outcomes.md'
     - 'user-guide/assertions.md'
+    - 'user-guide/parameterized-tests.md'
