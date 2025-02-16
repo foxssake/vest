@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b6yh8aylojfgt"
-path="res://.godot/imported/benchmark.svg-b9f24369bdd89bc588a152cef6f09c00.ctex"
+uid="uid://c1cdr1khuiy2f"
+path="res://.godot/imported/benchmark-fail.svg-b20a3c22c391ea7bcebd7f59f83ca9d5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/vest/icons/benchmark.svg"
-dest_files=["res://.godot/imported/benchmark.svg-b9f24369bdd89bc588a152cef6f09c00.ctex"]
+source_file="res://addons/vest/icons/benchmark-fail.svg"
+dest_files=["res://.godot/imported/benchmark-fail.svg-b20a3c22c391ea7bcebd7f59f83ca9d5.ctex"]
 
 [params]
 

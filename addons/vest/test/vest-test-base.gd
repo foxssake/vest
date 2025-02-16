@@ -2,14 +2,11 @@ extends Object
 
 var _define_stack: Array[VestDefs.Suite] = []
 var _result: VestResult.Case
-var _bail: bool = false
 
 signal on_suite_begin(suite: VestDefs.Suite)
 signal on_case_begin(case: VestDefs.Case)
-signal on_benchmark_begin(benchmark: VestDefs.Benchmark)
 signal on_any_begin()
 signal on_any_finish()
-signal on_benchmark_finish(benchmark: VestDefs.Benchmark)
 signal on_case_finish(case: VestDefs.Case)
 signal on_suite_finish(case: VestDefs.Case)
 
@@ -41,21 +38,12 @@ func test(description: String, callback: Callable) -> void:
 
 	_define_stack.back().cases.push_back(case_def)
 
-func benchmark(description: String, callback: Callable) -> VestDefs.Benchmark:
-	var benchmark_def := VestDefs.Benchmark.new()
-	benchmark_def.description = description
-	benchmark_def.callback = callback
-
-	var userland_loc := _find_userland_stack_location()
-	benchmark_def.definition_file = userland_loc[0]
-	benchmark_def.definition_line = userland_loc[1]
-
-	_define_stack.back().benchmarks.push_back(benchmark_def)
-
-	return benchmark_def
-
-func bail() -> void:
-	_bail = true
+func benchmark(name: String, callback: Callable) -> VestDefs.Benchmark:
+	var result := VestDefs.Benchmark.new()
+	result.name = name
+	result.callback = callback
+	result._test = self
+	return result
 
 func todo(message: String = "", data: Dictionary = {}) -> void:
 	_with_result(VestResult.TEST_TODO, message, data)
@@ -75,16 +63,10 @@ func before_suite(_suite_def: VestDefs.Suite):
 func before_case(_case_def: VestDefs.Case):
 	pass
 
-func before_benchmark(_benchmark_def: VestDefs.Benchmark):
-	pass
-
 func before_each():
 	pass
 
 func after_each():
-	pass
-
-func after_benchmark(_benchmark_def: VestDefs.Benchmark):
 	pass
 
 func after_case(_case_def: VestDefs.Case):
@@ -103,7 +85,7 @@ func _with_result(status: int, message: String, data: Dictionary):
 
 	_result.status = status
 	_result.message = message
-	_result.data = data
+	_result.data.merge(data, true)
 
 	var userland_loc := _find_userland_stack_location()
 	_result.assert_file = userland_loc[0]
@@ -121,14 +103,6 @@ func _begin(what: Object):
 
 		before_each()
 		before_case(what)
-	elif what is VestDefs.Benchmark:
-		_prepare_for_benchmark(what)
-
-		on_any_begin.emit()
-		on_benchmark_begin.emit(what)
-
-		before_each()
-		before_benchmark(what)
 	else:
 		push_error("Beginning unknown object: %s" % [what])
 
@@ -142,24 +116,12 @@ func _finish(what: Object):
 
 		after_each()
 		after_case(what)
-	elif what is VestDefs.Benchmark:
-		on_any_finish.emit()
-		on_benchmark_finish.emit(what)
-
-		after_each()
-		after_benchmark(what)
 	else:
 		push_error("Finishing unknown object: %s" % [what])
 
 func _prepare_for_case(case_def: VestDefs.Case):
 	_result = VestResult.Case.new()
 	_result.case = case_def
-
-func _prepare_for_benchmark(_benchmark_def: VestDefs.Benchmark):
-	_bail = false
-
-func _is_bailing() -> bool:
-	return _bail
 
 func _get_result() -> VestResult.Case:
 	return _result

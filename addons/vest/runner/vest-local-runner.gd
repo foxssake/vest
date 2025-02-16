@@ -8,33 +8,6 @@ func run_case(case: VestDefs.Case, test_instance: VestTest) -> VestResult.Case:
 
 	return test_instance._get_result()
 
-func run_benchmark(benchmark: VestDefs.Benchmark, test_instance: VestTest) -> VestResult.Benchmark:
-	var result := VestResult.Benchmark.new()
-
-	result.benchmark = benchmark
-
-	if not benchmark.is_valid():
-		return result
-
-	test_instance._begin(benchmark)
-
-	while true:
-		var t_start := _get_time()
-		benchmark.callback.call()
-		var t_finish := _get_time()
-
-		result.iterations += 1
-		result.duration += t_finish - t_start
-
-		if (benchmark.max_iterations > 0 and result.iterations >= benchmark.max_iterations) or \
-			(benchmark.timeout > 0.) and (result.duration >= benchmark.timeout) or \
-			test_instance._is_bailing():
-				break
-
-	test_instance._finish(benchmark)
-
-	return result
-
 func run_suite(suite: VestDefs.Suite, test_instance: VestTest) -> VestResult.Suite:
 	var result := VestResult.Suite.new()
 	result.suite = suite
@@ -46,9 +19,6 @@ func run_suite(suite: VestDefs.Suite, test_instance: VestTest) -> VestResult.Sui
 
 	for case in suite.cases:
 		result.cases.append(run_case(case, test_instance))
-
-	for benchmark in suite.benchmarks:
-		result.benchmarks.append(run_benchmark(benchmark, test_instance))
 
 	test_instance._finish(suite)
 

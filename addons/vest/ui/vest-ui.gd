@@ -79,7 +79,7 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 		item.set_text(0, what.suite.name)
 		item.set_text(1, what.get_aggregate_status_string().capitalize())
 
-		item.set_icon(0, _get_status_icon(what.get_aggregate_status()))
+		item.set_icon(0, _get_status_icon(what))
 		item.set_icon_max_width(0, tree.get_theme_font_size(""))
 
 		tree.item_activated.connect(func():
@@ -91,15 +91,13 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 			_render_result(subsuite, tree, item)
 		for case in what.cases:
 			_render_result(case, tree, item)
-		for benchmark in what.benchmarks:
-			_render_result(benchmark, tree, item)
 	elif what is VestResult.Case:
 		var item := tree.create_item(parent)
 		item.set_text(0, what.case.description)
 		item.set_text(1, what.get_status_string().capitalize())
 		item.collapsed = what.status == VestResult.TEST_PASS
 
-		item.set_icon(0, _get_status_icon(what.status))
+		item.set_icon(0, _get_status_icon(what))
 		item.set_icon_max_width(0, tree.get_theme_font_size(""))
 
 		_render_data(what, tree, item)
@@ -108,28 +106,13 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 			if tree.get_selected() == item:
 				_navigate(what.case.definition_file, what.case.definition_line)
 		)
-	elif what is VestResult.Benchmark:
-		var item := tree.create_item(parent)
-		item.set_text(0, what.benchmark.description)
-		item.collapsed = true
-
-		tree.create_item(item).set_text(0, "Duration: %.2fms" % [what.duration * 1000.])
-		tree.create_item(item).set_text(0, "Iterations: %d" % [what.iterations])
-
-		item.set_icon(0, _get_benchmark_icon())
-		item.set_icon_max_width(0, tree.get_theme_font_size(""))
-
-		tree.item_activated.connect(func():
-			if tree.get_selected() == item:
-				_navigate(what.benchmark.definition_file, what.benchmark.definition_line)
-		)
 	else:
 		push_error("Rendering unknown object: %s" % [what])
 
 func _render_summary(results: VestResult.Suite, test_duration: float):
 	summary_label.text = "Ran %d tests in %.2fms" % [results.size(), test_duration * 1000.]
 	summary_icon.visible = true
-	summary_icon.texture = _get_status_icon(results.get_aggregate_status())
+	summary_icon.texture = _get_status_icon(results)
 	summary_icon.custom_minimum_size = Vector2i.ONE * get_theme_font("").get_height(get_theme_font_size(""))
 
 func _render_data(case: VestResult.Case, tree: Tree, parent: TreeItem):
@@ -155,6 +138,24 @@ func _render_data(case: VestResult.Case, tree: Tree, parent: TreeItem):
 			tree.create_item(header_item).set_text(0, message)
 
 		data.erase("messages")
+
+	if data.has("benchmarks"):
+		var header_item := tree.create_item(parent)
+		header_item.set_text(0, "Benchmarks")
+
+		for benchmark in data["benchmarks"]:
+			var benchmark_item = tree.create_item(header_item)
+			benchmark_item.set_text(0, benchmark["name"])
+			benchmark_item.set_text(1, benchmark["duration"])
+
+			for measurement in benchmark.keys():
+				if measurement == "name": continue
+
+				var measurement_item := tree.create_item(benchmark_item)
+				measurement_item.set_text(0, str(measurement).capitalize())
+				measurement_item.set_text(1, str(benchmark[measurement]))
+
+		data.erase("benchmarks")
 
 	if data.has("expect") and data.has("got"):
 		var header_item := tree.create_item(parent)
@@ -189,14 +190,25 @@ func _set_placeholder_text(text: String):
 func _navigate(file: String, line: int):
 	Vest._get_editor_interface().edit_script(load(file), line)
 
-func _get_status_icon(status: int) -> Texture2D:
-	match(status):
-		VestResult.TEST_VOID: return preload("res://addons/vest/icons/void.svg") as Texture2D
-		VestResult.TEST_TODO: return preload("res://addons/vest/icons/todo.svg") as Texture2D
-		VestResult.TEST_SKIP: return preload("res://addons/vest/icons/skip.svg") as Texture2D
-		VestResult.TEST_FAIL: return preload("res://addons/vest/icons/fail.svg") as Texture2D
-		VestResult.TEST_PASS: return preload("res://addons/vest/icons/pass.svg") as Texture2D
-		_: return null
+func _get_status_icon(what: Variant) -> Texture2D:
+	if what is VestResult.Suite:
+		return _get_status_icon(what.get_aggregate_status())
+	elif what is VestResult.Case:
+		if what.data.has("benchmarks"):
+			if what.status == VestResult.TEST_FAIL:
+				return preload("res://addons/vest/icons/benchmark-fail.svg")
+			else:
+				return preload("res://addons/vest/icons/benchmark.svg")
+		else:
+			return _get_status_icon(what.status)
+	elif what is int:
+		match(what):
+			VestResult.TEST_VOID: return preload("res://addons/vest/icons/void.svg") as Texture2D
+			VestResult.TEST_TODO: return preload("res://addons/vest/icons/todo.svg") as Texture2D
+			VestResult.TEST_SKIP: return preload("res://addons/vest/icons/skip.svg") as Texture2D
+			VestResult.TEST_FAIL: return preload("res://addons/vest/icons/fail.svg") as Texture2D
+			VestResult.TEST_PASS: return preload("res://addons/vest/icons/pass.svg") as Texture2D
+	return null
 
 func _get_benchmark_icon() -> Texture2D:
 	return preload("res://addons/vest/icons/benchmark.svg") as Texture2D
