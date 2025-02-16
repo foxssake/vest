@@ -26,3 +26,4 @@ nav:
     - 'user-guide/test-outcomes.md'
     - 'user-guide/assertions.md'
     - 'user-guide/parameterized-tests.md'
+    - 'user-guide/lifecycle-hooks.md'
