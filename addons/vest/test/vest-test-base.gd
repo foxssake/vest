@@ -3,12 +3,12 @@ extends Object
 var _define_stack: Array[VestDefs.Suite] = []
 var _result: VestResult.Case
 
+signal on_begin()
 signal on_suite_begin(suite: VestDefs.Suite)
 signal on_case_begin(case: VestDefs.Case)
-signal on_any_begin()
-signal on_any_finish()
 signal on_case_finish(case: VestDefs.Case)
 signal on_suite_finish(case: VestDefs.Case)
+signal on_finish()
 
 func define(name: String, callback: Callable) -> VestDefs.Suite:
 	var suite = VestDefs.Suite.new()
@@ -57,22 +57,22 @@ func fail(message: String = "", data: Dictionary = {}) -> void:
 func ok(message: String = "", data: Dictionary = {}) -> void:
 	_with_result(VestResult.TEST_PASS, message, data)
 
+func before_all():
+	pass
+
 func before_suite(_suite_def: VestDefs.Suite):
 	pass
 
 func before_case(_case_def: VestDefs.Case):
 	pass
 
-func before_each():
-	pass
-
-func after_each():
-	pass
-
 func after_case(_case_def: VestDefs.Case):
 	pass
 
 func after_suite(_suite_def: VestDefs.Suite):
+	pass
+
+func after_all():
 	pass
 
 func _init():
@@ -92,29 +92,29 @@ func _with_result(status: int, message: String, data: Dictionary):
 	_result.assert_line = userland_loc[1]
 
 func _begin(what: Object):
-	if what is VestDefs.Suite:
+	if what == self:
+		on_begin.emit()
+		before_all()
+	elif what is VestDefs.Suite:
 		on_suite_begin.emit(what)
 		before_suite(what)
 	elif what is VestDefs.Case:
 		_prepare_for_case(what)
 
-		on_any_begin.emit()
 		on_case_begin.emit(what)
-
-		before_each()
 		before_case(what)
 	else:
 		push_error("Beginning unknown object: %s" % [what])
 
 func _finish(what: Object):
-	if what is VestDefs.Suite:
+	if what == self:
+		on_finish.emit()
+		after_all()
+	elif what is VestDefs.Suite:
 		on_suite_finish.emit(what)
 		after_suite(what)
 	elif what is VestDefs.Case:
-		on_any_finish.emit()
 		on_case_finish.emit(what)
-
-		after_each()
 		after_case(what)
 	else:
 		push_error("Finishing unknown object: %s" % [what])

@@ -32,7 +32,9 @@ func run_script(script: Script) -> VestResult.Suite:
 
 	var results: VestResult.Suite = null
 	if test_instance is VestTest:
+		test_instance._begin(test_instance)
 		results = run_suite(test_instance._get_suite(), test_instance)
+		test_instance._finish(test_instance)
 	test_instance.free()
 
 	return results
