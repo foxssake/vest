@@ -41,21 +41,21 @@ Test cases can have different outcomes:
     ```
 
 Pass
-: All requirements are fulfilled, the test subject works as expected.
+:   All requirements are fulfilled, the test subject works as expected.
 
 Fail
-: Some or all of the requirements are broken, the test subject doesn't work as
-  expected.
+:   Some or all of the requirements are broken, the test subject doesn't work as
+    expected.
 
 Skip
-: The test has skipped validating requirements. Often used for temporarily
-  disabling tests.
+:   The test has skipped validating requirements. Often used for temporarily
+    disabling tests.
 
 TODO
-: The test is yet to be implemented.
+:   The test is yet to be implemented.
 
 Void
-: No assertions have been made. Usually happens with empty test methods, or if
-  the test ran into an engine-level issue ( e.g. syntax- or runtime errors )
+:   No assertions have been made. Usually happens with empty test methods, or if
+    the test ran into an engine-level issue ( e.g. syntax- or runtime errors )
 
 The recommended way to set outcomes is to use [assertions](./assertions.md).
