@@ -6,8 +6,6 @@ var _result: VestResult.Case
 signal on_begin()
 signal on_suite_begin(suite: VestDefs.Suite)
 signal on_case_begin(case: VestDefs.Case)
-signal on_any_begin()
-signal on_any_finish()
 signal on_case_finish(case: VestDefs.Case)
 signal on_suite_finish(case: VestDefs.Case)
 signal on_finish()
@@ -68,12 +66,6 @@ func before_suite(_suite_def: VestDefs.Suite):
 func before_case(_case_def: VestDefs.Case):
 	pass
 
-func before_each():
-	pass
-
-func after_each():
-	pass
-
 func after_case(_case_def: VestDefs.Case):
 	pass
 
@@ -109,10 +101,7 @@ func _begin(what: Object):
 	elif what is VestDefs.Case:
 		_prepare_for_case(what)
 
-		on_any_begin.emit()
 		on_case_begin.emit(what)
-
-		before_each()
 		before_case(what)
 	else:
 		push_error("Beginning unknown object: %s" % [what])
@@ -125,10 +114,7 @@ func _finish(what: Object):
 		on_suite_finish.emit(what)
 		after_suite(what)
 	elif what is VestDefs.Case:
-		on_any_finish.emit()
 		on_case_finish.emit(what)
-
-		after_each()
 		after_case(what)
 	else:
 		push_error("Finishing unknown object: %s" % [what])
