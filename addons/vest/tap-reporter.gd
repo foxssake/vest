@@ -29,10 +29,6 @@ static func _report_suite(suite: VestResult.Suite, lines: PackedStringArray, ind
 		_report_case(test_id, case, lines, indent)
 		test_id += 1
 
-	for benchmark in suite.benchmarks:
-		_report_benchmark(test_id, benchmark, lines, indent)
-		test_id += 1
-
 static func _report_case(test_id: int, case: VestResult.Case, lines: PackedStringArray, indent: int = 0):
 	var indent_prefix := " ".repeat(indent)
 	var test_point := "ok"
@@ -59,22 +55,6 @@ static func _report_case(test_id: int, case: VestResult.Case, lines: PackedStrin
 
 	if not yaml_data.is_empty():
 		_report_yaml(yaml_data, lines, indent + INDENT_SIZE)
-
-static func _report_benchmark(test_id: int, benchmark: VestResult.Benchmark, lines: PackedStringArray, indent: int = 0):
-	var indent_prefix := " ".repeat(indent)
-	var test_point := "ok"
-	var description := benchmark.benchmark.description
-	var directive = ""
-
-	var yaml_data = {
-		"duration": "%.4fms" % [benchmark.duration * 1000.],
-		"iterations": benchmark.iterations,
-	}
-	if benchmark.iterations > 0:
-		yaml_data["iters/sec"] = benchmark.iterations / benchmark.duration
-
-	lines.append(indent_prefix + "%s %d - %s%s" % [test_point, test_id, description, directive])
-	_report_yaml(yaml_data, lines, indent + INDENT_SIZE)
 
 static func _report_subsuite_results(test_id: int, subsuite: VestResult.Suite, lines: PackedStringArray, indent: int = 0):
 	var indent_prefix := " ".repeat(indent)

@@ -91,8 +91,6 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 			_render_result(subsuite, tree, item)
 		for case in what.cases:
 			_render_result(case, tree, item)
-		for benchmark in what.benchmarks:
-			_render_result(benchmark, tree, item)
 	elif what is VestResult.Case:
 		var item := tree.create_item(parent)
 		item.set_text(0, what.case.description)
@@ -107,21 +105,6 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 		tree.item_activated.connect(func():
 			if tree.get_selected() == item:
 				_navigate(what.case.definition_file, what.case.definition_line)
-		)
-	elif what is VestResult.Benchmark:
-		var item := tree.create_item(parent)
-		item.set_text(0, what.benchmark.description)
-		item.collapsed = true
-
-		tree.create_item(item).set_text(0, "Duration: %.2fms" % [what.duration * 1000.])
-		tree.create_item(item).set_text(0, "Iterations: %d" % [what.iterations])
-
-		item.set_icon(0, _get_benchmark_icon())
-		item.set_icon_max_width(0, tree.get_theme_font_size(""))
-
-		tree.item_activated.connect(func():
-			if tree.get_selected() == item:
-				_navigate(what.benchmark.definition_file, what.benchmark.definition_line)
 		)
 	else:
 		push_error("Rendering unknown object: %s" % [what])
