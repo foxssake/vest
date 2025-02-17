@@ -21,3 +21,7 @@ gdscript/warnings/exclude_addons=false
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/vest/plugin.cfg")
+
+[vest]
+
+general/test_glob="res://*.test.gd"

@@ -1,5 +1,8 @@
 extends VestTest
 
+func get_suite_name() -> String:
+	return "VestCLI"
+
 func suite_params():
 	define("CLI Params", func():
 
