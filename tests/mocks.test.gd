@@ -1,5 +1,7 @@
 extends VestTest
-class_name MocksTest
+
+func get_suite_name() -> String:
+	return "Mocks"
 
 func test_should_return_default():
 	# Given
