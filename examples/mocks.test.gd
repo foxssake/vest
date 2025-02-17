@@ -5,9 +5,6 @@ func get_suite_name() -> String:
 
 var simple_math: SimpleMath
 
-class InnerClass:
-	var foo := "foo"
-
 func suite():
 	on_case_begin.connect(func(__):
 		simple_math = mock(SimpleMath)
