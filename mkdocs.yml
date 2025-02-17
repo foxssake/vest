@@ -27,3 +27,4 @@ nav:
     - 'user-guide/assertions.md'
     - 'user-guide/parameterized-tests.md'
     - 'user-guide/lifecycle-hooks.md'
+    - 'user-guide/capturing-signals.md'
