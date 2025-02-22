@@ -2,6 +2,8 @@ site_name: vest
 site_url: 'https://foxssake.github.io/vest/'
 theme:
   name: material
+  logo: assets/vest-logo.png
+  favicon: assets/vest-favicon.png
   palette:
     scheme: slate
 plugins:
