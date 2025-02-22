@@ -12,7 +12,13 @@ var _signal_recorders: Array[Array] = []
 
 func _init():
 	super()
-	on_case_begin.connect(func(__): _cleanup_recorders())
+	on_case_begin.connect(func(__):
+		# Remove non-persistent recorders
+		_cleanup_recorders()
+
+		# Clear captures
+		_signal_captures.clear()
+	)
 
 func capture_signal(what: Signal, arg_count: int = 0, persistent: bool = false):
 	# Reset captures
