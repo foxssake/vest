@@ -1,4 +1,4 @@
-# ![vest logo](./icon.png) vest
+# ![vest logo](./docs/assets/vest-favicon.png) vest
 
 A unit testing library for Godot.
 
