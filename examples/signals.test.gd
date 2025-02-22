@@ -5,11 +5,10 @@ signal on_event(data: String)
 func get_suite_name() -> String:
 	return "Signals test"
 
-func before_all():
-	capture_signal(on_event, 1)
-
 func suite():
 	test("Signal was emitted at least once", func():
+		capture_signal(on_event, 1)
+
 		on_event.emit("foo")
 		on_event.emit("bar")
 
@@ -17,12 +16,16 @@ func suite():
 	)
 
 	test("Signal was emitted just once", func():
+		capture_signal(on_event, 1)
+
 		on_event.emit("foo")
 
 		expect_equal(get_signal_emissions(on_event).size(), 1)
 	)
 
 	test("Signal was emitted with params", func():
+		capture_signal(on_event, 1)
+
 		on_event.emit("foo")
 		on_event.emit("bar")
 
@@ -30,17 +33,23 @@ func suite():
 	)
 
 func test_signal_was_emitted_at_least_once():
+	capture_signal(on_event, 1)
+
 	on_event.emit("foo")
 	on_event.emit("bar")
 
 	expect_not_empty(get_signal_emissions(on_event))
 
 func test_signal_was_emitted_just_once():
+	capture_signal(on_event, 1)
+
 	on_event.emit("foo")
 
 	expect_equal(get_signal_emissions(on_event).size(), 1)
 
 func test_signal_was_emitted_with_params():
+	capture_signal(on_event, 1)
+
 	on_event.emit("foo")
 	on_event.emit("bar")
 
