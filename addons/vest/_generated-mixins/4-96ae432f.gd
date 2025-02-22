@@ -43,6 +43,8 @@ func _cleanup_recorders():
 		else:
 			recorded_signal.disconnect(recorder)
 
+	_signal_recorders = filtered_recorders
+
 func _get_signal_recorder(what: Signal, arg_count: int):
 	match(arg_count):
 		0: return func(): _record_emission(what, [])
