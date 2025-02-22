@@ -13,7 +13,7 @@ that certain signals are emitted, or even signals *not* being emitted.
       return "Signals test"
 
     func before_all():
-      capture_signal(on_event, 1)
+      capture_signal(on_event, 1, true)
 
     func suite():
       test("Signal was emitted at least once", func():
@@ -46,7 +46,7 @@ that certain signals are emitted, or even signals *not* being emitted.
       return "Signals test"
 
     func before_all():
-      capture_signal(on_event, 1)
+      capture_signal(on_event, 1, true)
 
     func test_signal_was_emitted_at_least_once():
       on_event.emit("foo")
@@ -66,9 +66,26 @@ that certain signals are emitted, or even signals *not* being emitted.
       expect_contains(get_signal_emissions(on_event), ["bar"])
     ```
 
+## Capture
+
 By calling `capture_signal()`, a listener is connected to the signal that will
 record each emission. Make sure to pass in the amount of parameters the signal
 has, otherwise *vest* may fail at recording emissions.
+
+*vest* has *persistent* and *non-persistent* signal captures. The latter,
+*non-persistent* captures are disconnected after every test case. If you want
+to call `capture_signal()` only once and have it be active for all subsequent
+test cases in the suite, pass in `true` for its *persistent* parameter.
+
+Persistent captures enable you to setup all the signal captures in
+`before_all()` or `on_begin()`, instead of having to repeat the same call for
+all your test cases.
+
+!!!note
+    All captured signal emissions are reset before each test case. This so that
+    a signal emission captured in test A doesn't affect the results of test B.
+
+## Inspect
 
 To retrieve the recorded emissions, call `get_signal_emissions()` with the
 captured signal. It will return an array of arrays, where each individual array
