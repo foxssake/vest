@@ -23,6 +23,9 @@ markdown_extensions:
       alternate_style: true
 nav:
   - 'index.md'
+  - 'Getting Started':
+    - 'getting-started/installing-vest.md'
+    - 'getting-started/your-first-test.md'
   - 'User Guide':
     - 'user-guide/writing-tests.md'
     - 'user-guide/running-from-ui.md'
