@@ -17,7 +17,7 @@ func expect_not(condition: bool, p_message: String = "") -> void:
 	else:
 		fail(p_message)
 
-func expect_equal(actual: Variant, expected: Variant) -> void:
+func expect_equal(actual: Variant, expected: Variant, p_message: String = "Actual value differs from expected!") -> void:
 	var equals = actual == expected
 	if actual is Object and actual.has_method("equals"):
 		equals = actual.equals(expected)
@@ -25,11 +25,11 @@ func expect_equal(actual: Variant, expected: Variant) -> void:
 	if equals:
 		ok()
 	else:
-		fail("Actual value differs from expected!", { "expect": expected, "got": actual })
+		fail(p_message, { "expect": expected, "got": actual })
 
-func expect_not_equal(actual: Variant, expected: Variant) -> void:
+func expect_not_equal(actual: Variant, expected: Variant, p_message: String = "Actual value equals expected!") -> void:
 	if actual == expected:
-		fail("Actual value equals expected!", { "expect": expected, "got": actual })
+		fail(p_message, { "expect": expected, "got": actual })
 	else:
 		ok()
 
@@ -72,7 +72,7 @@ func expect_contains(object: Variant, item: Variant, p_message: String = "Item i
 		ERR_CANT_RESOLVE:
 			fail("Unknown object, can't be checked if it contains item!", { "object": object })
 
-func expect_doesnt_contain(object: Variant, item: Variant, p_message: String = "Item is missing from collection!") -> void:
+func expect_doesnt_contain(object: Variant, item: Variant, p_message: String = "Item is in collection!") -> void:
 	match _contains(object, item):
 		true:
 			fail(p_message, { "got": object, "excess": item })
