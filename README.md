@@ -18,3 +18,8 @@ A unit testing library for Godot.
 ## Compatibility
 
 Godot v4.1.4 and up
+
+## License
+
+*vest* is licensed under the [MIT License](LICENSE).
+
