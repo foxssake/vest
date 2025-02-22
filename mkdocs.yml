@@ -25,6 +25,7 @@ nav:
   - 'index.md'
   - 'User Guide':
     - 'user-guide/writing-tests.md'
+    - 'user-guide/running-from-ui.md'
     - 'user-guide/test-outcomes.md'
     - 'user-guide/assertions.md'
     - 'user-guide/parameterized-tests.md'
