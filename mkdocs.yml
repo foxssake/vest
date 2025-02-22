@@ -31,5 +31,6 @@ nav:
     - 'user-guide/parameterized-tests.md'
     - 'user-guide/lifecycle-hooks.md'
     - 'user-guide/mocks.md'
+    - 'user-guide/benchmarking.md'
     - 'user-guide/capturing-signals.md'
     - 'user-guide/printing-custom-messages.md'
