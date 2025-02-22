@@ -58,7 +58,7 @@ fails.
     expect(array.size() == 3, 'Array size not as expected!')
     ```
 
-`expect_equal(), expect_not_equal()`
+`expect_equal()`, `expect_not_equal()`
 :   Asserts that two values are equal. Uses Godot's builtin `==` operator. If
     the values being compared are objects implementing an `equals()` method, the
     method will be used instead.
@@ -73,26 +73,28 @@ fails.
     expect_not_equal(2 * 2, 5)
     ```
 
-`expect_true(), expect_false()`
+`expect_true()`, `expect_false()`
 :   Synonyms of `expect()` and `expect_not()`. Aimed at better readability for
     asserting on boolean values.
 
-`expect_empty()`
+`expect_empty()`, `expect_not_empty()`
 :   Asserts that a given container is empty. Godot's built-in types and objects
-    implementing `is_empty()` are supported.
+    implementing `is_empty()` are supported. Has a negated version.
 
     If the assertion fails, the container will be included in the report.
 
     ```gdscript
     expect_empty(range(1,1))
+    expect_not_empty(range(1, 8))
     ```
 
-`expect_contains()`
+`expect_contains()`, `expect_doesnt_contain()`
 :   Asserts that a given container includes a value. Godot built-in types and
-    objects implementing `has()` are supported.
+    objects implementing `has()` are supported. Has a negated version.
 
     If the assertion fails, the container will be included in the report.
 
     ```gdscript
     expect_contains(range(0, 5), 3)
+    expect_doesnt_contain(range(2, 4), 4)
     ```

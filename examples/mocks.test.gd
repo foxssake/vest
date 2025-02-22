@@ -23,7 +23,7 @@ func suite():
 		simple_math.times(4, 4)
 
 		var calls := get_calls_of(simple_math.times)
-		expect(not calls.is_empty(), "Method was not called!")
+		expect_not_empty(calls, "Method was not called!")
 	)
 
 	test("Method was called with parameters", func():
@@ -46,7 +46,7 @@ func test_method_was_called_at_least_once():
 	simple_math.times(4, 4)
 
 	var calls := get_calls_of(simple_math.times)
-	expect(not calls.is_empty(), "Method was not called!")
+	expect_not_empty(calls, "Method was not called!")
 
 func test_method_was_called_with_parameters():
 	simple_math.times(2, 4)

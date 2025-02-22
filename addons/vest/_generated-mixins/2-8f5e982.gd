@@ -40,31 +40,67 @@ func expect_false(condition: bool, p_message: String = "") -> void:
 	expect_not(condition, p_message)
 
 func expect_empty(object: Variant, p_message: String = "Object was not empty!") -> void:
-	if object is Array or object is Dictionary:
-		expect(object.is_empty(), p_message)
-	elif object is Object:
-		if object.has_method("is_empty"):
-			expect(object.is_empty(), p_message)
-		else:
+	match _is_empty(object):
+		true:
+			ok()
+		false:
+			fail(p_message)
+		ERR_METHOD_NOT_FOUND:
 			fail("Object has no is_empty() method!", { "object": object })
-	else:
-		fail("Unknown object, can't be checked for emptiness!", { "object": object })
+		ERR_CANT_RESOLVE:
+			fail("Unknown object, can't be checked for emptiness!", { "object": object })
+
+func expect_not_empty(object: Variant, p_message: String = "Object was empty!") -> void:
+	match _is_empty(object):
+		true:
+			fail(p_message)
+		false:
+			ok()
+		ERR_METHOD_NOT_FOUND:
+			fail("Object has no is_empty() method!", { "object": object })
+		ERR_CANT_RESOLVE:
+			fail("Unknown object, can't be checked for emptiness!", { "object": object })
 
 func expect_contains(object: Variant, item: Variant, p_message: String = "Item is missing from collection!") -> void:
-	var data = { "got": object, "missing": item }
-	var contains = false
+	match _contains(object, item):
+		true:
+			ok()
+		false:
+			fail(p_message, { "got": object, "missing": item })
+		ERR_METHOD_NOT_FOUND:
+			fail("Object has no has() method!", { "object": object })
+		ERR_CANT_RESOLVE:
+			fail("Unknown object, can't be checked if it contains item!", { "object": object })
 
+func expect_doesnt_contain(object: Variant, item: Variant, p_message: String = "Item is missing from collection!") -> void:
+	match _contains(object, item):
+		true:
+			fail(p_message, { "got": object, "excess": item })
+		false:
+			ok()
+		ERR_METHOD_NOT_FOUND:
+			fail("Object has no has() method!", { "object": object })
+		ERR_CANT_RESOLVE:
+			fail("Unknown object, can't be checked if it contains item!", { "object": object })
+
+func _is_empty(object: Variant) -> Variant:
 	if object is Array or object is Dictionary:
-		contains = object.has(item)
+		return object.is_empty()
+	elif object is Object:
+		if object.has_method("is_empty"):
+			return object.is_empty()
+		else:
+			return ERR_METHOD_NOT_FOUND
+	else:
+		return ERR_CANT_RESOLVE
+
+func _contains(object: Variant, item: Variant) -> Variant:
+	if object is Array or object is Dictionary:
+		return object.has(item)
 	elif object is Object:
 		if object.has_method("has"):
-			contains = object.has(item)
+			return object.has(item)
 		else:
-			return fail("Object has no has() method!", { "object": object })
+			return ERR_METHOD_NOT_FOUND
 	else:
-		return fail("Unknown object, can't be checked if it contains item!", { "object": object })
-
-	if contains:
-		ok()
-	else:
-		fail(p_message, data)
+		return ERR_CANT_RESOLVE

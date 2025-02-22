@@ -13,7 +13,7 @@ func suite():
 		on_event.emit("foo")
 		on_event.emit("bar")
 
-		expect_not(get_signal_emissions(on_event).is_empty())
+		expect_not_empty(get_signal_emissions(on_event))
 	)
 
 	test("Signal was emitted just once", func():
@@ -33,7 +33,7 @@ func test_signal_was_emitted_at_least_once():
 	on_event.emit("foo")
 	on_event.emit("bar")
 
-	expect_not(get_signal_emissions(on_event).is_empty())
+	expect_not_empty(get_signal_emissions(on_event))
 
 func test_signal_was_emitted_just_once():
 	on_event.emit("foo")
