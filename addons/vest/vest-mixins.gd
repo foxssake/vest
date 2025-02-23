@@ -1,23 +1,46 @@
 extends Object
 class_name VestMixins
 
+## Manages mixins for [VestTest].
+##
+## Instead of having to implement all the functionality in one huge class,
+## the functionality can be separated into mixins.
+## [br][br]
+## Mixins are classes whose functionality is combined into a single class, to
+## produce the [VestTest] base class. This is done by generating scripts that
+## Godot can then load.
+## [br][br]
+## When working with custom mixins, [b]make sure to refresh[/b] when a change
+## is applied!
+
+## List all active mixins.
 static func list() -> Array[Script]:
 	var result: Array[Script] = []
 	result.assign((VestTest.new()).__get_vest_mixins())
 	return result
 
+## Add a custom script to the list of mixins.
+## [br][br]
+## Make sure to call [method refresh], otherwise the generated classes are not
+## updated.
 static func add(mixin: Script):
 	var active_mixins := list()
 	if not active_mixins.has(mixin):
 		active_mixins.append(mixin)
 		refresh(active_mixins)
 
+## Remove a custom script from the list of mixins.
+## [br][br]
+## Make sure to call [method refresh], otherwise the generated classes are not
+## updated.
 static func remove(mixin: Script):
 	var active_mixins := list()
 	if active_mixins.has(mixin):
 		active_mixins.erase(mixin)
 		refresh(active_mixins)
 
+## Refresh the generated classes, making sure that all mixins used are up to
+## date.
 static func refresh(mixins: Array[Script] = []):
 	if mixins.is_empty():
 		mixins = list()

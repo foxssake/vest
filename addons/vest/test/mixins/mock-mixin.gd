@@ -1,5 +1,9 @@
 extends VestTestMixin
 
+## Provides mocking for tests
+##
+## @tutorial(Mocks): https://foxssake.github.io/vest/user-guide/mocks/
+
 # TODO: Fail test case if there's unhandled calls
 
 var _mock_generator := VestMockGenerator.new()
@@ -8,6 +12,7 @@ var _mock_handler := VestMockHandler.new()
 # Maps Scripts to their mocked counterparts
 var _mock_script_cache := {}
 
+## Create a mocked instance of a given script
 func mock(script: Script):
 	var mocked_script := _get_mock_script(script)
 	var mocked_object = mocked_script.new()
@@ -15,6 +20,7 @@ func mock(script: Script):
 	_mock_handler.take_over(mocked_object)
 	return mocked_object
 
+## Get calls of a mock object's method
 func get_calls_of(method: Callable) -> Array[Array]:
 	var result: Array[Array] = []
 
@@ -25,8 +31,9 @@ func get_calls_of(method: Callable) -> Array[Array]:
 
 	return result
 
+## Start specifying an answer for a mocked method call
 func when(method: Callable) -> AnswerBuilder:
-	return AnswerBuilder.of(method, self)
+	return AnswerBuilder._of(method, self)
 
 func _get_mock_script(script: Script) -> Script:
 	if _mock_script_cache.has(script):
@@ -36,33 +43,39 @@ func _get_mock_script(script: Script) -> Script:
 		_mock_script_cache[script] = mocked_script
 		return mocked_script
 
+## Builder for specifying [VestMockDefs.Answer] objects
 class AnswerBuilder:
-	var test
-	var args: Array = []
-	var method: Callable
+	var _test
+	var _args: Array = []
+	var _method: Callable
 
+	## Set expected arguments
 	func with_args(p_args: Array) -> AnswerBuilder:
-		args = p_args
+		_args = p_args
 		return self
 
+	## Answer by calling a custom method
+	## [br][br]
+	## The method will received the passed arguments as an array.
 	func then_answer(p_answer_method: Callable) -> void:
 		var answer := VestMockDefs.Answer.new()
-		answer.expected_method = method
-		answer.expected_args = args
-		answer.answer_method = p_answer_method
+		answer.expected_method = _method
+		answer.expected_args = _args
+		answer._answer_method = p_answer_method
 
-		test._mock_handler.add_answer(answer)
+		_test._mock_handler.add_answer(answer)
 
+	## Answer with a fixed value
 	func then_return(p_answer_value: Variant) -> void:
 		var answer := VestMockDefs.Answer.new()
-		answer.expected_method = method
-		answer.answer_value = p_answer_value
-		answer.expected_args = args
+		answer.expected_method = _method
+		answer.expected_args = _args
+		answer._answer_value = p_answer_value
 
-		test._mock_handler.add_answer(answer)
+		_test._mock_handler.add_answer(answer)
 
-	static func of(p_method: Callable, p_test):
+	static func _of(p_method: Callable, p_test):
 		var builder := AnswerBuilder.new()
-		builder.method = p_method
-		builder.test = p_test
+		builder._method = p_method
+		builder._test = p_test
 		return builder

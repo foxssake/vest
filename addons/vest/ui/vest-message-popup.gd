@@ -16,12 +16,14 @@ var _text: String = ""
 # The workaround is this weird pattern where the class is instantiated with a reference to the
 # scriptless scene ( Window ), and takes over.
 
+# NOTE: This class may be rewritten, as we went from supporting 4.0.4 to 4.1.4
+
 static func of(text: String):
 	var popup_scene := (load("res://addons/vest/ui/message-popup.tscn") as PackedScene).instantiate(PackedScene.GEN_EDIT_STATE_MAIN)
 	var popup := VestMessagePopup.new(popup_scene)
 
 	popup.set_contents(text)
-	
+
 	return popup
 
 func set_contents(text: String):

@@ -5,6 +5,8 @@ extends "res://addons/vest/_generated-mixins/4-96ae432f.gd"
 
 
 
+# Manages logs added using [method Vest.message]
+
 func _init():
 	super()
 
