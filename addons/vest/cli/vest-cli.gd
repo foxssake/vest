@@ -1,14 +1,34 @@
 extends SceneTree
 class_name VestCLI
 
+## Class for running vest from the CLI
+## [br][br]
+## See [VestCLI.Params]
+
+## Vest CLI parameters
 class Params:
+	## Which test script file to run
 	var run_file: String = ""
+
+	## Which test glob to run
 	var run_glob: String = "res://*.test.gd"
+
+	## Reporting format - currently only TAP is supported
 	var report_format: String = ""
+
+	## Path for saving the report
 	var report_file: String = ""
+
+	## Host to connect to for sending results
 	var host: String = ""
+
+	## Port to connect to for sending results
 	var port: int = -1
 
+	## Validate parameters.
+	## [br][br]
+	## Returns an array of error messages, or an empty array of the parameters
+	## are valid.
 	func validate() -> Array[String]:
 		var result: Array[String] = []
 		if not run_file and not run_glob:
@@ -19,6 +39,7 @@ class Params:
 			result.append("Specified port %d is invalid!" % port)
 		return result
 
+	## Convert to an array of CLI parameters.
 	func to_args() -> Array[String]:
 		var result: Array[String] = []
 
@@ -31,6 +52,9 @@ class Params:
 
 		return result
 
+	## Parse an array of CLI parameters.
+	## [br][br]
+	## See [method OS.get_cmdline_args].
 	static func parse(args: Array[String]) -> Params:
 		var result := Params.new()
 
@@ -47,7 +71,9 @@ class Params:
 
 		return result
 
+## Implements functionality to run tests
 class Runner:
+	## Run tests with [Params]
 	func run(params: Params) -> int:
 		var validation_errors := params.validate()
 		if not validation_errors.is_empty():
@@ -114,10 +140,14 @@ class Runner:
 		peer.disconnect_from_host()
 
 
+## Run vest CLI with parameters.
+## [br][br]
+## Returns the spawned process' ID.
 static func run(params: Params) -> int:
 	var args = ["--headless", "-s", (VestCLI as Script).resource_path]
 	return OS.create_instance(args + params.to_args())
 
+## Run vest in debug mode.
 static func debug():
 	Vest._get_editor_interface()\
 		.play_custom_scene(preload("res://addons/vest/cli/vest-cli-scene.tscn").resource_path)

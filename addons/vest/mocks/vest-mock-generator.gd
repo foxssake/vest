@@ -1,8 +1,13 @@
 extends RefCounted
 class_name VestMockGenerator
 
-# TODO: Support getters and setters
+## Generates mocks for existing scripts
+##
+## @tutorial(Mocks): https://foxssake.github.io/vest/user-guide/mocks/
 
+# TODO: Support getters and setters?
+
+## Generate a mocked version of a script
 func generate_mock_script(script: Script) -> Script:
 	var dummy_script := preload("res://addons/vest/mocks/vest-mock-dummy.gd") as Script
 	var mock_script := dummy_script.duplicate() as Script
@@ -11,6 +16,7 @@ func generate_mock_script(script: Script) -> Script:
 
 	return mock_script
 
+## Generate the source code for mocking a script
 func generate_mock_source(script: Script) -> String:
 	var mock_source := PackedStringArray()
 
