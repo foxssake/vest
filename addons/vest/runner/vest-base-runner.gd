@@ -10,9 +10,6 @@ func run_glob(_p_glob: String) -> VestResult.Suite:
 	# OVERRIDE
 	return VestResult.Suite.new()
 
-func run_instance(instance: VestTest) -> VestResult.Suite:
-	return run_script(instance.get_script())
-
 func run_script_at(path: String) -> VestResult.Suite:
 	var test_script := load(path)
 

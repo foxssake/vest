@@ -1,25 +1,29 @@
 extends "res://addons/vest/runner/vest-base-runner.gd"
 class_name VestDaemonRunner
 
+## Runs tests in a separate, background process
+
 var _server: TCPServer
 var _port: int
 var _peer: StreamPeerTCP
 
 var _is_debug_run := false
 
+## Enable debug mode for the next run
 func with_debug() -> VestDaemonRunner:
 	_is_debug_run = true
 	return self
 
-func run_instance(instance: VestTest) -> VestResult.Suite:
-	return await run_script(instance.get_script() as Script)
-
+## Run a test script
 func run_script(script: Script) -> VestResult.Suite:
 	var params := VestCLI.Params.new()
 	params.run_file = script.resource_path
 
 	return await _run_with_params(params)
 
+## Run test scripts matching glob
+## [br][br]
+## See [method String.match]
 func run_glob(glob: String) -> VestResult.Suite:
 	var params := VestCLI.Params.new()
 	params.run_glob = glob

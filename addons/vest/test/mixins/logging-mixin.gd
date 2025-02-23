@@ -1,5 +1,7 @@
 extends VestTestMixin
 
+# Manages logs added using [method Vest.message]
+
 func _init():
 	super()
 
