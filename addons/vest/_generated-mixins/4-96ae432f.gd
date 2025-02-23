@@ -5,21 +5,21 @@ extends "res://addons/vest/_generated-mixins/3-795b469a.gd"
 
 
 
+## Mixin for capturing and asserting signals
+##
+## @tutorial(Capturing signals): https://foxssake.github.io/vest/user-guide/capturing-signals/
+
+# Maps signals to an array of recorded emissions
+# Each array item is an individual array containing the emission params
 var _signal_captures := {}
 
 # Array of [signal, recorder, is_persistent] tuples
 var _signal_recorders: Array[Array] = []
 
-func _init():
-	super()
-	on_case_begin.connect(func(__):
-		# Remove non-persistent recorders
-		_cleanup_recorders()
-
-		# Clear captures
-		_signal_captures.clear()
-	)
-
+## Capture all emissions of a signal.
+## [br][br]
+## Mark the capture as [param persistent] if you want the capture to persist
+## between test cases.
 func capture_signal(what: Signal, arg_count: int = 0, persistent: bool = false):
 	# Reset captures
 	_signal_captures[what] = []
@@ -33,8 +33,22 @@ func capture_signal(what: Signal, arg_count: int = 0, persistent: bool = false):
 	what.connect(recorder)
 	_signal_recorders.append([what, recorder, persistent])
 
+## Get the captured signal emissions for a given signal.
+## [br][br]
+## Note that the captured emissions are reset between test cases. [br]
+## Returns an array of signal emission parameters for each captured emission.
 func get_signal_emissions(what: Signal) -> Array:
 	return _signal_captures.get(what, [])
+
+func _init():
+	super()
+	on_case_begin.connect(func(__):
+		# Remove non-persistent recorders
+		_cleanup_recorders()
+
+		# Clear captures
+		_signal_captures.clear()
+	)
 
 func _cleanup_recorders():
 	var filtered_recorders: Array[Array] = []

@@ -5,6 +5,8 @@ extends "res://addons/vest/test/vest-test-base.gd"
 
 
 
+# Automatically gathers tests defined in the test class
+
 func _get_ignored_methods() -> Array[String]:
 	return [
 		"get_suite_name",

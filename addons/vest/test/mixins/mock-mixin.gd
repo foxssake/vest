@@ -61,7 +61,7 @@ class AnswerBuilder:
 		var answer := VestMockDefs.Answer.new()
 		answer.expected_method = _method
 		answer.expected_args = _args
-		answer.answer_method = p_answer_method
+		answer._answer_method = p_answer_method
 
 		_test._mock_handler.add_answer(answer)
 
@@ -69,13 +69,13 @@ class AnswerBuilder:
 	func then_return(p_answer_value: Variant) -> void:
 		var answer := VestMockDefs.Answer.new()
 		answer.expected_method = _method
-		answer.answer_value = p_answer_value
 		answer.expected_args = _args
+		answer._answer_value = p_answer_value
 
 		_test._mock_handler.add_answer(answer)
 
 	static func _of(p_method: Callable, p_test):
 		var builder := AnswerBuilder.new()
-		builder.method = p_method
-		builder.test = p_test
+		builder._method = p_method
+		builder._test = p_test
 		return builder

@@ -29,8 +29,8 @@ func _handle(method: Callable, args: Array):
 	call_data.args = args
 
 	var possible_answers = _answers\
-		.filter(func(it): return it.is_answering(method, args))
-	possible_answers.sort_custom(func(a, b): return a.get_specificity() > b.get_specificity())
+		.filter(func(it): return it._is_answering(method, args))
+	possible_answers.sort_custom(func(a, b): return a._get_specificity() > b._get_specificity())
 
 	if possible_answers.is_empty():
 		_unhandled_calls.append(call_data)
@@ -38,4 +38,4 @@ func _handle(method: Callable, args: Array):
 
 	var answer := possible_answers.front() as VestMockDefs.Answer
 	_calls.append(call_data)
-	return answer.get_answer(args)
+	return answer._get_answer(args)
