@@ -1,8 +1,13 @@
 extends Object
 class_name TAPReporter
 
+## Generates reports in the Test Anything Protocol format
+##
+## See [url]https://testanything.org/[/url]
+
 const INDENT_SIZE := 2
 
+## Generate a report from test suite results
 static func report(suite: VestResult.Suite) -> String:
 	var lines := PackedStringArray()
 
