@@ -1,6 +1,19 @@
 extends Object
 class_name YAMLWriter
 
+## YAML serializer.
+##
+## Used for adding extra data to [TAPReporter] reports.
+## [br][br]
+## For custom types, implement [code]_to_yaml[/code]. It should return a basic
+## type, which will be then serialized.
+## [br][br]
+## Alternatively, implement [code]_to_yaml_raw[/code], which should return the
+## raw YAML string.
+## [br][br]
+## [b]Not recommended for use outside of generating test reports.[/b]
+
+## Convert a value to YAML.
 static func stringify(what, indent: int = 0) -> String:
 	if indent > 0:
 		return _indented(stringify(what), indent)
@@ -44,9 +57,9 @@ static func stringify(what, indent: int = 0) -> String:
 
 	if what is Object:
 		if what.has_method("_to_yaml"):
-			return stringify(what.call("_to_yaml"))
+			return stringify(what.call("_to_yaml", indent))
 		elif what.has_method("_to_yaml_raw"):
-			return what.call("_to_yaml_raw")
+			return what.call("_to_yaml_raw", indent)
 
 	return stringify(str(what))
 
