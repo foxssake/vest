@@ -12,7 +12,7 @@ class_name VestDefs
 ## A test suite consists of test cases, and optionally other, nested test
 ## suites.
 ##
-## @tutorial(Writing tests): https://foxssake.github.io/vest/user-guide/writing-tests/
+## @tutorial(Writing tests): https://foxssake.github.io/vest/latest/user-guide/writing-tests/
 class Suite:
 	## Test suite name, displayed in reports
 	var name: String = ""
@@ -49,7 +49,7 @@ class Suite:
 
 ## Test case definition.
 ##
-## @tutorial(Writing tests): https://foxssake.github.io/vest/user-guide/writing-tests/
+## @tutorial(Writing tests): https://foxssake.github.io/vest/latest/user-guide/writing-tests/
 class Case:
 	## Test case description, displayed in reports
 	var description: String = ""
@@ -88,7 +88,7 @@ class Case:
 ## Benchmarks run a piece of code multiple times, measuring how much time each
 ## iteration took.
 ##
-## @tutorial(Benchmarking): https://foxssake.github.io/vest/user-guide/benchmarking/
+## @tutorial(Benchmarking): https://foxssake.github.io/vest/latest/user-guide/benchmarking/
 class Benchmark:
 	## Method to measure during the benchmark
 	var callback: Callable

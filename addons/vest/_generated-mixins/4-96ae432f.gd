@@ -7,7 +7,7 @@ extends "res://addons/vest/_generated-mixins/3-795b469a.gd"
 
 ## Mixin for capturing and asserting signals
 ##
-## @tutorial(Capturing signals): https://foxssake.github.io/vest/user-guide/capturing-signals/
+## @tutorial(Capturing signals): https://foxssake.github.io/vest/latest/user-guide/capturing-signals/
 
 # Maps signals to an array of recorded emissions
 # Each array item is an individual array containing the emission params

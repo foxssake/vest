@@ -3,7 +3,7 @@ class_name VestMockGenerator
 
 ## Generates mocks for existing scripts
 ##
-## @tutorial(Mocks): https://foxssake.github.io/vest/user-guide/mocks/
+## @tutorial(Mocks): https://foxssake.github.io/vest/latest/user-guide/mocks/
 
 # TODO: Support getters and setters?
 

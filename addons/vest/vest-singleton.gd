@@ -3,7 +3,7 @@ class_name Vest
 
 ## Utility singleton for running tests.
 ##
-## @tutorial(Printing custom messages): https://foxssake.github.io/vest/user-guide/printing-custom-messages/
+## @tutorial(Printing custom messages): https://foxssake.github.io/vest/latest/user-guide/printing-custom-messages/
 
 static var _messages: Array[String] = []
 static var _scene_tree: SceneTree

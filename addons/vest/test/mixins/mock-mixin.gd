@@ -2,7 +2,7 @@ extends VestTestMixin
 
 ## Provides mocking for tests
 ##
-## @tutorial(Mocks): https://foxssake.github.io/vest/user-guide/mocks/
+## @tutorial(Mocks): https://foxssake.github.io/vest/latest/user-guide/mocks/
 
 # TODO: Fail test case if there's unhandled calls
 
