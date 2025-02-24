@@ -59,6 +59,3 @@ zip -r "../build/vest.docs.v${version}.zip" ./*
 cd ..
 rm -rf site
 
-# Cleanup
-print $BOLD"Cleaning up" $NC
-rm -rf build/win64 build/linux
