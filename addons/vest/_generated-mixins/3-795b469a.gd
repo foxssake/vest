@@ -7,7 +7,7 @@ extends "res://addons/vest/_generated-mixins/2-8f5e982.gd"
 
 ## Provides mocking for tests
 ##
-## @tutorial(Mocks): https://foxssake.github.io/vest/user-guide/mocks/
+## @tutorial(Mocks): https://foxssake.github.io/vest/latest/user-guide/mocks/
 
 # TODO: Fail test case if there's unhandled calls
 

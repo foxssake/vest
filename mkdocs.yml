@@ -21,6 +21,9 @@ markdown_extensions:
   - pymdownx.superfences
   - pymdownx.tabbed:
       alternate_style: true
+extra:
+  version:
+    provider: mike
 nav:
   - 'index.md'
   - 'Getting Started':
