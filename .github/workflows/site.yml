@@ -1,0 +1,31 @@
+name: Publish site
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - v*
+  workflow_dispatch:
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy docs to GitHub Pages
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 
+        uses: actions/checkout@v2
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+      - name: Setup Python
+        uses: actions/setup-python@v5
+      - name: Setup mkdocs
+        run: pip install mkdocs && pip install $(mkdocs get-deps) && pip install mkdocs-material
+      - name: Setup mike
+        run: pip install mike
+      - name: Build
+        run: sh/push-docs.sh
