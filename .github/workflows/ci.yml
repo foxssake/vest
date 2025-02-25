@@ -23,4 +23,11 @@ jobs:
       - name: Verify setup
         run: godot --version
       - name: Run tests
-        run: sh/test.sh
+        run: |
+          godot --headless --import .
+          godot --headless -s "addons/vest/cli/vest-cli.gd" \
+                --vest-report-format tap --vest-report-file "vest.log" \
+                --vest-glob "res://test/*.test.gd"
+          if grep "not ok" "vest.log"; then
+            exit 1
+          fi
