@@ -1,4 +1,4 @@
-# Running from UI
+# Running from the UI
 
 *Vest*'s UI lives in the editor's bottom panel.
 

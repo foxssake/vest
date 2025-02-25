@@ -31,7 +31,6 @@ nav:
     - 'getting-started/your-first-test.md'
   - 'User Guide':
     - 'user-guide/writing-tests.md'
-    - 'user-guide/running-from-ui.md'
     - 'user-guide/test-outcomes.md'
     - 'user-guide/assertions.md'
     - 'user-guide/parameterized-tests.md'
@@ -40,3 +39,6 @@ nav:
     - 'user-guide/benchmarking.md'
     - 'user-guide/capturing-signals.md'
     - 'user-guide/printing-custom-messages.md'
+    - 'user-guide/running-from-ui.md'
+    - 'user-guide/running-from-cli.md'
+    - 'user-guide/running-on-ci.md'
