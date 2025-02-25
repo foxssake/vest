@@ -4,7 +4,7 @@ By levaraging it's [CLI support], *vest* can be used on CI as well.
 
 ## General use
 
-Usually a pipeline for running *vest* test consists of the following steps:
+Usually a pipeline for running *vest* tests consists of the following steps:
 
 1. Grab the Godot project
 1. Setup Godot
