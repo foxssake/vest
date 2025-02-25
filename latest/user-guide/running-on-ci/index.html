@@ -8,13 +8,11 @@
       
       
       
-        <link rel="canonical" href="https://foxssake.github.io/vest/latest/user-guide/capturing-signals/">
+        <link rel="canonical" href="https://foxssake.github.io/vest/latest/user-guide/running-on-ci/">
       
       
-        <link rel="prev" href="../benchmarking/">
+        <link rel="prev" href="../running-from-cli/">
       
-      
-        <link rel="next" href="../printing-custom-messages/">
       
       
       <link rel="icon" href="../../assets/vest-favicon.png">
@@ -22,7 +20,7 @@
     
     
       
-        <title>Capturing signals - vest</title>
+        <title>Running on CI - vest</title>
       
     
     
@@ -74,7 +72,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#capturing-signals" class="md-skip">
+        <a href="#running-on-ci" class="md-skip">
           Skip to content
         </a>
       
@@ -113,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Capturing signals
+              Running on CI
             
           </span>
         </div>
@@ -465,31 +463,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Capturing signals
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../capturing-signals/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -499,44 +476,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#capture" class="md-nav__link">
-    <span class="md-ellipsis">
-      Capture
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#inspect" class="md-nav__link">
-    <span class="md-ellipsis">
-      Inspect
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -612,10 +551,31 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../running-on-ci/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Running on CI
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -625,6 +585,44 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#general-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      General use
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-with-github-actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using with Github Actions
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -664,18 +662,18 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#capture" class="md-nav__link">
+  <a href="#general-use" class="md-nav__link">
     <span class="md-ellipsis">
-      Capture
+      General use
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#inspect" class="md-nav__link">
+  <a href="#using-with-github-actions" class="md-nav__link">
     <span class="md-ellipsis">
-      Inspect
+      Using with Github Actions
     </span>
   </a>
   
@@ -697,101 +695,88 @@
 
 
 
-<h1 id="capturing-signals">Capturing signals</h1>
-<p><em>Vest</em> lets you capture signal emissions. This is useful when a requirement is
-that certain signals are emitted, or even signals <em>not</em> being emitted.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">define()</label><label for="__tabbed_1_2">methods</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="k">extends</span><span class="w"> </span><span class="n">VestTest</span>
-
-<span class="k">signal</span><span class="w"> </span><span class="n">on_event</span><span class="p">(</span><span class="n">data</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="p">)</span>
-
-<span class="k">func</span><span class="w"> </span><span class="n">get_suite_name</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="p">:</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;Signals test&quot;</span>
-
-<span class="k">func</span><span class="w"> </span><span class="n">before_all</span><span class="p">():</span>
-<span class="w">  </span><span class="n">capture_signal</span><span class="p">(</span><span class="n">on_event</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="bp">true</span><span class="p">)</span>
-
-<span class="k">func</span><span class="w"> </span><span class="n">suite</span><span class="p">():</span>
-<span class="w">  </span><span class="n">test</span><span class="p">(</span><span class="s2">&quot;Signal was emitted at least once&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">():</span>
-<span class="w">    </span><span class="n">on_event</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
-<span class="w">    </span><span class="n">on_event</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="s2">&quot;bar&quot;</span><span class="p">)</span>
-
-<span class="w">    </span><span class="n">expect_not_empty</span><span class="p">(</span><span class="n">get_signal_emissions</span><span class="p">(</span><span class="n">on_event</span><span class="p">))</span>
-<span class="w">  </span><span class="p">)</span>
-
-<span class="w">  </span><span class="n">test</span><span class="p">(</span><span class="s2">&quot;Signal was emitted just once&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">():</span>
-<span class="w">    </span><span class="n">on_event</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
-
-<span class="w">    </span><span class="n">expect_equal</span><span class="p">(</span><span class="n">get_signal_emissions</span><span class="p">(</span><span class="n">on_event</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">(),</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
-<span class="w">  </span><span class="p">)</span>
-
-<span class="w">  </span><span class="n">test</span><span class="p">(</span><span class="s2">&quot;Signal was emitted with params&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">():</span>
-<span class="w">    </span><span class="n">on_event</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
-<span class="w">    </span><span class="n">on_event</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="s2">&quot;bar&quot;</span><span class="p">)</span>
-
-<span class="w">    </span><span class="n">expect_contains</span><span class="p">(</span><span class="n">get_signal_emissions</span><span class="p">(</span><span class="n">on_event</span><span class="p">),</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;bar&quot;</span><span class="p">])</span>
-<span class="w">  </span><span class="p">)</span>
-</code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="k">extends</span><span class="w"> </span><span class="n">VestTest</span>
-
-<span class="k">signal</span><span class="w"> </span><span class="n">on_event</span><span class="p">(</span><span class="n">data</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="p">)</span>
-
-<span class="k">func</span><span class="w"> </span><span class="n">get_suite_name</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="p">:</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;Signals test&quot;</span>
-
-<span class="k">func</span><span class="w"> </span><span class="n">before_all</span><span class="p">():</span>
-<span class="w">  </span><span class="n">capture_signal</span><span class="p">(</span><span class="n">on_event</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="bp">true</span><span class="p">)</span>
-
-<span class="k">func</span><span class="w"> </span><span class="n">test_signal_was_emitted_at_least_once</span><span class="p">():</span>
-<span class="w">  </span><span class="n">on_event</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="n">on_event</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="s2">&quot;bar&quot;</span><span class="p">)</span>
-
-<span class="w">  </span><span class="n">expect_not_empty</span><span class="p">(</span><span class="n">get_signal_emissions</span><span class="p">(</span><span class="n">on_event</span><span class="p">))</span>
-
-<span class="k">func</span><span class="w"> </span><span class="n">test_signal_was_emitted_just_once</span><span class="p">():</span>
-<span class="w">  </span><span class="n">on_event</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
-
-<span class="w">  </span><span class="n">expect_equal</span><span class="p">(</span><span class="n">get_signal_emissions</span><span class="p">(</span><span class="n">on_event</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">(),</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
-
-<span class="k">func</span><span class="w"> </span><span class="n">test_signal_was_emitted_with_params</span><span class="p">():</span>
-<span class="w">  </span><span class="n">on_event</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="n">on_event</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="s2">&quot;bar&quot;</span><span class="p">)</span>
-
-<span class="w">  </span><span class="n">expect_contains</span><span class="p">(</span><span class="n">get_signal_emissions</span><span class="p">(</span><span class="n">on_event</span><span class="p">),</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;bar&quot;</span><span class="p">])</span>
-</code></pre></div>
-</div>
-</div>
-</div>
-<h2 id="capture">Capture</h2>
-<p>By calling <code>capture_signal()</code>, a listener is connected to the signal that will
-record each emission. Make sure to pass in the amount of parameters the signal
-has, otherwise <em>vest</em> may fail at recording emissions.</p>
-<p><em>vest</em> has <em>persistent</em> and <em>non-persistent</em> signal captures. The latter,
-<em>non-persistent</em> captures are disconnected after every test case. If you want
-to call <code>capture_signal()</code> only once and have it be active for all subsequent
-test cases in the suite, pass in <code>true</code> for its <em>persistent</em> parameter.</p>
-<p>Persistent captures enable you to setup all the signal captures in
-<code>before_all()</code> or <code>on_begin()</code>, instead of having to repeat the same call for
-all your test cases.</p>
+<h1 id="running-on-ci">Running on CI</h1>
+<p>By levaraging it's <a href="../running-from-cli/">CLI support</a>, <em>vest</em> can be used on CI as well.</p>
+<h2 id="general-use">General use</h2>
+<p>Usually a pipeline for running <em>vest</em> tests consists of the following steps:</p>
+<ol>
+<li>Grab the Godot project</li>
+<li>Setup Godot</li>
+<li>Run <em>vest</em> CLI</li>
+<li>Check results</li>
+</ol>
+<p>While most steps are platform-specific, running the CLI and inspecting results
+is not.</p>
+<p>Running the CLI is covered in the <a href="../running-from-cli/">CLI support</a> page.</p>
+<p>To check results, export the test results in <em><a href="https://testanything.org/">TAP</a></em> format, and check if the
+report contains a line starting with <em>"not ok"</em>. If so, there were test
+failures, otherwise the tests have passed.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>All captured signal emissions are reset before each test case. This so that
-a signal emission captured in test A doesn't affect the results of test B.</p>
+<p>A much more sensible approach would be to check exit codes. While <em>vest</em>
+<em>does</em> set the exit code when ran from the CLI, this seems to be not always
+respected by Godot.</p>
 </div>
-<h2 id="inspect">Inspect</h2>
-<p>To retrieve the recorded emissions, call <code>get_signal_emissions()</code> with the
-captured signal. It will return an array of arrays, where each individual array
-is the list of parameters that were emitted.</p>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>Since <code>get_signal_emissions()</code> returns an array, it can also be asserted as
-such. This means that the <a href="../assertions/">assert library</a> can be used, instead of having
-to resort to special methods or systems.</p>
-</div>
+<p>Usually on CI the project is freshly copied, meaning the test run would be the
+first time Godot opens and imports the project. For earlier versions ( 4.1, 4.2
+), a separate <em>import</em> step might be needed for Godot to properly parse the
+project. After the import is done, the tests may be ran.</p>
+<p>Let's see all of that in an example script:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Import project&quot;</span>
+godot<span class="w"> </span>--headless<span class="w"> </span>--import<span class="w"> </span>.
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Run vest&quot;</span>
+godot<span class="w"> </span>--headless<span class="w"> </span>-s<span class="w"> </span><span class="s2">&quot;addons/vest/cli/vest-cli.gd&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">      </span>--vest-report-format<span class="w"> </span>tap<span class="w"> </span>--vest-report-file<span class="w"> </span><span class="s2">&quot;vest.log&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">      </span>--vest-glob<span class="w"> </span><span class="s2">&quot;res://test/*.test.gd&quot;</span>
+
+<span class="k">if</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;not ok&quot;</span><span class="w"> </span><span class="s2">&quot;vest.log&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;There are failing test(s)!&quot;</span>
+<span class="w">  </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+<span class="k">else</span>
+<span class="w">  </span>print<span class="w"> </span><span class="s2">&quot;Success!&quot;</span>
+<span class="k">fi</span>
+</code></pre></div>
+<p>The script first imports the project with Godot, then runs the tests. After the
+run is complete, it checks the test report for failures.</p>
+<h2 id="using-with-github-actions">Using with Github Actions</h2>
+<p>As with many Github Actions workflows, the starting step is to checkout the
+repository.</p>
+<p>Godot itself can be setup with <a href="https://chickensoft.games/">Chickensoft</a>'s excellent <a href="https://github.com/chickensoft-games/setup-godot">Setup Godot</a> action.</p>
+<p>For a complete example, feel free to refer to <em>vest</em>'s own <a href="https://github.com/foxssake/vest/blob/main/.github/workflows/ci.yml">GHA setup</a>, or the
+following minimal example:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CI</span>
+
+<span class="nt">on</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">push</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="s">&quot;main&quot;</span><span class="w"> </span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">pull_request</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="s">&quot;main&quot;</span><span class="w"> </span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">workflow_dispatch</span><span class="p">:</span>
+
+<span class="nt">jobs</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">test</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run tests</span>
+<span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Checkout</span><span class="w"> </span>
+<span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v2</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Setup Godot</span>
+<span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">chickensoft-games/setup-godot@v1</span>
+<span class="w">        </span><span class="nt">with</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4.2.2</span>
+<span class="w">          </span><span class="nt">use-dotnet</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">          </span><span class="nt">include-templates</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run tests</span>
+<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">          </span><span class="no">godot --headless --import .</span>
+<span class="w">          </span><span class="no">godot --headless -s &quot;addons/vest/cli/vest-cli.gd&quot; \</span>
+<span class="w">                </span><span class="no">--vest-report-format tap --vest-report-file &quot;vest.log&quot; \</span>
+<span class="w">                </span><span class="no">--vest-glob &quot;res://test/*.test.gd&quot;</span>
+<span class="w">          </span><span class="no">if grep &quot;not ok&quot; &quot;vest.log&quot;; then</span>
+<span class="w">            </span><span class="no">exit 1</span>
+<span class="w">          </span><span class="no">fi</span>
+</code></pre></div>
 
 
 

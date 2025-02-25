@@ -8,13 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://foxssake.github.io/vest/latest/user-guide/capturing-signals/">
+        <link rel="canonical" href="https://foxssake.github.io/vest/latest/user-guide/running-from-cli/">
       
       
-        <link rel="prev" href="../benchmarking/">
+        <link rel="prev" href="../running-from-ui/">
       
       
-        <link rel="next" href="../printing-custom-messages/">
+        <link rel="next" href="../running-on-ci/">
       
       
       <link rel="icon" href="../../assets/vest-favicon.png">
@@ -22,7 +22,7 @@
     
     
       
-        <title>Capturing signals - vest</title>
+        <title>Running from CLI - vest</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#capturing-signals" class="md-skip">
+        <a href="#running-from-cli" class="md-skip">
           Skip to content
         </a>
       
@@ -113,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Capturing signals
+              Running from CLI
             
           </span>
         </div>
@@ -465,31 +465,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Capturing signals
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../capturing-signals/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -499,44 +478,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#capture" class="md-nav__link">
-    <span class="md-ellipsis">
-      Capture
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#inspect" class="md-nav__link">
-    <span class="md-ellipsis">
-      Inspect
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -590,10 +531,31 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../running-from-cli/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Running from CLI
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -603,6 +565,44 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#running-vest" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running vest
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#command-line-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Command line parameters
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -664,18 +664,18 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#capture" class="md-nav__link">
+  <a href="#running-vest" class="md-nav__link">
     <span class="md-ellipsis">
-      Capture
+      Running vest
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#inspect" class="md-nav__link">
+  <a href="#command-line-parameters" class="md-nav__link">
     <span class="md-ellipsis">
-      Inspect
+      Command line parameters
     </span>
   </a>
   
@@ -697,101 +697,57 @@
 
 
 
-<h1 id="capturing-signals">Capturing signals</h1>
-<p><em>Vest</em> lets you capture signal emissions. This is useful when a requirement is
-that certain signals are emitted, or even signals <em>not</em> being emitted.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">define()</label><label for="__tabbed_1_2">methods</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="k">extends</span><span class="w"> </span><span class="n">VestTest</span>
+<h1 id="running-from-cli">Running from CLI</h1>
+<p><em>Vest</em> can be ran without the Godot editor, by supporting CLI usage.</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>godot<span class="w"> </span>--headless<span class="w"> </span>-s<span class="w"> </span>addons/vest/cli/vest-cli.gd<span class="w"> </span>--vest-glob<span class="w"> </span><span class="s2">&quot;res://tests/*.test.gd&quot;</span><span class="w"> </span>--vest-report-format<span class="w"> </span>tap
+Godot<span class="w"> </span>Engine<span class="w"> </span>v4.2.2.stable.official.15073afe3<span class="w"> </span>-<span class="w"> </span>https://godotengine.org
 
-<span class="k">signal</span><span class="w"> </span><span class="n">on_event</span><span class="p">(</span><span class="n">data</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="p">)</span>
-
-<span class="k">func</span><span class="w"> </span><span class="n">get_suite_name</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="p">:</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;Signals test&quot;</span>
-
-<span class="k">func</span><span class="w"> </span><span class="n">before_all</span><span class="p">():</span>
-<span class="w">  </span><span class="n">capture_signal</span><span class="p">(</span><span class="n">on_event</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="bp">true</span><span class="p">)</span>
-
-<span class="k">func</span><span class="w"> </span><span class="n">suite</span><span class="p">():</span>
-<span class="w">  </span><span class="n">test</span><span class="p">(</span><span class="s2">&quot;Signal was emitted at least once&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">():</span>
-<span class="w">    </span><span class="n">on_event</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
-<span class="w">    </span><span class="n">on_event</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="s2">&quot;bar&quot;</span><span class="p">)</span>
-
-<span class="w">    </span><span class="n">expect_not_empty</span><span class="p">(</span><span class="n">get_signal_emissions</span><span class="p">(</span><span class="n">on_event</span><span class="p">))</span>
-<span class="w">  </span><span class="p">)</span>
-
-<span class="w">  </span><span class="n">test</span><span class="p">(</span><span class="s2">&quot;Signal was emitted just once&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">():</span>
-<span class="w">    </span><span class="n">on_event</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
-
-<span class="w">    </span><span class="n">expect_equal</span><span class="p">(</span><span class="n">get_signal_emissions</span><span class="p">(</span><span class="n">on_event</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">(),</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
-<span class="w">  </span><span class="p">)</span>
-
-<span class="w">  </span><span class="n">test</span><span class="p">(</span><span class="s2">&quot;Signal was emitted with params&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">():</span>
-<span class="w">    </span><span class="n">on_event</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
-<span class="w">    </span><span class="n">on_event</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="s2">&quot;bar&quot;</span><span class="p">)</span>
-
-<span class="w">    </span><span class="n">expect_contains</span><span class="p">(</span><span class="n">get_signal_emissions</span><span class="p">(</span><span class="n">on_event</span><span class="p">),</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;bar&quot;</span><span class="p">])</span>
-<span class="w">  </span><span class="p">)</span>
+TAP<span class="w"> </span>version<span class="w"> </span><span class="m">14</span>
+<span class="m">1</span>..2
+<span class="c1"># Subtest: Equality</span>
+<span class="w">  </span><span class="m">1</span>..6
+<span class="w">  </span>ok<span class="w"> </span><span class="m">1</span><span class="w"> </span>-<span class="w"> </span>Arrays<span class="w"> </span>should<span class="w"> </span>be<span class="w"> </span>equal
+<span class="w">  </span>ok<span class="w"> </span><span class="m">2</span><span class="w"> </span>-<span class="w"> </span>Arrays<span class="w"> </span>should<span class="w"> </span>differ
+<span class="w">  </span>ok<span class="w"> </span><span class="m">3</span><span class="w"> </span>-<span class="w"> </span>Dictionaries<span class="w"> </span>should<span class="w"> </span>be<span class="w"> </span>equal
+<span class="w">  </span>ok<span class="w"> </span><span class="m">4</span><span class="w"> </span>-<span class="w"> </span>Dictionaries<span class="w"> </span>should<span class="w"> </span>differ
+<span class="w">  </span>ok<span class="w"> </span><span class="m">5</span><span class="w"> </span>-<span class="w"> </span>Should<span class="w"> </span>equal<span class="w"> </span>on<span class="w"> </span>custom<span class="w"> </span>method
+<span class="w">  </span>ok<span class="w"> </span><span class="m">6</span><span class="w"> </span>-<span class="w"> </span>Should<span class="w"> </span>differ<span class="w"> </span>on<span class="w"> </span>custom<span class="w"> </span>method
+ok<span class="w"> </span><span class="m">1</span><span class="w"> </span>-<span class="w"> </span>Equality
+<span class="c1"># Subtest: Mocks</span>
+<span class="w">  </span><span class="m">1</span>..7
+<span class="w">  </span>ok<span class="w"> </span><span class="m">1</span><span class="w"> </span>-<span class="w"> </span>Should<span class="w"> </span>Return<span class="w"> </span>Default
+<span class="w">  </span>ok<span class="w"> </span><span class="m">2</span><span class="w"> </span>-<span class="w"> </span>Should<span class="w"> </span>Return<span class="w"> </span>On<span class="w"> </span>Args
+<span class="w">  </span>ok<span class="w"> </span><span class="m">3</span><span class="w"> </span>-<span class="w"> </span>Should<span class="w"> </span>Return<span class="w"> </span>Default<span class="w"> </span>On<span class="w"> </span>Wrong<span class="w"> </span>Args
+<span class="w">  </span>ok<span class="w"> </span><span class="m">4</span><span class="w"> </span>-<span class="w"> </span>Should<span class="w"> </span>Answer<span class="w"> </span>Default
+<span class="w">  </span>ok<span class="w"> </span><span class="m">5</span><span class="w"> </span>-<span class="w"> </span>Should<span class="w"> </span>Answer<span class="w"> </span>On<span class="w"> </span>Args
+<span class="w">  </span>ok<span class="w"> </span><span class="m">6</span><span class="w"> </span>-<span class="w"> </span>Should<span class="w"> </span>Answer<span class="w"> </span>Default<span class="w"> </span>On<span class="w"> </span>Wrong<span class="w"> </span>Args
+<span class="w">  </span>ok<span class="w"> </span><span class="m">7</span><span class="w"> </span>-<span class="w"> </span>Should<span class="w"> </span>Record<span class="w"> </span>Calls
+ok<span class="w"> </span><span class="m">2</span><span class="w"> </span>-<span class="w"> </span>Mocks
 </code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="k">extends</span><span class="w"> </span><span class="n">VestTest</span>
-
-<span class="k">signal</span><span class="w"> </span><span class="n">on_event</span><span class="p">(</span><span class="n">data</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="p">)</span>
-
-<span class="k">func</span><span class="w"> </span><span class="n">get_suite_name</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="p">:</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;Signals test&quot;</span>
-
-<span class="k">func</span><span class="w"> </span><span class="n">before_all</span><span class="p">():</span>
-<span class="w">  </span><span class="n">capture_signal</span><span class="p">(</span><span class="n">on_event</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="bp">true</span><span class="p">)</span>
-
-<span class="k">func</span><span class="w"> </span><span class="n">test_signal_was_emitted_at_least_once</span><span class="p">():</span>
-<span class="w">  </span><span class="n">on_event</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="n">on_event</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="s2">&quot;bar&quot;</span><span class="p">)</span>
-
-<span class="w">  </span><span class="n">expect_not_empty</span><span class="p">(</span><span class="n">get_signal_emissions</span><span class="p">(</span><span class="n">on_event</span><span class="p">))</span>
-
-<span class="k">func</span><span class="w"> </span><span class="n">test_signal_was_emitted_just_once</span><span class="p">():</span>
-<span class="w">  </span><span class="n">on_event</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
-
-<span class="w">  </span><span class="n">expect_equal</span><span class="p">(</span><span class="n">get_signal_emissions</span><span class="p">(</span><span class="n">on_event</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">(),</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
-
-<span class="k">func</span><span class="w"> </span><span class="n">test_signal_was_emitted_with_params</span><span class="p">():</span>
-<span class="w">  </span><span class="n">on_event</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="n">on_event</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="s2">&quot;bar&quot;</span><span class="p">)</span>
-
-<span class="w">  </span><span class="n">expect_contains</span><span class="p">(</span><span class="n">get_signal_emissions</span><span class="p">(</span><span class="n">on_event</span><span class="p">),</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;bar&quot;</span><span class="p">])</span>
+<h2 id="running-vest">Running vest</h2>
+<p>The script exposing <em>vest</em>'s CLI functionality is at
+<code>addons/vest/cli/vest-cli.gd</code>. Run this script with <a href="https://docs.godotengine.org/en/latest/tutorials/editor/command_line_tutorial.html">Godot's command line
+support</a>, optionally specifying <em>headless</em> mode:</p>
+<div class="highlight"><pre><span></span><code>godot<span class="w"> </span>--headless<span class="w"> </span>-s<span class="w"> </span>addonst/vest/cli/vest-cli.gd<span class="w"> </span><span class="o">[</span>...<span class="o">]</span>
 </code></pre></div>
-</div>
-</div>
-</div>
-<h2 id="capture">Capture</h2>
-<p>By calling <code>capture_signal()</code>, a listener is connected to the signal that will
-record each emission. Make sure to pass in the amount of parameters the signal
-has, otherwise <em>vest</em> may fail at recording emissions.</p>
-<p><em>vest</em> has <em>persistent</em> and <em>non-persistent</em> signal captures. The latter,
-<em>non-persistent</em> captures are disconnected after every test case. If you want
-to call <code>capture_signal()</code> only once and have it be active for all subsequent
-test cases in the suite, pass in <code>true</code> for its <em>persistent</em> parameter.</p>
-<p>Persistent captures enable you to setup all the signal captures in
-<code>before_all()</code> or <code>on_begin()</code>, instead of having to repeat the same call for
-all your test cases.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>All captured signal emissions are reset before each test case. This so that
-a signal emission captured in test A doesn't affect the results of test B.</p>
-</div>
-<h2 id="inspect">Inspect</h2>
-<p>To retrieve the recorded emissions, call <code>get_signal_emissions()</code> with the
-captured signal. It will return an array of arrays, where each individual array
-is the list of parameters that were emitted.</p>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>Since <code>get_signal_emissions()</code> returns an array, it can also be asserted as
-such. This means that the <a href="../assertions/">assert library</a> can be used, instead of having
-to resort to special methods or systems.</p>
-</div>
+<p>After the script, optional parameters can be specified for <em>vest</em>.</p>
+<h2 id="command-line-parameters">Command line parameters</h2>
+<dl>
+<dt><code>--vest-file</code></dt>
+<dd>Specify the test script file to run. Mutually exclusive with <code>--vest-glob</code>.</dd>
+<dt><code>--vest-glob</code></dt>
+<dd>Specify the test glob to use for finding test scripts. Mutually exclusive with <code>--vest-file</code>.</dd>
+<dt><code>--vest-report-format</code></dt>
+<dd>Specify the report format. Currently only <code>tap</code> is supported. If not
+specified, no report will be written.</dd>
+<dt><code>--vest-report-file</code></dt>
+<dd>Specify the output file for saving the test report. The report will be
+printed to STDOUT if not specified.</dd>
+<dt><code>--vest-host</code></dt>
+<dd><em>Internal only</em>. Specifies the host to connect to for sending test results.</dd>
+<dt><code>--vest-port</code></dt>
+<dd><em>Internal only</em>. Specifies the port to use for sending test results.</dd>
+</dl>
 
 
 
