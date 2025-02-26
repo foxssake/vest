@@ -12,13 +12,13 @@ A unit testing library for Godot.
 
 ## Features
 
-* Define tests with test methods or programmatically with `define()`
-* Parameterized tests to conveniently define multiple tests
-* Mock classes dynamically, for simpler unit testing
-* Run benchmarks, to find the best performing implementations
-* Generate reports in [TAP] format, to integrate with other test harnesses
-* In-editor UI for convenient testing
-* Support for running in CI
+* 🆎 Define tests with test methods or programmatically with `define()`
+* 📝 Parameterized tests to conveniently define multiple tests
+* 🎭 Mock classes dynamically, for simpler unit testing
+* ⚡ Run benchmarks, to find the best performing implementations
+* 🗒️ Generate reports in [TAP] format, to integrate with other test harnesses
+* ▶️ In-editor UI for convenient testing
+* 🤖 Support for running in CI
 
 ## Overview
 
