@@ -1,6 +1,6 @@
-![vest logo](./icon.png)
+<!-- ![vest logo](./icon.png) -->
 
-# vest
+# ![vest logo](./docs/assets/vest-favicon.png) vest
 
 [![License](https://img.shields.io/github/license/foxssake/vest)](https://github.com/foxssake/vest/blob/main/LICENSE)
 [![GitHub Release](https://img.shields.io/github/v/release/foxssake/vest)](https://github.com/foxssake/vest/releases)
