@@ -8,11 +8,11 @@
 [![Discord](https://img.shields.io/discord/1253434107656933447?logo=discord&label=Discord)](https://discord.gg/xWGh4GskG5)
 [![ko-fi](https://img.shields.io/badge/Support%20on-ko--fi-ff5e5b?logo=ko-fi)](https://ko-fi.com/T6T8WZD0W)
 
-A unit testing library for Godot.
+A unit testing library for [Godot].
 
 ## Features
 
-* 🆎 Define tests with test methods or programmatically with `define()`
+* ✨ Define tests with test methods or programmatically with `define()`
 * 📝 Parameterized tests to conveniently define multiple tests
 * 🎭 Mock classes dynamically, for simpler unit testing
 * ⚡ Run benchmarks, to find the best performing implementations
@@ -22,12 +22,9 @@ A unit testing library for Godot.
 
 ## Overview
 
-A testing addon for Godot, *vest* aims to bring all the features of a
+A testing addon for [Godot], *vest* aims to bring all the features of a
 full-fledged testing framework, while staying as lightweight and nonintrusive
 as possible.
-
-To this end, all tests are ran in the background, so developer flow is not
-broken.
 
 Tests written with *vest* look as follows:
 
@@ -91,6 +88,7 @@ Donations are always appreciated and taken as gratitude for the work that has
 already been done.
 
 
+[Godot]: https://godotengine.org/
 [TAP]: https://testanything.org/
 [vest site]: https://foxssake.github.io/vest/latest/
 [Getting started]: https://foxssake.github.io/vest/latest/getting-started/installing-vest/
