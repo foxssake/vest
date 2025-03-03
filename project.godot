@@ -14,6 +14,10 @@ config/name="vest"
 config/features=PackedStringArray("4.1")
 config/icon="res://icon.png"
 
+[autoload]
+
+Autoload="*res://src/autoload.gd"
+
 [debug]
 
 gdscript/warnings/exclude_addons=false
@@ -22,6 +26,10 @@ gdscript/warnings/exclude_addons=false
 
 enabled=PackedStringArray("res://addons/vest/plugin.cfg")
 
+[filesystem]
+
+import/blender/enabled=false
+
 [vest]
 
-general/test_glob="res://*.test.gd"
+general/test_glob="res://tests/*.test.gd"

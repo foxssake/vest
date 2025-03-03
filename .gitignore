@@ -2,5 +2,6 @@
 .godot/
 
 vest-report.log
+vest.log
 build/
 buildtmp/
