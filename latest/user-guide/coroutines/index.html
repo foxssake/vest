@@ -8,13 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://foxssake.github.io/vest/latest/user-guide/writing-tests/">
+        <link rel="canonical" href="https://foxssake.github.io/vest/latest/user-guide/coroutines/">
       
       
-        <link rel="prev" href="../../getting-started/your-first-test/">
+        <link rel="prev" href="../capturing-signals/">
       
       
-        <link rel="next" href="../test-outcomes/">
+        <link rel="next" href="../printing-custom-messages/">
       
       
       <link rel="icon" href="../../assets/vest-favicon.png">
@@ -22,7 +22,7 @@
     
     
       
-        <title>Writing tests - vest</title>
+        <title>Coroutines - vest</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#writing-tests" class="md-skip">
+        <a href="#coroutines" class="md-skip">
           Skip to content
         </a>
       
@@ -113,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Writing tests
+              Coroutines
             
           </span>
         </div>
@@ -311,31 +311,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Writing tests
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../writing-tests/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -345,68 +324,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#defining-suites" class="md-nav__link">
-    <span class="md-ellipsis">
-      Defining suites
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Defining suites">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#with-define" class="md-nav__link">
-    <span class="md-ellipsis">
-      With define
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#with-methods" class="md-nav__link">
-    <span class="md-ellipsis">
-      With methods
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#suite-name" class="md-nav__link">
-    <span class="md-ellipsis">
-      Suite name
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -570,10 +487,19 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../coroutines/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -583,6 +509,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -703,56 +630,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#defining-suites" class="md-nav__link">
-    <span class="md-ellipsis">
-      Defining suites
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Defining suites">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#with-define" class="md-nav__link">
-    <span class="md-ellipsis">
-      With define
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#with-methods" class="md-nav__link">
-    <span class="md-ellipsis">
-      With methods
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#suite-name" class="md-nav__link">
-    <span class="md-ellipsis">
-      Suite name
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -767,96 +644,54 @@
 
 
 
-<h1 id="writing-tests">Writing tests</h1>
-<p><em>Vest</em> defines tests as a set of <em>suites</em>. Each <em>suite</em> may contain test
-<em>cases</em>, <em>benchmarks</em>, and even nested <em>suites</em>.</p>
-<p>For example, the suite could cover the class ( unit )  being tested, with each
-method receiving its own suite of requirements, each being covered by a test
-case:</p>
-<div class="highlight"><pre><span></span><code>Set
-├── add()
-│   ├── should add unknown item
-│   └── should do nothing on known item
-├── has()
-│   ├── should return false on empty set
-│   ├── should return false on unknown item
-│   └── should return true on known item
-└── erase()
-    ├── should erase known item
-    └── should do nothing on unknown item
-</code></pre></div>
-<p>In this example, the <code>Set</code> suite has 3 subsuites, each with their own test cases.</p>
-<h2 id="defining-suites">Defining suites</h2>
-<p><em>Vest</em> considers classes extending the <code>VestTest</code> base class as tests. Each
-example in the documentation will present both styles of suite definitions
-supported:</p>
+<h1 id="coroutines">Coroutines</h1>
+<p><em>vest</em> also supports coroutines. This enables writing asynchronous tests where
+you need to wait for signals or other coroutines.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">define()</label><label for="__tabbed_1_2">methods</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="k">extends</span><span class="w"> </span><span class="n">VestTest</span>
 
-<span class="k">func</span><span class="w"> </span><span class="n">suite</span><span class="p">():</span>
-<span class="w">  </span><span class="n">define</span><span class="p">(</span><span class="s2">&quot;Test suite&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">():</span>
-<span class="w">    </span><span class="n">test</span><span class="p">(</span><span class="s2">&quot;Should do A&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">():</span><span class="w"> </span><span class="k">pass</span><span class="p">)</span>
-<span class="w">    </span><span class="n">test</span><span class="p">(</span><span class="s2">&quot;Should do B&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">():</span><span class="w"> </span><span class="k">pass</span><span class="p">)</span>
-<span class="w">    </span><span class="n">test</span><span class="p">(</span><span class="s2">&quot;Should do C&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">():</span><span class="w"> </span><span class="k">pass</span><span class="p">)</span>
+<span class="k">func</span><span class="w"> </span><span class="n">get_suite_name</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="p">:</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;Coroutines&quot;</span>
 
-<span class="w">    </span><span class="n">define</span><span class="p">(</span><span class="s2">&quot;Nested suite&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">():</span>
-<span class="w">      </span><span class="n">test</span><span class="p">(</span><span class="s2">&quot;Should do D&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">():</span><span class="w"> </span><span class="k">pass</span><span class="p">)</span>
-<span class="w">    </span><span class="p">)</span>
+<span class="k">func</span><span class="w"> </span><span class="n">suite</span><span class="p">():</span>
+<span class="w">  </span><span class="c1"># Coroutines are also supported when defining tests</span>
+<span class="w">  </span><span class="n">await</span><span class="w"> </span><span class="n">Vest</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+
+<span class="w">  </span><span class="n">test</span><span class="p">(</span><span class="s2">&quot;Think of a number&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">():</span>
+<span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">await</span><span class="w"> </span><span class="n">think_of_a_number</span><span class="p">()</span>
+
+<span class="w">    </span><span class="n">expect_contains</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">),</span><span class="w"> </span><span class="n">number</span><span class="p">)</span>
 <span class="w">  </span><span class="p">)</span>
+
+<span class="k">func</span><span class="w"> </span><span class="n">think_of_a_number</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Think for a bit</span>
+<span class="w">  </span><span class="n">await</span><span class="w"> </span><span class="n">Vest</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nb">randi</span><span class="p">()</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">10</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="k">extends</span><span class="w"> </span><span class="n">VestTest</span>
 
-<span class="k">func</span><span class="w"> </span><span class="n">test_should_do_a</span><span class="p">():</span>
-<span class="w">  </span><span class="k">pass</span>
+<span class="k">func</span><span class="w"> </span><span class="n">get_suite_name</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="p">:</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;Coroutines&quot;</span>
 
-<span class="k">func</span><span class="w"> </span><span class="n">test_should_do_b</span><span class="p">():</span>
-<span class="w">  </span><span class="k">pass</span>
+<span class="k">func</span><span class="w"> </span><span class="n">test_think_of_a_number</span><span class="p">():</span>
+<span class="w">  </span><span class="k">var</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">await</span><span class="w"> </span><span class="n">think_of_a_number</span><span class="p">()</span>
 
-<span class="k">func</span><span class="w"> </span><span class="n">test_should_do_c</span><span class="p">():</span>
-<span class="w">  </span><span class="k">pass</span>
+<span class="w">  </span><span class="n">expect_contains</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">),</span><span class="w"> </span><span class="n">number</span><span class="p">)</span>
+
+<span class="k">func</span><span class="w"> </span><span class="n">think_of_a_number</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Think for a bit</span>
+<span class="w">  </span><span class="n">await</span><span class="w"> </span><span class="n">Vest</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nb">randi</span><span class="p">()</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">10</span>
 </code></pre></div>
 </div>
 </div>
 </div>
-<h3 id="with-define">With define</h3>
-<p>Methods whose names start with <code>suite</code> are considered suite definitions and are
-expected to use <code>define()</code>. The method name can be anything ( even simply
-<code>suite()</code> ), and will be called once, before running the test class.</p>
-<p>Inside <code>define()</code>, use <code>test()</code> to define individual test cases. For nested
-suites, use <code>define()</code> inside itself. There's no limit on the amount of
-nesting.</p>
-<p>As shown in the examples, <code>test()</code> takes a test name, and a function. This
-function contains the actual test case implementation.</p>
-<p>The method name has no bearing on the suites or cases defined.</p>
-<h3 id="with-methods">With methods</h3>
-<p>Methods whose names start with <code>test</code> are considered test case definitions. The
-test case name is derived from the method name, e.g.
-<code>test_should_return_false_on_null()</code> becomes <code>Should Return False On Null</code>.</p>
-<p>The function body contains the test case implementation.</p>
-<p>Methods don't support nested suites.</p>
-<h3 id="suite-name">Suite name</h3>
-<p>Test classes are represented as test suites. There's different ways to set this
-suite's name. In order of precedence:</p>
-<ol>
-<li>Implement <code>get_suite_name()</code>:
-    <div class="highlight"><pre><span></span><code><span class="k">extends</span><span class="w"> </span><span class="n">VestTest</span>
-
-<span class="k">func</span><span class="w"> </span><span class="n">get_suite_name</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="p">:</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;Example Suite&quot;</span>
-</code></pre></div></li>
-<li>Use <code>class_name</code>:
-    <div class="highlight"><pre><span></span><code><span class="k">extends</span><span class="w"> </span><span class="n">VestTest</span>
-<span class="k">class_name</span><span class="w"> </span><span class="n">ExampleSuite</span>
-</code></pre></div></li>
-<li>If none of the above are present, <em>vest</em> will use the script's path, e.g.
-   <code>res://tests/example_test.gd</code></li>
-</ol>
-<p>To find out how to set test outcomes, continue reading about <a href="../test-outcomes/">test outcomes</a>
-and <a href="../assertions/">assertions</a>.</p>
+<p>Coroutines are supported in tests ( both with <code>test()</code> and test methods ), and
+in suite definitions ( both in <code>define()</code> and suite methods ).</p>
 
 
 
