@@ -13,6 +13,7 @@ A unit testing library for [Godot].
 * 🎭 Mock classes dynamically, for simpler unit testing
 * ⚡ Run benchmarks, to find the best performing implementations
 * 🗒️ Generate reports in [TAP] format, to integrate with other test harnesses
+* 🔁 [Coroutines] for asynchronous cases
 * ▶️ In-editor UI for convenient testing
 * 🤖 Support for running in CI
 
@@ -56,3 +57,4 @@ Godot v4.1.4 and up
 
 [Godot]: https://godotengine.org/
 [TAP]: https://testanything.org/
+[Coroutines]: https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/gdscript_basics.html#awaiting-signals-or-coroutines

@@ -11,7 +11,8 @@ func run_script(script: Script) -> VestResult.Suite:
 	var results: VestResult.Suite = null
 	if test_instance is VestTest:
 		test_instance._begin(test_instance)
-		results = _run_suite(test_instance._get_suite(), test_instance)
+		var suite = await test_instance._get_suite()
+		results = await _run_suite(suite, test_instance)
 		test_instance._finish(test_instance)
 	test_instance.free()
 
@@ -26,7 +27,7 @@ func run_glob(glob: String) -> VestResult.Suite:
 	result.suite.name = "Glob suite \"%s\"" % [glob]
 
 	for test_file in _glob(glob):
-		var suite_result := run_script_at(test_file)
+		var suite_result := await run_script_at(test_file)
 		if suite_result:
 			result.subsuites.append(suite_result)
 
@@ -34,7 +35,7 @@ func run_glob(glob: String) -> VestResult.Suite:
 
 func _run_case(case: VestDefs.Case, test_instance: VestTest) -> VestResult.Case:
 	test_instance._begin(case)
-	case.callback.call()
+	await case.callback.call()
 	test_instance._finish(case)
 
 	return test_instance._get_result()
@@ -46,10 +47,12 @@ func _run_suite(suite: VestDefs.Suite, test_instance: VestTest) -> VestResult.Su
 	test_instance._begin(suite)
 
 	for subsuite in suite.suites:
-		result.subsuites.append(_run_suite(subsuite, test_instance))
+		var suite_result := await _run_suite(subsuite, test_instance)
+		result.subsuites.append(suite_result)
 
 	for case in suite.cases:
-		result.cases.append(_run_case(case, test_instance))
+		var case_result := await _run_case(case, test_instance)
+		result.cases.append(case_result)
 
 	test_instance._finish(suite)
 

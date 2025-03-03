@@ -19,7 +19,7 @@ func define(name: String, callback: Callable) -> VestDefs.Suite:
 	suite.definition_file = userland_loc[0]
 	suite.definition_line = userland_loc[1]
 
-	callback.call()
+	await callback.call()
 
 	_define_stack.pop_back()
 	if not _define_stack.is_empty():
@@ -127,7 +127,7 @@ func _get_result() -> VestResult.Case:
 	return _result
 
 func _get_suite() -> VestDefs.Suite:
-	return define("OVERRIDE ME", func():)
+	return await define("OVERRIDE ME", func(): pass)
 
 func _find_userland_stack_location() -> Array:
 	var stack := get_stack()

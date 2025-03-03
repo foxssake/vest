@@ -38,6 +38,7 @@ nav:
     - 'user-guide/mocks.md'
     - 'user-guide/benchmarking.md'
     - 'user-guide/capturing-signals.md'
+    - 'user-guide/coroutines.md'
     - 'user-guide/printing-custom-messages.md'
     - 'user-guide/running-from-ui.md'
     - 'user-guide/running-from-cli.md'
