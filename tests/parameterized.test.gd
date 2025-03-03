@@ -1,5 +1,7 @@
 extends VestTest
-class_name ParameterizedTest
+
+func get_suite_name() -> String:
+	return "Parameterized"
 
 func params_provider():
 	return [

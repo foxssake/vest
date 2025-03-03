@@ -42,6 +42,18 @@ static func until(condition: Callable, timeout: float = 5., interval: float = 0.
 
 	return ERR_TIMEOUT
 
+## Wait for [param duration] seconds.
+## [br][br]
+## Returns [constant OK] on success.[br]
+## Returns [constant ERR_UNAVAILABLE] if no [SceneTree] is available.
+static func sleep(duration: float) -> Error:
+	if not _scene_tree:
+		push_warning("Missing reference to SceneTree, will return immediately!")
+		return ERR_UNAVAILABLE
+
+	await _scene_tree.create_timer(duration).timeout
+	return OK
+
 ## Set the test glob.
 ## [br][br]
 ## The test glob is used for finding test scripts to run.

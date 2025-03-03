@@ -16,7 +16,7 @@ func run_script_at(path: String) -> VestResult.Suite:
 	if not test_script or not test_script is Script:
 		return null
 
-	return run_script(test_script)
+	return await run_script(test_script)
 
 func _glob(pattern: String) -> Array[String]:
 	var results: Array[String] = []

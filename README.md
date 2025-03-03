@@ -17,6 +17,7 @@ A unit testing library for [Godot].
 * 🎭 Mock classes dynamically, for simpler unit testing
 * ⚡ Run benchmarks, to find the best performing implementations
 * 🗒️ Generate reports in [TAP] format, to integrate with other test harnesses
+* 🔁 [Coroutines] for asynchronous cases
 * ▶️ In-editor UI for convenient testing
 * 🤖 Support for running in CI
 
@@ -90,6 +91,7 @@ already been done.
 
 [Godot]: https://godotengine.org/
 [TAP]: https://testanything.org/
+[Coroutines]: https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/gdscript_basics.html#awaiting-signals-or-coroutines
 [vest site]: https://foxssake.github.io/vest/latest/
 [Getting started]: https://foxssake.github.io/vest/latest/getting-started/installing-vest/
 [`examples/`]: https://github.com/foxssake/vest/tree/main/examples
