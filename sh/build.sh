@@ -48,7 +48,7 @@ for addon in ${addons[@]}; do
     # Copy script templates
     cp -r "$ROOT/script_templates" "./${addon}.v${version}"
 
-    zip -r "${addon_dst}.zip" "${addon}.v${version}" "script_templates"
+    zip -r "${addon_dst}.zip" "${addon}.v${version}"
 
     cd "$ROOT"
     rm -rf "$TMP"
