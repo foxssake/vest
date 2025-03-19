@@ -109,6 +109,18 @@ func expect_doesnt_contain(object: Variant, item: Variant, p_message: String = "
 		ERR_CANT_RESOLVE:
 			fail("Unknown object, can't be checked if it contains item!", { "object": object })
 
+func expect_null(value: Variant, p_message: String = "Item is not null!") -> void:
+	if value == null:
+		ok()
+	else:
+		fail(p_message)
+
+func expect_not_null(value: Variant, p_message: String = "Item is null!") -> void:
+	if value != null:
+		ok()
+	else:
+		fail(p_message)
+
 func _is_equal(actual, expected) -> bool:
 	if actual is Object and actual.has_method("equals"):
 		return actual.equals(expected)
