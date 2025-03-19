@@ -114,7 +114,7 @@ func expect_null(value: Variant, p_message: String = "Item is not null!") -> voi
 	if value == null:
 		ok()
 	else:
-		fail(p_message)
+		fail(p_message, { "got": value })
 
 ## Expect a [param value] to not be null.
 func expect_not_null(value: Variant, p_message: String = "Item is null!") -> void:

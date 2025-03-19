@@ -98,3 +98,14 @@ fails.
     expect_contains(range(0, 5), 3)
     expect_doesnt_contain(range(2, 4), 4)
     ```
+
+`expect_null()`, `expect_not_null()`
+:   Asserts that a given value is null. Has a negated version.
+
+    If the assertion fails, the container will be included in the report.
+
+    ```gdscript
+    var data := { "foo": 2 }
+    expect_null(data.get("bar"))
+    expect_not_null(data.get("foo"))
+    ```
