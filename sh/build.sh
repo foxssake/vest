@@ -32,9 +32,9 @@ for addon in ${addons[@]}; do
     addon_src="$ROOT/addons/${addon}"
     addon_dst="$BUILD/${addon}.v${version}"
 
+    # Copy addon source
     mkdir -p "${addon_tmp}"
     cd "$TMP"
-
     cp -r "${addon_src}" "${addon_tmp}"
 
     has_deps="false"
@@ -45,7 +45,10 @@ for addon in ${addons[@]}; do
       has_deps="true"
     done
 
-    zip -r "${addon_dst}.zip" "${addon}.v${version}"
+    # Copy script templates
+    cp -r "$ROOT/script_templates" "./${addon}.v${version}"
+
+    zip -r "${addon_dst}.zip" "${addon}.v${version}" "script_templates"
 
     cd "$ROOT"
     rm -rf "$TMP"
