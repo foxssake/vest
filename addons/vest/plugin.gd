@@ -28,6 +28,42 @@ func _enter_tree():
 	add_control_to_bottom_panel(bottom_control, "Vest")
 
 	add_settings(SETTINGS)
+	
+	get_editor_interface().get_command_palette().add_command("Go to test", "vest/go-test", func():
+		print("Where test?")
+		var interface := get_editor_interface()
+		var edited_script := interface.get_script_editor().get_current_script()
+		
+		if not edited_script:
+			print("No script open!")
+			return
+		
+		var script_path := edited_script.resource_path
+		var script_filename := script_path.get_file()
+		var target_filenames := [
+			script_filename,
+			script_filename.get_basename() + ".test.gd",
+			script_filename.replace(".test.gd", ".gd")
+		]
+		
+		print("Script: %s / %s" % [script_filename, script_path])
+		print("Looking for: %s" % [target_filenames])
+		
+		var hits := [] as Array[String]
+		Vest.traverse_directory("res://", func(path: String):
+			if path == script_path:
+				return
+			if path.get_file() not in target_filenames:
+				return
+			# TODO: Consider checking if script extends VestTest in some way
+			hits.append(path)
+		)
+		
+		print("Found scripts: %s" % [hits])
+		if hits.size() == 1:
+			print("Navigating to: %s" % [hits.front()])
+			get_editor_interface().edit_script(load(hits.front()))
+	, "Ctrl+T")
 
 func _exit_tree():
 	resource_saved.disconnect(bottom_control.handle_resource_saved)
@@ -35,6 +71,8 @@ func _exit_tree():
 	bottom_control.queue_free()
 
 	remove_settings(SETTINGS)
+	
+	get_editor_interface().get_command_palette().remove_command("vest/go-test")
 
 func add_settings(settings: Array):
 	for setting in settings:
