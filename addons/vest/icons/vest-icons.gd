@@ -8,9 +8,9 @@ const result_fail: Texture2D = preload("res://addons/vest/icons/fail.svg")
 const result_pass: Texture2D = preload("res://addons/vest/icons/pass.svg")
 
 # Benchmark
-const benchmark: Texture2D= preload("res://addons/vest/icons/benchmark.svg")
-const benchmark_pass: Texture2D= preload("res://addons/vest/icons/benchmark-pass.svg")
-const benchmark_fail: Texture2D= preload("res://addons/vest/icons/benchmark-fail.svg")
+const benchmark: Texture2D = preload("res://addons/vest/icons/benchmark.svg")
+const benchmark_pass: Texture2D = preload("res://addons/vest/icons/benchmark-pass.svg")
+const benchmark_fail: Texture2D = preload("res://addons/vest/icons/benchmark-fail.svg")
 
 # Actions and buttons
 const run: Texture2D = preload("res://addons/vest/icons/run.svg")

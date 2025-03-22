@@ -108,6 +108,16 @@ static func traverse_directory(directory: String, visitor: Callable, max_iters: 
 			var file := _path_join(da.get_current_dir(), file_name)
 			visitor.call(file)
 
+static func glob(pattern: String, max_iters: int = 131072) -> Array[String]:
+	var results: Array[String] = []
+
+	traverse_directory("res://", func(path: String):
+		if path.match(pattern):
+			results.append(path)
+	, max_iters)
+
+	return results
+
 static func _clear_messages():
 	_messages.clear()
 

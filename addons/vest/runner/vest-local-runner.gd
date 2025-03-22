@@ -26,7 +26,7 @@ func run_glob(glob: String) -> VestResult.Suite:
 	result.suite = VestDefs.Suite.new()
 	result.suite.name = "Glob suite \"%s\"" % [glob]
 
-	for test_file in _glob(glob):
+	for test_file in Vest.glob(glob):
 		var suite_result := await run_script_at(test_file)
 		if suite_result:
 			result.subsuites.append(suite_result)
