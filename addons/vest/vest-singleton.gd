@@ -5,6 +5,8 @@ class_name Vest
 ##
 ## @tutorial(Printing custom messages): https://foxssake.github.io/vest/latest/user-guide/printing-custom-messages/
 
+const Icons := preload("res://addons/vest/icons/vest-icons.gd")
+
 static var _messages: Array[String] = []
 static var _scene_tree: SceneTree
 static var _editor_interface: EditorInterface

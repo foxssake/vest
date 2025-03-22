@@ -203,21 +203,17 @@ func _get_status_icon(what: Variant) -> Texture2D:
 		return _get_status_icon(what.get_aggregate_status())
 	elif what is VestResult.Case:
 		if what.data.has("benchmarks"):
-			# TODO: Refactor these to separate Icons singleton
 			if what.status == VestResult.TEST_FAIL:
-				return preload("res://addons/vest/icons/benchmark-fail.svg")
+				return Vest.Icons.benchmark_fail
 			else:
-				return preload("res://addons/vest/icons/benchmark.svg")
+				return Vest.Icons.benchmark
 		else:
 			return _get_status_icon(what.status)
 	elif what is int:
 		match(what):
-			VestResult.TEST_VOID: return preload("res://addons/vest/icons/void.svg") as Texture2D
-			VestResult.TEST_TODO: return preload("res://addons/vest/icons/todo.svg") as Texture2D
-			VestResult.TEST_SKIP: return preload("res://addons/vest/icons/skip.svg") as Texture2D
-			VestResult.TEST_FAIL: return preload("res://addons/vest/icons/fail.svg") as Texture2D
-			VestResult.TEST_PASS: return preload("res://addons/vest/icons/pass.svg") as Texture2D
+			VestResult.TEST_VOID: return Vest.Icons.result_void
+			VestResult.TEST_TODO: return Vest.Icons.result_todo
+			VestResult.TEST_SKIP: return Vest.Icons.result_skip
+			VestResult.TEST_FAIL: return Vest.Icons.result_fail
+			VestResult.TEST_PASS: return Vest.Icons.result_pass
 	return null
-
-func _get_benchmark_icon() -> Texture2D:
-	return preload("res://addons/vest/icons/benchmark.svg") as Texture2D
