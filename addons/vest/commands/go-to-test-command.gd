@@ -72,6 +72,9 @@ func go_to_test():
 		get_editor_interface().edit_script(load(hits.front()))
 		return
 
+	if hits.is_empty():
+		return
+
 	# Create popup with options
 	var popup := PopupMenu.new()
 	popup.min_size = Vector2(0, 0)
@@ -81,8 +84,8 @@ func go_to_test():
 		var accel := (KEY_1 + idx) if idx < 9 else 0
 		popup.add_icon_item(preload("res://addons/vest/icons/jump-to.svg"), hit, -1, accel)
 		popup.set_item_icon_max_width(popup.item_count - 1, VestUI.get_icon_size())
-	popup.add_icon_item(preload("res://addons/vest/icons/lightbulb.svg"), "Create new test", -1, KEY_C)
-	popup.set_item_icon_max_width(popup.item_count - 1, VestUI.get_icon_size())
+#	popup.add_icon_item(preload("res://addons/vest/icons/lightbulb.svg"), "Create new test", -1, KEY_C)
+#	popup.set_item_icon_max_width(popup.item_count - 1, VestUI.get_icon_size())
 
 	get_editor_interface().get_base_control().add_child(popup)
 	popup.position = get_viewport().get_mouse_position()
