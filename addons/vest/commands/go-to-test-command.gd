@@ -64,7 +64,7 @@ func show_popup(matching_script_paths: Array[String]):
 	popup.size = Vector2(0, 0)
 	for idx in range(matching_script_paths.size()):
 		var script_path := matching_script_paths[idx]
-		popup.add_icon_item(preload("res://addons/vest/icons/jump-to.svg"), script_path)
+		popup.add_icon_item(Vest.Icons.jump_to, script_path)
 		popup.set_item_icon_max_width(popup.item_count - 1, VestUI.get_icon_size())
 
 	_get_editor_interface().get_base_control().add_child(popup)
