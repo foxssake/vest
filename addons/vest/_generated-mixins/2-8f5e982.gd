@@ -134,7 +134,13 @@ func _is_equal(actual, expected) -> bool:
 	return actual == expected
 
 func _is_empty(object: Variant) -> Variant:
-	if object is Array or object is Dictionary:
+	if object is Array or object is Dictionary \
+		or object is String or object is StringName or object is NodePath \
+		or object is PackedByteArray or object is PackedColorArray \
+		or object is PackedFloat32Array or object is PackedFloat64Array \
+		or object is PackedInt32Array or object is PackedInt64Array \
+		or object is PackedStringArray \
+		or object is PackedVector2Array or object is PackedVector3Array:
 		return object.is_empty()
 	elif object is Object:
 		if object.has_method("is_empty"):

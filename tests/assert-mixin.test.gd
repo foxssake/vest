@@ -26,6 +26,13 @@ func suite():
 		test("not null", func(): expect_not_null(2))
 	)
 
+	define("expect_empty", func():
+		test("Array", func(): expect_empty([]); expect_not_empty([ 1 ]))
+		test("Dictionary", func(): expect_empty({}); expect_not_empty({ 1: 2 }))
+		test("String", func(): expect_empty(""); expect_not_empty("foo"))
+		test("StringName", func(): expect_empty(&""); expect_not_empty(&"bar"))
+	)
+
 class CustomContainer:
 	var value: Variant
 	
