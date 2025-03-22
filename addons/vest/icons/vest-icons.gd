@@ -1,22 +1,22 @@
 extends Object
 
 # Results
-static var result_void := preload("res://addons/vest/icons/void.svg") as Texture2D
-static var result_skip := preload("res://addons/vest/icons/skip.svg") as Texture2D
-static var result_todo := preload("res://addons/vest/icons/todo.svg") as Texture2D
-static var result_fail := preload("res://addons/vest/icons/fail.svg") as Texture2D
-static var result_pass := preload("res://addons/vest/icons/pass.svg") as Texture2D
+const result_void: Texture2D = preload("res://addons/vest/icons/void.svg")
+const result_skip: Texture2D = preload("res://addons/vest/icons/skip.svg")
+const result_todo: Texture2D = preload("res://addons/vest/icons/todo.svg")
+const result_fail: Texture2D = preload("res://addons/vest/icons/fail.svg")
+const result_pass: Texture2D = preload("res://addons/vest/icons/pass.svg")
 
 # Benchmark
-static var benchmark := preload("res://addons/vest/icons/benchmark.svg") as Texture2D
-static var benchmark_pass := preload("res://addons/vest/icons/benchmark-pass.svg") as Texture2D
-static var benchmark_fail := preload("res://addons/vest/icons/benchmark-fail.svg") as Texture2D
+const benchmark: Texture2D= preload("res://addons/vest/icons/benchmark.svg")
+const benchmark_pass: Texture2D= preload("res://addons/vest/icons/benchmark-pass.svg")
+const benchmark_fail: Texture2D= preload("res://addons/vest/icons/benchmark-fail.svg")
 
 # Actions and buttons
-static var run := preload("res://addons/vest/icons/run.svg") as Texture2D
-static var debug := preload("res://addons/vest/icons/debug.svg") as Texture2D
-static var run_on_save := preload("res://addons/vest/icons/run-save.svg") as Texture2D
-static var clear := preload("res://addons/vest/icons/clear.svg") as Texture2D
-static var jump_to := preload("res://addons/vest/icons/jump-to.svg") as Texture2D
-static var refresh := preload("res://addons/vest/icons/refresh.svg") as Texture2D
-static var lightbulb := preload("res://addons/vest/icons/lightbulb.svg") as Texture2D
+const run: Texture2D = preload("res://addons/vest/icons/run.svg")
+const debug: Texture2D = preload("res://addons/vest/icons/debug.svg")
+const run_on_save: Texture2D = preload("res://addons/vest/icons/run-save.svg")
+const clear: Texture2D = preload("res://addons/vest/icons/clear.svg")
+const jump_to: Texture2D = preload("res://addons/vest/icons/jump-to.svg")
+const refresh: Texture2D = preload("res://addons/vest/icons/refresh.svg")
+const lightbulb: Texture2D = preload("res://addons/vest/icons/lightbulb.svg")
