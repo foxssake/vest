@@ -108,6 +108,27 @@ static func traverse_directory(directory: String, visitor: Callable, max_iters: 
 			var file := _path_join(da.get_current_dir(), file_name)
 			visitor.call(file)
 
+static func glob(pattern: String, max_iters: int = 131072) -> Array[String]:
+	if pattern.is_empty(): return []
+	var results: Array[String] = []
+
+	var first_glob_index := mini(
+		(pattern.find("?") + pattern.length()) % pattern.length(),
+		(pattern.find("*") + pattern.length()) % pattern.length()
+	)
+	var root := (
+		pattern.get_base_dir()
+		if first_glob_index < 0 else
+		pattern.substr(0, first_glob_index).get_base_dir()
+	)
+
+	traverse_directory(root, func(path: String):
+		if path.match(pattern):
+			results.append(path)
+	, max_iters)
+
+	return results
+
 static func _clear_messages():
 	_messages.clear()
 
