@@ -5,17 +5,27 @@ func get_suite_name() -> String:
 
 func suite():
 	define("contains", func():
-		test("array", func():
+		test("Array", func():
 			expect_contains([1, 2, 3], 2)
 			expect_doesnt_contain([1, 2, 3], 4)
 		)
 
-		test("dictionary", func():
+		test("Dictionary", func():
 			expect_contains({ "foo": 1, "bar": 2 }, "foo")
 			expect_doesnt_contain({ "foo": 1, "bar": 2 }, 1)
 		)
 
-		test("custom", func():
+		test("String", func():
+			expect_contains("foobar", "foo")
+			expect_doesnt_contain("foobar", "quix")
+		)
+
+		test("StringName", func():
+			expect_contains(&"foobar", &"foo")
+			expect_doesnt_contain(&"foobar", &"quix")
+		)
+
+		test("Custom", func():
 			expect_contains(CustomContainer.new(1), 1)
 			expect_doesnt_contain(CustomContainer.new(2), 1)
 		)
