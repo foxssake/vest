@@ -32,4 +32,4 @@ import/blender/enabled=false
 
 [vest]
 
-general/test_glob="res://*.perf.gd"
+general/test_glob="res://tests/*.test.gd"
