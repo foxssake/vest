@@ -101,8 +101,9 @@ stretch_mode = 4
 
 [node name="Tests Summary Label" type="Label" parent="VBoxContainer/Bottom Line"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(220, 0)
 layout_mode = 2
-text = "Ran 20 tests in 0.58ms"
+text = "Ready"
 
 [node name="VSeparator2" type="VSeparator" parent="VBoxContainer/Bottom Line"]
 layout_mode = 2
