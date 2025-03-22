@@ -28,6 +28,9 @@ func _enter_tree():
 	add_control_to_bottom_panel(bottom_control, "Vest")
 
 	add_settings(SETTINGS)
+	
+	# Create commands
+	add_child(VestGoToTestCommand.new())
 
 func _exit_tree():
 	resource_saved.disconnect(bottom_control.handle_resource_saved)
