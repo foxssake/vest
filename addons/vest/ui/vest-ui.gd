@@ -76,7 +76,6 @@ func _ready():
 	debug_button.pressed.connect(func(): run_all(true))
 
 	_icon_size = 16. * Vest._get_editor_interface().get_editor_scale()
-	print("[vest] Icon size measured at %f px with %.2f%% scale" % [_icon_size, Vest._get_editor_interface().get_editor_scale()])
 
 func _notification(what):
 	if what == NOTIFICATION_DRAW:
