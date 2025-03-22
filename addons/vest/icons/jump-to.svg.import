@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ckxkehgmjtjcx"
-path="res://.godot/imported/lightbulb.svg-f4f05ab673622fe0cb66314541b2eac4.ctex"
+uid="uid://beoxvhp204wuv"
+path="res://.godot/imported/jump-to.svg-c9add894b2d5164c6f4e6837154c4f30.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/vest/icons/lightbulb.svg"
-dest_files=["res://.godot/imported/lightbulb.svg-f4f05ab673622fe0cb66314541b2eac4.ctex"]
+source_file="res://addons/vest/icons/jump-to.svg"
+dest_files=["res://.godot/imported/jump-to.svg-c9add894b2d5164c6f4e6837154c4f30.ctex"]
 
 [params]
 

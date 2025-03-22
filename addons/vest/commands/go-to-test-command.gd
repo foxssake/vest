@@ -30,13 +30,28 @@ func go_to_test():
 	
 	var script_path := edited_script.resource_path
 	var script_filename := script_path.get_file()
-	var target_filenames := [
-		script_filename,
-		script_filename.get_basename() + ".test.gd",
-		"test_" + script_filename,
-		script_filename.replace(".test.gd", ".gd"),
-		script_filename.replace("test_", "") # TODO: Only remove if starts with
-	]
+	var patterns := [
+		FilenamePattern.new("*.test.gd"),
+		FilenamePattern.new("test_*.gd")
+	] as Array[FilenamePattern]
+
+	var is_edited_script_test := false
+	var impl_filename := script_filename
+	for pattern in patterns:
+		if not pattern.matches(script_filename):
+			continue
+
+		print("Script %s matches pattern %s!" % [script_filename, pattern])
+
+		is_edited_script_test = true
+		impl_filename = pattern.reverse(script_filename)
+		print("Implementation: %s" % [impl_filename])
+
+	var target_filenames := (
+		[impl_filename]
+		if is_edited_script_test else
+		patterns.map(func(it): return it.substitute(script_filename))
+	)
 	
 	print("Script: %s / %s" % [script_filename, script_path])
 	print("Looking for: %s" % [target_filenames])
@@ -64,9 +79,10 @@ func go_to_test():
 	for idx in range(hits.size()):
 		var hit := hits[idx]
 		var accel := (KEY_1 + idx) if idx < 9 else 0
-		popup.add_icon_item(preload("res://addons/vest/icons/run.svg"), hit, -1, accel)
-		popup.set_item_icon_max_width(popup.item_count - 1, 16)
+		popup.add_icon_item(preload("res://addons/vest/icons/jump-to.svg"), hit, -1, accel)
+		popup.set_item_icon_max_width(popup.item_count - 1, VestUI.get_icon_size())
 	popup.add_icon_item(preload("res://addons/vest/icons/lightbulb.svg"), "Create new test", -1, KEY_C)
+	popup.set_item_icon_max_width(popup.item_count - 1, VestUI.get_icon_size())
 
 	get_editor_interface().get_base_control().add_child(popup)
 	popup.position = get_viewport().get_mouse_position()
@@ -78,7 +94,7 @@ func go_to_test():
 		if idx < hits.size():
 			get_editor_interface().edit_script(load(hits[idx]))
 		else:
-			print("Create new script!")
+			print("Create new script!") # TODO
 	)
 
 func get_editor_interface() -> EditorInterface:

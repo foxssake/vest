@@ -1,5 +1,6 @@
 @tool
 extends Control
+class_name VestUI
 
 @onready var run_all_button := %"Run All Button" as Button
 @onready var debug_button := %"Debug Button" as Button
@@ -13,7 +14,12 @@ extends Control
 
 var _run_on_save: bool = false
 
+static var _icon_size := 16.0
+
 signal on_debug()
+
+static func get_icon_size() -> int:
+	return _icon_size
 
 func handle_resource_saved(resource: Resource):
 	if not resource is Script or not visible:
@@ -69,6 +75,9 @@ func _ready():
 
 	debug_button.pressed.connect(func(): run_all(true))
 
+	_icon_size = 16. * Vest._get_editor_interface().get_editor_scale()
+	print("[vest] Icon size measured at %f px with %.2f%% scale" % [_icon_size, Vest._get_editor_interface().get_editor_scale()])
+
 func _notification(what):
 	if what == NOTIFICATION_DRAW:
 		glob_line_edit.text = Vest.get_test_glob()
@@ -80,7 +89,7 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 		item.set_text(1, what.get_aggregate_status_string().capitalize())
 
 		item.set_icon(0, _get_status_icon(what))
-		item.set_icon_max_width(0, tree.get_theme_font_size(""))
+		item.set_icon_max_width(0, get_icon_size())
 
 		tree.item_activated.connect(func():
 			if tree.get_selected() == item:
@@ -98,7 +107,7 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 		item.collapsed = what.status == VestResult.TEST_PASS
 
 		item.set_icon(0, _get_status_icon(what))
-		item.set_icon_max_width(0, tree.get_theme_font_size(""))
+		item.set_icon_max_width(0, get_icon_size())
 
 		_render_data(what, tree, item)
 
@@ -113,7 +122,7 @@ func _render_summary(results: VestResult.Suite, test_duration: float):
 	summary_label.text = "Ran %d tests in %.2fms" % [results.size(), test_duration * 1000.]
 	summary_icon.visible = true
 	summary_icon.texture = _get_status_icon(results)
-	summary_icon.custom_minimum_size = Vector2i.ONE * get_theme_font("").get_height(get_theme_font_size(""))
+	summary_icon.custom_minimum_size = Vector2i.ONE * get_icon_size() # TODO: Check
 
 func _render_data(case: VestResult.Case, tree: Tree, parent: TreeItem):
 	var data := case.data.duplicate()
@@ -195,6 +204,7 @@ func _get_status_icon(what: Variant) -> Texture2D:
 		return _get_status_icon(what.get_aggregate_status())
 	elif what is VestResult.Case:
 		if what.data.has("benchmarks"):
+			# TODO: Refactor these to separate Icons singleton
 			if what.status == VestResult.TEST_FAIL:
 				return preload("res://addons/vest/icons/benchmark-fail.svg")
 			else:
