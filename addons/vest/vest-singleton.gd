@@ -74,6 +74,15 @@ static func get_test_glob() -> String:
 static func get_debug_port() -> int:
 	return ProjectSettings.get_setting("vest/general/debug_port", 59432)
 
+# TODO: Docs
+static func get_test_name_patterns() -> Array[FilenamePattern]:
+	var patterns := [
+		FilenamePattern.new("*.test.gd"),
+		FilenamePattern.new("test_*.gd")
+	] as Array[FilenamePattern]
+
+	return patterns
+
 ## Get the current time, in seconds.
 ## [br][br]
 ## Used for benchmarking and waiting [method until] a condition becomes true.

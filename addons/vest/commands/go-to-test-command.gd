@@ -16,18 +16,14 @@ func go_to_test():
 	
 	var script_path := edited_script.resource_path
 	var script_filename := script_path.get_file()
-	var patterns := [
-		FilenamePattern.new("*.test.gd"),
-		FilenamePattern.new("test_*.gd")
-	] as Array[FilenamePattern]
 
-	var target_filenames := get_search_filenames(script_filename, patterns)
+	var target_filenames := get_search_filenames(script_filename, Vest.get_test_name_patterns())
 	var hits := find_matching_scripts(script_path, target_filenames)
 
 	if hits.size() == 1:
 		# Single hit, navigate to script asap
 		_get_editor_interface().edit_script(load(hits.front()))
-	elif hits.size() > 1:
+	else:
 		# Multiple hits, let user choose which one to open
 		show_popup(hits)
 
@@ -62,18 +58,30 @@ func show_popup(matching_script_paths: Array[String]):
 	var popup := PopupMenu.new()
 	popup.min_size = Vector2(0, 0)
 	popup.size = Vector2(0, 0)
+
+	# Add options for matches
 	for idx in range(matching_script_paths.size()):
 		var script_path := matching_script_paths[idx]
 		popup.add_icon_item(Vest.Icons.jump_to, script_path)
 		popup.set_item_icon_max_width(popup.item_count - 1, VestUI.get_icon_size())
 
+	# Add option to create
+	popup.add_icon_item(Vest.Icons.lightbulb, "Create test")
+	popup.set_item_icon_max_width(popup.item_count - 1, VestUI.get_icon_size())
+
+	# TODO: popup_dialog()
 	_get_editor_interface().get_base_control().add_child(popup)
 	popup.position = get_viewport().get_mouse_position()
 	popup.visible = true
 	popup.set_focused_item(0)
 
 	popup.index_pressed.connect(func(idx: int):
-		_get_editor_interface().edit_script(load(matching_script_paths[idx]))
+		if idx < matching_script_paths.size():
+			print("Edit %d" % [idx])
+			_get_editor_interface().edit_script(load(matching_script_paths[idx]))
+		else:
+			print("Create test!")
+			VestCreateTestCommand.execute()
 	)
 
 func _get_editor_interface() -> EditorInterface:

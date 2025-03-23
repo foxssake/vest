@@ -31,6 +31,7 @@ func _enter_tree():
 	
 	# Create commands
 	add_child(VestGoToTestCommand.new())
+	add_child(VestCreateTestCommand.new())
 
 func _exit_tree():
 	resource_saved.disconnect(bottom_control.handle_resource_saved)
