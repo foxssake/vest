@@ -69,18 +69,17 @@ func show_popup(matching_script_paths: Array[String]):
 	popup.add_icon_item(Vest.Icons.lightbulb, "Create test")
 	popup.set_item_icon_max_width(popup.item_count - 1, VestUI.get_icon_size())
 
-	# TODO: popup_dialog()
-	_get_editor_interface().get_base_control().add_child(popup)
-	popup.position = get_viewport().get_mouse_position()
-	popup.visible = true
+	# Show popup at mouse pos
+	_get_editor_interface().popup_dialog(popup, Rect2i(
+		get_viewport().get_mouse_position(),
+		Vector2.ZERO
+	))
 	popup.set_focused_item(0)
 
 	popup.index_pressed.connect(func(idx: int):
 		if idx < matching_script_paths.size():
-			print("Edit %d" % [idx])
 			_get_editor_interface().edit_script(load(matching_script_paths[idx]))
 		else:
-			print("Create test!")
 			VestCreateTestCommand.execute()
 	)
 
@@ -96,6 +95,6 @@ func _exit_tree():
 
 func _shortcut_input(event):
 	if event is InputEventKey:
-		if event.is_command_or_control_pressed() and event.key_label == KEY_T and event.is_pressed():
+		if event.is_command_or_control_pressed() and not event.shift_pressed and event.key_label == KEY_T and event.is_pressed():
 			go_to_test()
 			get_viewport().set_input_as_handled()
