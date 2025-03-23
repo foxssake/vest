@@ -29,3 +29,7 @@ enabled=PackedStringArray("res://addons/vest/plugin.cfg")
 [filesystem]
 
 import/blender/enabled=false
+
+[vest]
+
+general/sources_root="res://src/"

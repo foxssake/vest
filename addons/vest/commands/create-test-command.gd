@@ -29,10 +29,38 @@ func create_test():
 
 	var preferred_pattern := Vest.get_test_name_patterns()[0]
 	var test_filename := preferred_pattern.substitute(script_filename)
-	var test_path := script_directory + "/" + test_filename # TODO: Test sources root
+	var test_directory := get_test_directory(script_directory)
+	var test_path := Vest.path_join(test_directory, test_filename)
 
 	print("Create test at %s" % [test_path])
 	_get_editor_interface().get_script_editor().open_script_create_dialog("VestTest", test_path)
+
+func get_test_directory(script_dir: String) -> String:
+	match Vest.get_new_test_location_preference():
+		Vest.NEW_TEST_MIRROR_DIR_STRUCTURE:
+			print("Preference is mirror")
+			return get_mirrored_test_dir(script_dir)
+		Vest.NEW_TEST_NEXT_TO_SOURCE:
+			print("Preference is next to source")
+			return script_dir
+		Vest.NEW_TEST_IN_ROOT:
+			print("Preference is tests root")
+			return Vest.get_tests_root()
+
+	print("What the fuck is preference? %s" % [Vest.get_new_test_location_preference()])
+	return script_dir
+
+func get_mirrored_test_dir(script_dir: String) -> String:
+	# TODO: Class for managing paths?
+	if not script_dir.ends_with("/"):
+		script_dir += "/"
+
+	if script_dir.begins_with(Vest.get_sources_root()):
+		var relative_to_src_root := script_dir.substr(Vest.get_sources_root().length())
+		return Vest.get_tests_root() + relative_to_src_root
+	else:
+		var relative_to_root := script_dir.replace("res://", "")
+		return Vest.get_tests_root() + relative_to_root
 
 func _get_editor_interface() -> EditorInterface:
 	return Vest._get_editor_interface()

@@ -7,6 +7,10 @@ class_name Vest
 
 const Icons := preload("res://addons/vest/icons/vest-icons.gd")
 
+const NEW_TEST_MIRROR_DIR_STRUCTURE := 0
+const NEW_TEST_NEXT_TO_SOURCE := 1
+const NEW_TEST_IN_ROOT := 2
+
 static var _messages: Array[String] = []
 static var _scene_tree: SceneTree
 static var _editor_interface: EditorInterface
@@ -75,13 +79,25 @@ static func get_debug_port() -> int:
 	return ProjectSettings.get_setting("vest/general/debug_port", 59432)
 
 # TODO: Docs
+static func get_sources_root() -> String:
+	return ProjectSettings.get_setting("vest/general/sources_root", "res://")
+
+# TODO: Docs
+static func get_tests_root() -> String:
+	return ProjectSettings.get_setting("vest/general/tests_root", "res://tests/")
+
+# TODO: Docs
 static func get_test_name_patterns() -> Array[FilenamePattern]:
-	var patterns := [
-		FilenamePattern.new("*.test.gd"),
-		FilenamePattern.new("test_*.gd")
-	] as Array[FilenamePattern]
+	# TODO: Memoize
+	var pattern_strings := ProjectSettings.get_setting("vest/general/test_name_patterns") as PackedStringArray
+	var patterns := [] as Array[FilenamePattern]
+	patterns.assign(Array(pattern_strings).map(func(it): return FilenamePattern.new(it)))
 
 	return patterns
+
+# TODO: Docs
+static func get_new_test_location_preference() -> int:
+	return ProjectSettings.get_setting("vest/general/new_test_location", NEW_TEST_MIRROR_DIR_STRUCTURE)
 
 ## Get the current time, in seconds.
 ## [br][br]
@@ -108,13 +124,13 @@ static func traverse_directory(directory: String, visitor: Callable, max_iters: 
 
 		# Add directories to queue
 		for dir_name in da.get_directories():
-			var dir := _path_join(da.get_current_dir(), dir_name)
+			var dir := path_join(da.get_current_dir(), dir_name)
 			if not dir_history.has(dir) and not dir_queue.has(dir):
 				dir_queue.append(dir)
 
 		# Visit files
 		for file_name in da.get_files():
-			var file := _path_join(da.get_current_dir(), file_name)
+			var file := path_join(da.get_current_dir(), file_name)
 			visitor.call(file)
 
 static func glob(pattern: String, max_iters: int = 131072) -> Array[String]:
@@ -138,6 +154,12 @@ static func glob(pattern: String, max_iters: int = 131072) -> Array[String]:
 
 	return results
 
+static func path_join(a: String, b: String) -> String:
+	if a.ends_with("/"):
+		return a + b
+	else:
+		return a + "/" + b
+
 static func _clear_messages():
 	_messages.clear()
 
@@ -152,9 +174,3 @@ static func _get_editor_interface() -> EditorInterface:
 
 static func _register_editor_interface(editor_interface: EditorInterface):
 	_editor_interface = editor_interface
-
-static func _path_join(a: String, b: String) -> String:
-	if a.ends_with("/"):
-		return a + b
-	else:
-		return a + "/" + b

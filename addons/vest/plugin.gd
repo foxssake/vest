@@ -3,7 +3,7 @@ extends EditorPlugin
 
 var bottom_control: Control
 
-const SETTINGS = [
+static var SETTINGS := [
 	{
 		"name": "vest/general/test_glob",
 		"value": "res://*.test.gd",
@@ -15,8 +15,37 @@ const SETTINGS = [
 		"type": TYPE_INT,
 		"hint": PROPERTY_HINT_RANGE,
 		"hint_string": "0,65535"
+	},
+	{
+		"name": "vest/general/sources_root",
+		"value": "res://",
+		"type": TYPE_STRING,
+		"hint": PROPERTY_HINT_DIR
+	},
+	{
+		"name": "vest/general/tests_root",
+		"value": "res://tests/",
+		"type": TYPE_STRING,
+		"hint": PROPERTY_HINT_DIR
+	},
+	{
+		"name": "vest/general/test_name_patterns",
+		"value": PackedStringArray(["*.test.gd", "test_*.gd"]),
+		"type": TYPE_PACKED_STRING_ARRAY,
+		"hint": PROPERTY_HINT_DIR
+	},
+	{
+		"name": "vest/general/new_test_location",
+		"value": Vest.NEW_TEST_MIRROR_DIR_STRUCTURE,
+		"type": TYPE_INT,
+		"hint": PROPERTY_HINT_ENUM,
+		"hint_string": ",".join([
+			"Mirror directory structure",
+			"Next to source",
+			"In tests root"
+		])
 	}
-]
+] as Array[Dictionary]
 
 func _enter_tree():
 	Vest._register_scene_tree(get_tree())
