@@ -1,9 +1,8 @@
 extends Node
-class_name VestGoToTestCommand
 
-static var _instance: VestGoToTestCommand = null
+static var _instance: Vest.__.GoToTestCommand = null
 
-static func find() -> VestGoToTestCommand:
+static func find() -> Vest.__.GoToTestCommand:
 	return _instance
 
 func go_to_test():
@@ -80,7 +79,7 @@ func show_popup(matching_script_paths: Array[String]):
 		if idx < matching_script_paths.size():
 			_get_editor_interface().edit_script(load(matching_script_paths[idx]))
 		else:
-			VestCreateTestCommand.execute()
+			Vest.__.CreateTestCommand.execute()
 	)
 
 func _get_editor_interface() -> EditorInterface:

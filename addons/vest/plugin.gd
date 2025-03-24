@@ -59,8 +59,8 @@ func _enter_tree():
 	add_settings(SETTINGS)
 	
 	# Create commands
-	add_child(VestGoToTestCommand.new())
-	add_child(VestCreateTestCommand.new())
+	for command in Vest.__.create_commands():
+		add_child(command)
 
 func _exit_tree():
 	resource_saved.disconnect(bottom_control.handle_resource_saved)

@@ -1,9 +1,8 @@
 extends Node
-class_name VestCreateTestCommand
 
-static var _instance: VestCreateTestCommand = null
+static var _instance: Vest.__.CreateTestCommand = null
 
-static func find() -> VestCreateTestCommand:
+static func find():
 	return _instance
 
 static func execute() -> void:

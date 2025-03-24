@@ -6,6 +6,7 @@ class_name Vest
 ## @tutorial(Printing custom messages): https://foxssake.github.io/vest/latest/user-guide/printing-custom-messages/
 
 const Icons := preload("res://addons/vest/icons/vest-icons.gd")
+const __ := preload("res://addons/vest/vest-internals.gd")
 
 const NEW_TEST_MIRROR_DIR_STRUCTURE := 0
 const NEW_TEST_NEXT_TO_SOURCE := 1
