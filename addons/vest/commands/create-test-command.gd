@@ -32,22 +32,17 @@ func create_test():
 	var test_directory := get_test_directory(script_directory)
 	var test_path := Vest.path_join(test_directory, test_filename)
 
-	print("Create test at %s" % [test_path])
 	_get_editor_interface().get_script_editor().open_script_create_dialog("VestTest", test_path)
 
 func get_test_directory(script_dir: String) -> String:
 	match Vest.get_new_test_location_preference():
 		Vest.NEW_TEST_MIRROR_DIR_STRUCTURE:
-			print("Preference is mirror")
 			return get_mirrored_test_dir(script_dir)
 		Vest.NEW_TEST_NEXT_TO_SOURCE:
-			print("Preference is next to source")
 			return script_dir
 		Vest.NEW_TEST_IN_ROOT:
-			print("Preference is tests root")
 			return Vest.get_tests_root()
 
-	print("What the fuck is preference? %s" % [Vest.get_new_test_location_preference()])
 	return script_dir
 
 func get_mirrored_test_dir(script_dir: String) -> String:

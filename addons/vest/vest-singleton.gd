@@ -105,7 +105,7 @@ static func get_new_test_location_preference() -> int:
 static func time() -> float:
 	return Time.get_unix_time_from_system()
 
-# TODO: Update VestBaseRunner._glob
+# TODO: Docs
 static func traverse_directory(directory: String, visitor: Callable, max_iters: int = 131072) -> void:
 	var da := DirAccess.open(directory)
 	da.include_navigational = false
@@ -133,6 +133,7 @@ static func traverse_directory(directory: String, visitor: Callable, max_iters: 
 			var file := path_join(da.get_current_dir(), file_name)
 			visitor.call(file)
 
+# TODO: Docs
 static func glob(pattern: String, max_iters: int = 131072) -> Array[String]:
 	if pattern.is_empty(): return []
 	var results: Array[String] = []
@@ -154,6 +155,7 @@ static func glob(pattern: String, max_iters: int = 131072) -> Array[String]:
 
 	return results
 
+# TODO: Docs
 static func path_join(a: String, b: String) -> String:
 	if a.ends_with("/"):
 		return a + b
