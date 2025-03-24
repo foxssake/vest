@@ -1,9 +1,8 @@
 extends Node
-class_name VestGoToTestCommand
 
-static var _instance: VestGoToTestCommand = null
+static var _instance: Vest.__.GoToTestCommand = null
 
-static func find() -> VestGoToTestCommand:
+static func find() -> Vest.__.GoToTestCommand:
 	return _instance
 
 func go_to_test():
@@ -16,18 +15,14 @@ func go_to_test():
 	
 	var script_path := edited_script.resource_path
 	var script_filename := script_path.get_file()
-	var patterns := [
-		FilenamePattern.new("*.test.gd"),
-		FilenamePattern.new("test_*.gd")
-	] as Array[FilenamePattern]
 
-	var target_filenames := get_search_filenames(script_filename, patterns)
+	var target_filenames := get_search_filenames(script_filename, Vest.get_test_name_patterns())
 	var hits := find_matching_scripts(script_path, target_filenames)
 
 	if hits.size() == 1:
 		# Single hit, navigate to script asap
 		_get_editor_interface().edit_script(load(hits.front()))
-	elif hits.size() > 1:
+	else:
 		# Multiple hits, let user choose which one to open
 		show_popup(hits)
 
@@ -62,18 +57,29 @@ func show_popup(matching_script_paths: Array[String]):
 	var popup := PopupMenu.new()
 	popup.min_size = Vector2(0, 0)
 	popup.size = Vector2(0, 0)
+
+	# Add options for matches
 	for idx in range(matching_script_paths.size()):
 		var script_path := matching_script_paths[idx]
 		popup.add_icon_item(Vest.Icons.jump_to, script_path)
 		popup.set_item_icon_max_width(popup.item_count - 1, VestUI.get_icon_size())
 
-	_get_editor_interface().get_base_control().add_child(popup)
-	popup.position = get_viewport().get_mouse_position()
-	popup.visible = true
+	# Add option to create
+	popup.add_icon_item(Vest.Icons.lightbulb, "Create test")
+	popup.set_item_icon_max_width(popup.item_count - 1, VestUI.get_icon_size())
+
+	# Show popup at mouse pos
+	_get_editor_interface().popup_dialog(popup, Rect2i(
+		get_viewport().get_mouse_position(),
+		Vector2.ZERO
+	))
 	popup.set_focused_item(0)
 
 	popup.index_pressed.connect(func(idx: int):
-		_get_editor_interface().edit_script(load(matching_script_paths[idx]))
+		if idx < matching_script_paths.size():
+			_get_editor_interface().edit_script(load(matching_script_paths[idx]))
+		else:
+			Vest.__.CreateTestCommand.execute()
 	)
 
 func _get_editor_interface() -> EditorInterface:
@@ -88,6 +94,6 @@ func _exit_tree():
 
 func _shortcut_input(event):
 	if event is InputEventKey:
-		if event.is_command_or_control_pressed() and event.key_label == KEY_T and event.is_pressed():
+		if event.is_command_or_control_pressed() and not event.shift_pressed and event.key_label == KEY_T and event.is_pressed():
 			go_to_test()
 			get_viewport().set_input_as_handled()

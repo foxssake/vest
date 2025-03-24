@@ -6,6 +6,11 @@ class_name Vest
 ## @tutorial(Printing custom messages): https://foxssake.github.io/vest/latest/user-guide/printing-custom-messages/
 
 const Icons := preload("res://addons/vest/icons/vest-icons.gd")
+const __ := preload("res://addons/vest/vest-internals.gd")
+
+const NEW_TEST_MIRROR_DIR_STRUCTURE := 0
+const NEW_TEST_NEXT_TO_SOURCE := 1
+const NEW_TEST_IN_ROOT := 2
 
 static var _messages: Array[String] = []
 static var _scene_tree: SceneTree
@@ -74,13 +79,34 @@ static func get_test_glob() -> String:
 static func get_debug_port() -> int:
 	return ProjectSettings.get_setting("vest/general/debug_port", 59432)
 
+# TODO: Docs
+static func get_sources_root() -> String:
+	return ProjectSettings.get_setting("vest/general/sources_root", "res://")
+
+# TODO: Docs
+static func get_tests_root() -> String:
+	return ProjectSettings.get_setting("vest/general/tests_root", "res://tests/")
+
+# TODO: Docs
+static func get_test_name_patterns() -> Array[FilenamePattern]:
+	# TODO: Memoize
+	var pattern_strings := ProjectSettings.get_setting("vest/general/test_name_patterns") as PackedStringArray
+	var patterns := [] as Array[FilenamePattern]
+	patterns.assign(Array(pattern_strings).map(func(it): return FilenamePattern.new(it)))
+
+	return patterns
+
+# TODO: Docs
+static func get_new_test_location_preference() -> int:
+	return ProjectSettings.get_setting("vest/general/new_test_location", NEW_TEST_MIRROR_DIR_STRUCTURE)
+
 ## Get the current time, in seconds.
 ## [br][br]
 ## Used for benchmarking and waiting [method until] a condition becomes true.
 static func time() -> float:
 	return Time.get_unix_time_from_system()
 
-# TODO: Update VestBaseRunner._glob
+# TODO: Docs
 static func traverse_directory(directory: String, visitor: Callable, max_iters: int = 131072) -> void:
 	var da := DirAccess.open(directory)
 	da.include_navigational = false
@@ -99,15 +125,16 @@ static func traverse_directory(directory: String, visitor: Callable, max_iters: 
 
 		# Add directories to queue
 		for dir_name in da.get_directories():
-			var dir := _path_join(da.get_current_dir(), dir_name)
+			var dir := path_join(da.get_current_dir(), dir_name)
 			if not dir_history.has(dir) and not dir_queue.has(dir):
 				dir_queue.append(dir)
 
 		# Visit files
 		for file_name in da.get_files():
-			var file := _path_join(da.get_current_dir(), file_name)
+			var file := path_join(da.get_current_dir(), file_name)
 			visitor.call(file)
 
+# TODO: Docs
 static func glob(pattern: String, max_iters: int = 131072) -> Array[String]:
 	if pattern.is_empty(): return []
 	var results: Array[String] = []
@@ -129,6 +156,13 @@ static func glob(pattern: String, max_iters: int = 131072) -> Array[String]:
 
 	return results
 
+# TODO: Docs
+static func path_join(a: String, b: String) -> String:
+	if a.ends_with("/"):
+		return a + b
+	else:
+		return a + "/" + b
+
 static func _clear_messages():
 	_messages.clear()
 
@@ -143,9 +177,3 @@ static func _get_editor_interface() -> EditorInterface:
 
 static func _register_editor_interface(editor_interface: EditorInterface):
 	_editor_interface = editor_interface
-
-static func _path_join(a: String, b: String) -> String:
-	if a.ends_with("/"):
-		return a + b
-	else:
-		return a + "/" + b
