@@ -1,5 +1,7 @@
 extends Object
 
+const Matchers := preload("res://addons/vest/vest-matchers.gd")
+
 const GoToTestCommand := preload("res://addons/vest/commands/go-to-test-command.gd")
 const CreateTestCommand := preload("res://addons/vest/commands/create-test-command.gd")
 

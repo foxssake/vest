@@ -10,5 +10,5 @@ func test_asserts():
 		.is_not_null()\
 		.is_not_empty()\
 		.contains(4)\
-		.doesnt_contain(2)\
+		.does_not_contain(2)\
 		.is_not_equal_to([1, 2])

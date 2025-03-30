@@ -33,8 +33,8 @@ class Assertion:
 		_test.expect_contains(_value, item, p_message)
 		return self
 
-	func doesnt_contain(item: Variant, p_message: String = "Item is in collection!") -> Assertion:
-		_test.expect_doesnt_contain(_value, item, p_message)
+	func does_not_contain(item: Variant, p_message: String = "Item is in collection!") -> Assertion:
+		_test.expect_does_not_contain(_value, item, p_message)
 		return self
 
 	func is_null(p_message: String = "Item is not null!") -> Assertion:

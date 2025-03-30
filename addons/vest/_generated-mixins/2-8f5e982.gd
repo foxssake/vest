@@ -27,7 +27,7 @@ func expect_not(condition: bool, p_message: String = "") -> void:
 ## [br][br]
 ## If [param actual] has an [code]equals()[/code] method, it will be used.
 func expect_equal(actual: Variant, expected: Variant, p_message: String = "Actual value differs from expected!") -> void:
-	if _is_equal(actual, expected):
+	if Vest.__.Matchers.is_equal(actual, expected):
 		ok()
 	else:
 		fail(p_message, { "expect": expected, "got": actual })
@@ -36,7 +36,7 @@ func expect_equal(actual: Variant, expected: Variant, p_message: String = "Actua
 ## [br][br]
 ## If [param actual] has an [code]equals()[/code] method, it will be used.
 func expect_not_equal(actual: Variant, expected: Variant, p_message: String = "Actual value equals expected!") -> void:
-	if _is_equal(actual, expected):
+	if Vest.__.Matchers.is_equal(actual, expected):
 		fail(p_message, { "expect": expected, "got": actual })
 	else:
 		ok()
@@ -59,7 +59,7 @@ func expect_false(condition: bool, p_message: String = "") -> void:
 ## If it's a custom type implementing [code]is_empty()[/code], that method will
 ## be used.
 func expect_empty(object: Variant, p_message: String = "Object was not empty!") -> void:
-	match _is_empty(object):
+	match Vest.__.Matchers.is_empty(object):
 		true:
 			ok()
 		false:
@@ -74,7 +74,7 @@ func expect_empty(object: Variant, p_message: String = "Object was not empty!") 
 ## If it's a custom type implementing [code]is_empty()[/code], that method will
 ## be used.
 func expect_not_empty(object: Variant, p_message: String = "Object was empty!") -> void:
-	match _is_empty(object):
+	match Vest.__.Matchers.is_empty(object):
 		true:
 			fail(p_message)
 		false:
@@ -89,7 +89,7 @@ func expect_not_empty(object: Variant, p_message: String = "Object was empty!") 
 ## If it's a custom type implementing [code]has()[/code], that method will be
 ## used.
 func expect_contains(object: Variant, item: Variant, p_message: String = "Item is missing from collection!") -> void:
-	match _contains(object, item):
+	match Vest.__.Matchers.contains(object, item):
 		true:
 			ok()
 		false:
@@ -103,8 +103,8 @@ func expect_contains(object: Variant, item: Variant, p_message: String = "Item i
 ## [br][br]
 ## If it's a custom type implementing [code]has()[/code], that method will be
 ## used.
-func expect_doesnt_contain(object: Variant, item: Variant, p_message: String = "Item is in collection!") -> void:
-	match _contains(object, item):
+func expect_does_not_contain(object: Variant, item: Variant, p_message: String = "Item is in collection!") -> void:
+	match Vest.__.Matchers.contains(object, item):
 		true:
 			fail(p_message, { "got": object, "excess": item })
 		false:
@@ -127,43 +127,3 @@ func expect_not_null(value: Variant, p_message: String = "Item is null!") -> voi
 		ok()
 	else:
 		fail(p_message)
-
-func _is_equal(actual, expected) -> bool:
-	if actual is Object and actual.has_method("equals"):
-		return actual.equals(expected)
-	return actual == expected
-
-func _is_empty(object: Variant) -> Variant:
-	if _is_builtin_container(object) or _is_stringlike(object):
-		return object.is_empty()
-	elif object is Object:
-		if object.has_method("is_empty"):
-			return object.is_empty()
-		else:
-			return ERR_METHOD_NOT_FOUND
-	else:
-		return ERR_CANT_RESOLVE
-
-func _contains(object: Variant, item: Variant) -> Variant:
-	if _is_builtin_container(object):
-		return object.has(item)
-	elif _is_stringlike(object):
-		return object.contains(str(item))
-	elif object is Object:
-		if object.has_method("has"):
-			return object.has(item)
-		else:
-			return ERR_METHOD_NOT_FOUND
-	else:
-		return ERR_CANT_RESOLVE
-
-func _is_builtin_container(object: Variant) -> bool:
-	return object is Array or object is Dictionary \
-		or object is PackedByteArray or object is PackedColorArray \
-		or object is PackedFloat32Array or object is PackedFloat64Array \
-		or object is PackedInt32Array or object is PackedInt64Array \
-		or object is PackedStringArray \
-		or object is PackedVector2Array or object is PackedVector3Array
-
-func _is_stringlike(object: Variant) -> bool:
-	return object is String or object is StringName or object is NodePath
