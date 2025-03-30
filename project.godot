@@ -33,3 +33,4 @@ import/blender/enabled=false
 [vest]
 
 general/sources_root="res://src/"
+general/test_glob="res://tests/generator*.test.gd"
