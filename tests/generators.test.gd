@@ -11,14 +11,17 @@ func test_generator():
 		print("await gen.call(3)"); await gen.call(3)
 	)
 	
-	var values := [
-		await generator.get_value(),
-		await generator.get_value(),
-		await generator.get_value(),
-		await generator.get_value(),
-	]
+	var values := []
+	for val in generator:
+		values.append(await val)
 	
 	expect_equal(values, [1, 2, 3, null])
+
+func test_iterator():
+	var iterator := ThinkingIterable.new()
+	for i in iterator:
+		print(await i)
+	ok()
 
 class Generator:
 	var _callable: Callable
@@ -51,6 +54,15 @@ class Generator:
 		print("_run() / _queued_value = null"); _queued_value = null
 		print("_run() / _on_push.emit()"); (func(): _on_push.emit()).call_deferred()
 	
+	func _iter_init(arg) -> bool:
+		return _status == PENDING
+
+	func _iter_next(arg) -> bool:
+		return _status != FINISHED
+
+	func _iter_get(arg) -> Variant:
+		return await get_value()
+	
 	func get_value() -> Variant:
 		print("get_value()")
 		match _status:
@@ -61,9 +73,25 @@ class Generator:
 			ACTIVE:
 				print("get_value() / ACTIVE / _on_pull.emit()"); _on_pull.emit()
 				print("get_value() / ACTIVE / await _on_push"); await _on_push
+				print("get_value() / ACTIVE / Resulting state: %s" % [_status]);
 				print("get_value() / ACTIVE / return %s" % [_queued_value]); return _queued_value
 			_:
 				return null
 	
 	static func of(p_callable: Callable) -> Generator:
 		return Generator.new(p_callable)
+
+class ThinkingIterable:
+	var _iters := 0
+
+	func _iter_init(arg):
+		_iters = 0
+		return true
+
+	func _iter_next(arg):
+		_iters += 1
+		return _iters <= 3
+
+	func _iter_get(arg):
+		await Vest.sleep(0.1)
+		return _iters
