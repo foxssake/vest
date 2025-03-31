@@ -49,7 +49,7 @@ static var SETTINGS := [
 
 func _enter_tree():
 	Vest._register_scene_tree(get_tree())
-	Vest._register_editor_interface(get_editor_interface())
+	Vest._register_editor_interface_provider(get_editor_interface)
 
 	bottom_control = (preload("res://addons/vest/ui/vest-ui.tscn") as PackedScene).instantiate()
 	resource_saved.connect(bottom_control.handle_resource_saved)
