@@ -61,24 +61,6 @@ static func sleep(duration: float) -> Error:
 	await _scene_tree.create_timer(duration).timeout
 	return OK
 
-## Set the test glob.
-## [br][br]
-## The test glob is used for finding test scripts to run.
-static func set_test_glob(glob: String):
-	ProjectSettings.set_setting("vest/general/test_glob", glob)
-
-## Get the test glob.
-## [br][br]
-## The test glob is used for finding test scripts to run.
-static func get_test_glob() -> String:
-	return ProjectSettings.get_setting("vest/general/test_glob", "res://*.test.gd")
-
-## Get the debug port.
-## [br][br]
-## The debug port is used for returning results when running in debug mode.
-static func get_debug_port() -> int:
-	return ProjectSettings.get_setting("vest/general/debug_port", 59432)
-
 # TODO: Docs
 static func get_sources_root() -> String:
 	return ProjectSettings.get_setting("vest/general/sources_root", "res://")
@@ -156,7 +138,7 @@ static func glob(pattern: String, max_iters: int = 131072) -> Array[String]:
 
 	return results
 
-# TODO: Docs
+# TODO: Remove - there's String.path_join
 static func path_join(a: String, b: String) -> String:
 	if a.ends_with("/"):
 		return a + b

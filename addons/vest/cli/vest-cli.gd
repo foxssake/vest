@@ -148,7 +148,9 @@ static func run(params: Params) -> int:
 	return OS.create_instance(args + params.to_args())
 
 ## Run vest in debug mode.
-static func debug():
+static func debug(params: Params):
+	Vest.__.LocalSettings.run_params = params
+	Vest.__.LocalSettings.flush()
 	Vest._get_editor_interface()\
 		.play_custom_scene(preload("res://addons/vest/cli/vest-cli-scene.tscn").resource_path)
 

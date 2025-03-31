@@ -14,7 +14,7 @@ class_name VestUI
 
 var _run_on_save: bool = false
 
-static var _icon_size := 16.0
+static var _icon_size := 16
 
 signal on_debug()
 
@@ -31,6 +31,10 @@ func handle_resource_saved(resource: Resource):
 func run_all(is_debug: bool = false):
 	Vest._register_scene_tree(get_tree())
 	var runner := VestDaemonRunner.new()
+
+	var test_glob := glob_line_edit.text
+	Vest.__.LocalSettings.test_glob = test_glob
+	Vest.__.LocalSettings.flush()
 
 	clear_results()
 	_set_placeholder_text("Waiting for results...")
@@ -68,18 +72,14 @@ func _ready():
 	clear_button.pressed.connect(clear_results)
 	refresh_mixins_button.pressed.connect(func(): VestMixins.refresh())
 
-	glob_line_edit.text = Vest.get_test_glob()
+	glob_line_edit.text = Vest.__.LocalSettings.test_glob
 	glob_line_edit.text_changed.connect(func(text: String):
-		Vest.set_test_glob(text)
+		Vest.__.LocalSettings.test_glob = text
 	)
 
 	debug_button.pressed.connect(func(): run_all(true))
 
-	_icon_size = 16. * Vest._get_editor_interface().get_editor_scale()
-
-func _notification(what):
-	if what == NOTIFICATION_DRAW:
-		glob_line_edit.text = Vest.get_test_glob()
+	_icon_size = int(16. * Vest._get_editor_interface().get_editor_scale())
 
 func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 	if what is VestResult.Suite:
@@ -88,7 +88,7 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 		item.set_text(1, what.get_aggregate_status_string().capitalize())
 
 		item.set_icon(0, _get_status_icon(what))
-		item.set_icon_max_width(0, get_icon_size())
+		item.set_icon_max_width(0, VestUI.get_icon_size())
 
 		tree.item_activated.connect(func():
 			if tree.get_selected() == item:
@@ -106,7 +106,7 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 		item.collapsed = what.status == VestResult.TEST_PASS
 
 		item.set_icon(0, _get_status_icon(what))
-		item.set_icon_max_width(0, get_icon_size())
+		item.set_icon_max_width(0, VestUI.get_icon_size())
 
 		_render_data(what, tree, item)
 
@@ -121,7 +121,7 @@ func _render_summary(results: VestResult.Suite, test_duration: float):
 	summary_label.text = "Ran %d tests in %.2fms" % [results.size(), test_duration * 1000.]
 	summary_icon.visible = true
 	summary_icon.texture = _get_status_icon(results)
-	summary_icon.custom_minimum_size = Vector2i.ONE * get_icon_size() # TODO: Check
+	summary_icon.custom_minimum_size = Vector2i.ONE * VestUI.get_icon_size() # TODO: Check
 
 func _render_data(case: VestResult.Case, tree: Tree, parent: TreeItem):
 	var data := case.data.duplicate()
@@ -132,6 +132,7 @@ func _render_data(case: VestResult.Case, tree: Tree, parent: TreeItem):
 
 		tree.item_activated.connect(func():
 			if tree.get_selected() == item:
+				# TODO: popup_dialog()
 				add_child(VestMessagePopup.of(case.message).window)
 		)
 
@@ -178,6 +179,7 @@ func _render_data(case: VestResult.Case, tree: Tree, parent: TreeItem):
 		comparison_item.set_text(1, expect_string)
 
 		tree.item_activated.connect(func():
+			# TODO: popup_dialog()
 			if tree.get_selected() in [header_item, comparison_item]:
 				add_child(VestComparisonPopup.of(expect_string, got_string).window)
 		)
