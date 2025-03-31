@@ -14,7 +14,7 @@ const NEW_TEST_IN_ROOT := 2
 
 static var _messages: Array[String] = []
 static var _scene_tree: SceneTree
-static var _editor_interface: EditorInterface
+static var _editor_interface_provider: Callable
 
 ## Add a custom message to the current test.
 ## [br][br]
@@ -173,7 +173,7 @@ static func _register_scene_tree(scene_tree: SceneTree):
 	_scene_tree = scene_tree
 
 static func _get_editor_interface() -> EditorInterface:
-	return _editor_interface
+	return _editor_interface_provider.call()
 
-static func _register_editor_interface(editor_interface: EditorInterface):
-	_editor_interface = editor_interface
+static func _register_editor_interface_provider(provider: Callable):
+	_editor_interface_provider = provider
