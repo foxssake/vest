@@ -3,14 +3,24 @@ extends VestTest
 func get_suite_name() -> String:
 	return "assert_that()"
 
-func test_asserts():
-	var values := [1, 4, 3]
+func suite():
+	test("exp 0 should return 1", func():
+		assert_that(pow(128, 0))\
+			.is_not_null()\
+			.is_equal_to(1)
+	)
+	test("exp 1 should return input", func():
+		assert_that(pow(128, 1))\
+			.is_not_null()\
+			.is_equal_to(128)
+	)
 
-	assert_that(values)\
+func test_exp_0_should_return_1():
+	assert_that(pow(128, 0))\
 		.is_not_null()\
-		.is_not_empty()\
-		.contains(4)\
-		.does_not_contain(2)\
-		.is_not_equal_to([1, 2])\
-		.passes(func(it): return it.size() == 3, "Array should contain 3 items!")\
-		.fails(func(it): return it.max() > 6, "Items should be lesser than 6!")
+		.is_equal_to(1)
+
+func test_exp_1_should_return_inpt():
+	assert_that(pow(128, 1))\
+		.is_not_null()\
+		.is_equal_to(128)
