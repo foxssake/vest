@@ -9,26 +9,32 @@ func suite():
 	define("equals", func():
 		test("string", func():
 			expect(Matchers.is_equal("foo", "foo"))
+			expect_not(Matchers.is_equal("foo", "bar"))
 		)
 
 		test("string name", func():
 			expect(Matchers.is_equal(&"bar", &"bar"))
+			expect_not(Matchers.is_equal(&"foo", &"bar"))
 		)
 
 		test("array", func():
 			expect(Matchers.is_equal([1, 2], [1, 2]))
+			expect_not(Matchers.is_equal([1, 2], [2, 1]))
 		)
 
 		test("dictionary", func():
 			expect(Matchers.is_equal({ 1: 2 }, { 1: 2 }))
+			expect_not(Matchers.is_equal({ 1: 2 }, { 2: 1 }))
 		)
 
 		test("custom", func():
 			expect(Matchers.is_equal(CustomContainer.new([1, 2]), CustomContainer.new([1, 2])))
+			expect_not(Matchers.is_equal(CustomContainer.new([1, 2]), CustomContainer.new([2, 1])))
 		)
 
 		test("custom without overloads", func():
 			expect_not(Matchers.is_equal(RawCustomContainer.new([1, 2]), RawCustomContainer.new([1, 2])))
+			expect_not(Matchers.is_equal(RawCustomContainer.new([1, 2]), RawCustomContainer.new([2, 1])))
 		)
 	)
 
