@@ -5,18 +5,6 @@ var bottom_control: Control
 
 static var SETTINGS := [
 	{
-		"name": "vest/general/test_glob",
-		"value": "res://*.test.gd",
-		"type": TYPE_STRING
-	},
-	{
-		"name": "vest/general/debug_port",
-		"value": 59432,
-		"type": TYPE_INT,
-		"hint": PROPERTY_HINT_RANGE,
-		"hint_string": "0,65535"
-	},
-	{
 		"name": "vest/general/sources_root",
 		"value": "res://",
 		"type": TYPE_STRING,
@@ -50,6 +38,9 @@ static var SETTINGS := [
 func _enter_tree():
 	Vest._register_scene_tree(get_tree())
 	Vest._register_editor_interface_provider(get_editor_interface)
+
+	# Manually trigger local settings init?
+	Vest.__.LocalSettings._static_init()
 
 	bottom_control = (preload("res://addons/vest/ui/vest-ui.tscn") as PackedScene).instantiate()
 	resource_saved.connect(bottom_control.handle_resource_saved)

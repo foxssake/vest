@@ -35,8 +35,7 @@ func _run_with_params(params: VestCLI.Params) -> VestResult.Suite:
 	_is_debug_run = false
 
 	# Start host
-	var port := Vest.get_debug_port() if is_debug else -1
-	if _start(port) != OK:
+	if _start(-1) != OK:
 		push_error("Couldn't start vest host!")
 		return null
 
@@ -46,7 +45,7 @@ func _run_with_params(params: VestCLI.Params) -> VestResult.Suite:
 	if not is_debug:
 		VestCLI.run(params)
 	else:
-		VestCLI.debug()
+		VestCLI.debug(params)
 
 	# Wait for agent to connect
 	if await Vest.until(func(): return _server.is_connection_available()) != OK:

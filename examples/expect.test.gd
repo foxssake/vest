@@ -1,7 +1,7 @@
 extends VestTest
 
 func get_suite_name() -> String:
-	return "expect_*()"
+	return "expect()"
 
 func suite():
 	test("exp 0 should return 1", func():
