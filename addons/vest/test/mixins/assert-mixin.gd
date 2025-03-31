@@ -27,7 +27,7 @@ func expect_equal(actual: Variant, expected: Variant, p_message: String = "Actua
 	else:
 		fail(p_message, { "expect": expected, "got": actual })
 
-## Expect two values to be equal.
+## Expect two values not to be equal.
 ## [br][br]
 ## If [param actual] has an [code]equals()[/code] method, it will be used.
 func expect_not_equal(actual: Variant, expected: Variant, p_message: String = "Actual value equals expected!") -> void:
@@ -79,7 +79,7 @@ func expect_not_empty(object: Variant, p_message: String = "Object was empty!") 
 		ERR_CANT_RESOLVE:
 			fail("Unknown object, can't be checked for emptiness!", { "object": object })
 
-## Expect an [param object] to contain an [param item].
+## Expect an [param object] to contain [param item].
 ## [br][br]
 ## If it's a custom type implementing [code]has()[/code], that method will be
 ## used.
@@ -94,7 +94,7 @@ func expect_contains(object: Variant, item: Variant, p_message: String = "Item i
 		ERR_CANT_RESOLVE:
 			fail("Unknown object, can't be checked if it contains item!", { "object": object })
 
-## Expect an [param object] to not contain an [param item].
+## Expect an [param object] to not contain [param item].
 ## [br][br]
 ## If it's a custom type implementing [code]has()[/code], that method will be
 ## used.
