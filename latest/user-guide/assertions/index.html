@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/vest-favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.9">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.10">
     
     
       
@@ -171,6 +171,7 @@
       <a href="../.." class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     Home
     
@@ -192,6 +193,7 @@
     
     
     
+    
     <li class="md-nav__item md-nav__item--nested">
       
         
@@ -201,6 +203,7 @@
           
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
             
+  
   
   <span class="md-ellipsis">
     Getting Started
@@ -228,6 +231,7 @@
       <a href="../../getting-started/installing-vest/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     Installing vest
     
@@ -249,6 +253,7 @@
     <li class="md-nav__item">
       <a href="../../getting-started/your-first-test/" class="md-nav__link">
         
+  
   
   <span class="md-ellipsis">
     Your first test
@@ -281,6 +286,7 @@
     
     
     
+    
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
@@ -290,6 +296,7 @@
           
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
             
+  
   
   <span class="md-ellipsis">
     User Guide
@@ -317,6 +324,7 @@
       <a href="../writing-tests/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     Writing tests
     
@@ -338,6 +346,7 @@
     <li class="md-nav__item">
       <a href="../test-outcomes/" class="md-nav__link">
         
+  
   
   <span class="md-ellipsis">
     Test outcomes
@@ -370,6 +379,7 @@
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
   
+  
   <span class="md-ellipsis">
     Assertions
     
@@ -381,6 +391,7 @@
       
       <a href="./" class="md-nav__link md-nav__link--active">
         
+  
   
   <span class="md-ellipsis">
     Assertions
@@ -404,6 +415,15 @@
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#expectations-and-assertions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Expectations and assertions
+    </span>
+  </a>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#assert-methods" class="md-nav__link">
@@ -433,6 +453,7 @@
       <a href="../parameterized-tests/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     Parameterized tests
     
@@ -454,6 +475,7 @@
     <li class="md-nav__item">
       <a href="../lifecycle-hooks/" class="md-nav__link">
         
+  
   
   <span class="md-ellipsis">
     Lifecycle hooks
@@ -477,6 +499,7 @@
       <a href="../mocks/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     Mocks
     
@@ -498,6 +521,7 @@
     <li class="md-nav__item">
       <a href="../benchmarking/" class="md-nav__link">
         
+  
   
   <span class="md-ellipsis">
     Benchmarking
@@ -521,6 +545,7 @@
       <a href="../capturing-signals/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     Capturing signals
     
@@ -542,6 +567,7 @@
     <li class="md-nav__item">
       <a href="../coroutines/" class="md-nav__link">
         
+  
   
   <span class="md-ellipsis">
     Coroutines
@@ -565,6 +591,7 @@
       <a href="../printing-custom-messages/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     Printing custom messages
     
@@ -586,6 +613,7 @@
     <li class="md-nav__item">
       <a href="../running-from-ui/" class="md-nav__link">
         
+  
   
   <span class="md-ellipsis">
     Running from the UI
@@ -609,6 +637,7 @@
       <a href="../running-from-cli/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     Running from CLI
     
@@ -630,6 +659,7 @@
     <li class="md-nav__item">
       <a href="../running-on-ci/" class="md-nav__link">
         
+  
   
   <span class="md-ellipsis">
     Running on CI
@@ -677,6 +707,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#expectations-and-assertions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Expectations and assertions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#assert-methods" class="md-nav__link">
     <span class="md-ellipsis">
       Assert methods
@@ -717,7 +756,7 @@ requirements about the results. This latter part is done using <em>assertions</e
 <span class="w">    </span><span class="n">expect_equal</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nb">pow</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span>
 <span class="w">  </span><span class="p">)</span>
 <span class="w">  </span><span class="n">test</span><span class="p">(</span><span class="s2">&quot;exp 1 should return input&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">():</span>
-<span class="w">    </span><span class="n">expect_equal</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span><span class="w"> </span><span class="nb">pow</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p">))</span>
+<span class="w">    </span><span class="n">expect_equal</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span><span class="w"> </span><span class="nb">pow</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span>
 <span class="w">  </span><span class="p">)</span>
 </code></pre></div>
 </div>
@@ -731,7 +770,7 @@ requirements about the results. This latter part is done using <em>assertions</e
 <span class="w">  </span><span class="n">expect_equal</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nb">pow</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span>
 
 <span class="k">func</span><span class="w"> </span><span class="n">test_exp_1_should_return_inpt</span><span class="p">():</span>
-<span class="w">  </span><span class="n">expect_equal</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span><span class="w"> </span><span class="nb">pow</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p">))</span>
+<span class="w">  </span><span class="n">expect_equal</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span><span class="w"> </span><span class="nb">pow</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span>
 </code></pre></div>
 </div>
 </div>
@@ -741,63 +780,183 @@ requirements about the results. This latter part is done using <em>assertions</e
 considered <em>passing</em>. If any of the assertions fail, the test case is also
 considered <em>failing</em>.</p>
 <p>Checking for equality is not the only available assertion.</p>
+<h2 id="expectations-and-assertions">Expectations and assertions</h2>
+<p>There's two styles available for writing assertions - the <code>expect()</code> methods,
+and the <code>assert_that()</code> fluent API.</p>
+<p>Using expectations, each call defines a different requirement, possibly about
+different values and objects.</p>
+<p>Using <code>assert_that()</code>, an asserted value is specified, which will be the
+subject of the attached assertions. The previous example rewritten to use
+<code>assert_that()</code> looks as follows:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">define()</label><label for="__tabbed_2_2">methods</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="k">extends</span><span class="w"> </span><span class="n">VestTest</span>
+
+<span class="k">func</span><span class="w"> </span><span class="n">get_suite_name</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="p">:</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;assert_that()&quot;</span>
+
+<span class="k">func</span><span class="w"> </span><span class="n">suite</span><span class="p">():</span>
+<span class="w">  </span><span class="n">test</span><span class="p">(</span><span class="s2">&quot;exp 0 should return 1&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">():</span>
+<span class="w">    </span><span class="n">assert_that</span><span class="p">(</span><span class="nb">pow</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span>\
+<span class="w">      </span><span class="o">.</span><span class="n">is_not_null</span><span class="p">()</span>\
+<span class="w">      </span><span class="o">.</span><span class="n">is_equal_to</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">  </span><span class="p">)</span>
+<span class="w">  </span><span class="n">test</span><span class="p">(</span><span class="s2">&quot;exp 1 should return input&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">():</span>
+<span class="w">    </span><span class="n">assert_that</span><span class="p">(</span><span class="nb">pow</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span>\
+<span class="w">      </span><span class="o">.</span><span class="n">is_not_null</span><span class="p">()</span>\
+<span class="w">      </span><span class="o">.</span><span class="n">is_equal_to</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span>
+<span class="w">  </span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="k">extends</span><span class="w"> </span><span class="n">VestTest</span>
+
+<span class="k">func</span><span class="w"> </span><span class="n">get_suite_name</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="p">:</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;assert_that()&quot;</span>
+
+<span class="k">func</span><span class="w"> </span><span class="n">test_exp_0_should_return_1</span><span class="p">():</span>
+<span class="w">  </span><span class="n">assert_that</span><span class="p">(</span><span class="nb">pow</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span>\
+<span class="w">    </span><span class="o">.</span><span class="n">is_not_null</span><span class="p">()</span>\
+<span class="w">    </span><span class="o">.</span><span class="n">is_equal_to</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">func</span><span class="w"> </span><span class="n">test_exp_1_should_return_inpt</span><span class="p">():</span>
+<span class="w">  </span><span class="n">assert_that</span><span class="p">(</span><span class="nb">pow</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span>\
+<span class="w">    </span><span class="o">.</span><span class="n">is_not_null</span><span class="p">()</span>\
+<span class="w">    </span><span class="o">.</span><span class="n">is_equal_to</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Assertions in this way can be chained, making it convenient to define multiple
+requirements against the same value.</p>
+<p>The <code>expect()</code> methods and <code>assert_that()</code> are interchangeable - use
+whichever makes the most sense for your test case.</p>
 <h2 id="assert-methods">Assert methods</h2>
 <p><em>Vest</em> provides different assertion methods. Each of them take an additional
 message as the last parameter, that may be used as hints if the assertion
 fails.</p>
 <dl>
-<dt><code>expect(condition)</code>, <code>expect_not(conditions)</code></dt>
+<dt><code>expect(condition)</code>, <code>expect_not(conditions)</code> / <code>.passes(condition)</code>, <code>.fails(condition)</code></dt>
 <dd>
 <p>Asserts that the given condition is true, fails the test otherwise. Has a
 negated version for asserting that the given condition is false. As these
 assertions are very general, it is a good practice to include a message.</p>
+<p>For <code>.passes()</code> and <code>.fails()</code>, the argument is a Callable, that receives
+the asserted value as a parameter. The Callable must return true if the
+condition is true, otherwise false.</p>
 <p>Prefer more specific assert methods, as they can include more relevant data
 in the test report.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">expect()</label><label for="__tabbed_3_2">assert_that()</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="n">expect_not</span><span class="p">(</span><span class="n">array</span><span class="o">.</span><span class="n">is_empty</span><span class="p">(),</span><span class="w"> </span><span class="s1">&#39;Array was not empty!&#39;</span><span class="p">)</span>
 <span class="n">expect</span><span class="p">(</span><span class="n">array</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Array size not as expected!&#39;</span><span class="p">)</span>
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="n">assert_that</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>\
+<span class="w">  </span><span class="o">.</span><span class="n">fails</span><span class="p">(</span><span class="k">func</span><span class="p">(</span><span class="n">it</span><span class="p">):</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">it</span><span class="o">.</span><span class="n">is_empty</span><span class="p">())</span>\
+<span class="w">  </span><span class="o">.</span><span class="n">passes</span><span class="p">(</span><span class="k">func</span><span class="p">(</span><span class="n">it</span><span class="p">):</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">it</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
 </dd>
-<dt><code>expect_equal()</code>, <code>expect_not_equal()</code></dt>
+<dt><code>expect_equal()</code>, <code>expect_not_equal()</code> / <code>.is_equal_to()</code>, <code>.is_not_equal_to()</code></dt>
 <dd>
 <p>Asserts that two values are equal. Uses Godot's builtin <code>==</code> operator. If
 the values being compared are objects implementing an <code>equals()</code> method, the
 method will be used instead.</p>
 <p>In case the assertion fails, both values will be included in the report, to
 help with debugging.</p>
+<p>Supports builtin types. For custom types, <em>vest</em> will call <code>equals()</code> if it
+is implemented.</p>
 <p>Has a negated version to assert that two values are different.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">expect()</label><label for="__tabbed_4_2">assert_that()</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="n">expect_equal</span><span class="p">(</span><span class="s2">&quot;ba&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot;na&quot;</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="s2">&quot;banana&quot;</span><span class="p">)</span>
 <span class="n">expect_not_equal</span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span>
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="n">assert_that</span><span class="p">(</span><span class="s2">&quot;ba&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot;na&quot;</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>\
+<span class="w">  </span><span class="o">.</span><span class="n">is_equal_to</span><span class="p">(</span><span class="s2">&quot;banana&quot;</span><span class="p">)</span>\
+<span class="w">  </span><span class="o">.</span><span class="n">is_not_equal_to</span><span class="p">(</span><span class="s2">&quot;apple&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
 </dd>
-<dt><code>expect_true()</code>, <code>expect_false()</code></dt>
+<dt><code>expect_true()</code>, <code>expect_false()</code> / <code>.passes()</code>, <code>.fails()</code></dt>
 <dd>Synonyms of <code>expect()</code> and <code>expect_not()</code>. Aimed at better readability for
 asserting on boolean values.</dd>
-<dt><code>expect_empty()</code>, <code>expect_not_empty()</code></dt>
+<dt><code>expect_empty()</code>, <code>expect_not_empty()</code> / <code>.is_empty()</code>, <code>.is_not_empty()</code></dt>
 <dd>
 <p>Asserts that a given container is empty. Godot's built-in types and objects
 implementing <code>is_empty()</code> are supported. Has a negated version.</p>
+<p>Supports builtin types. For custom types, <em>vest</em> will call <code>is_empty()</code> if it
+is implemented.</p>
 <p>If the assertion fails, the container will be included in the report.</p>
-<div class="highlight"><pre><span></span><code><span class="n">expect_empty</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<div class="tabbed-set tabbed-alternate" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="__tabbed_5_1">expect()</label><label for="__tabbed_5_2">assert_that()</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="n">expect_empty</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span>
 <span class="n">expect_not_empty</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">))</span>
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="n">assert_that</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">is_empty</span><span class="p">()</span>
+<span class="n">assert_that</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">))</span><span class="o">.</span><span class="n">is_not_empty</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+</div>
 </dd>
-<dt><code>expect_contains()</code>, <code>expect_doesnt_contain()</code></dt>
+<dt><code>expect_contains()</code>, <code>expect_does_not_contain()</code> / <code>.contains()</code>, <code>.does_not_contain()</code></dt>
 <dd>
 <p>Asserts that a given container includes a value. Godot built-in types and
 objects implementing <code>has()</code> are supported. Has a negated version.</p>
+<p>Supports builtin types. For custom types, <em>vest</em> will call <code>has()</code> if it
+is implemented.</p>
 <p>If the assertion fails, the container will be included in the report.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="6:2"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio" /><input id="__tabbed_6_2" name="__tabbed_6" type="radio" /><div class="tabbed-labels"><label for="__tabbed_6_1">expect()</label><label for="__tabbed_6_2">assert_that()</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="n">expect_contains</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">),</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span>
-<span class="n">expect_doesnt_contain</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">),</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span>
+<span class="n">expect_does_not_contain</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">),</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span>
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="n">assert_that</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">))</span>\
+<span class="w">  </span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>\
+<span class="w">  </span><span class="o">.</span><span class="n">does_not_contain</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
 </dd>
-<dt><code>expect_null()</code>, <code>expect_not_null()</code></dt>
+<dt><code>expect_null()</code>, <code>expect_not_null()</code> / <code>.is_null()</code>, <code>.is_not_null()</code></dt>
 <dd>
 <p>Asserts that a given value is null. Has a negated version.</p>
 <p>If the assertion fails, the container will be included in the report.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="7:2"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><input id="__tabbed_7_2" name="__tabbed_7" type="radio" /><div class="tabbed-labels"><label for="__tabbed_7_1">expect()</label><label for="__tabbed_7_2">assert_that()</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="k">var</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;foo&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">}</span>
 <span class="n">expect_null</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;bar&quot;</span><span class="p">))</span>
 <span class="n">expect_not_null</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">))</span>
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="k">var</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;foo&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">}</span>
+<span class="n">assert_that</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;bar&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">is_null</span><span class="p">()</span>
+<span class="n">assert_that</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">is_not_null</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+</div>
 </dd>
 </dl>
 
@@ -846,7 +1005,9 @@ objects implementing <code>has()</code> are supported. Has a negated version.</p
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
       <script src="../../assets/javascripts/bundle.c8b220af.min.js"></script>
