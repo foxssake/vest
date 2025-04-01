@@ -1,5 +1,11 @@
 extends Object
 
+# Serializes any data into Godot builtin types ( strings, dicts, arrays, etc. ),
+# so they can be safely transmitted over the network when running tests from
+# the editor.
+#
+# See examples/custom-data-types.test.gd
+
 static func serialize(data: Variant) -> Variant:
 	match typeof(data):
 		# Numbers
