@@ -63,7 +63,8 @@ static func sleep(duration: float) -> Error:
 		push_warning("Missing reference to SceneTree, will return immediately!")
 		return ERR_UNAVAILABLE
 
-	await _scene_tree.create_timer(duration).timeout
+	if is_zero_approx(duration): await _scene_tree.process_frame
+	else: await _scene_tree.create_timer(duration).timeout
 	return OK
 
 # TODO: Docs

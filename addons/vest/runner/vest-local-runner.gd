@@ -10,10 +10,10 @@ func run_script(script: Script) -> VestResult.Suite:
 
 	var results: VestResult.Suite = null
 	if test_instance is VestTest:
-		test_instance._begin(test_instance)
+		await test_instance._begin(test_instance)
 		var suite = await test_instance._get_suite()
 		results = await _run_suite(suite, test_instance)
-		test_instance._finish(test_instance)
+		await test_instance._finish(test_instance)
 	test_instance.free()
 
 	return results

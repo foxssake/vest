@@ -92,30 +92,31 @@ func _with_result(status: int, message: String, data: Dictionary):
 	_result.assert_line = userland_loc[1]
 
 func _begin(what: Object):
+	# TODO: Handle async signal handlers? Possibly by manually calling each handler?
 	if what == self:
 		on_begin.emit()
-		before_all()
+		await before_all()
 	elif what is VestDefs.Suite:
 		on_suite_begin.emit(what)
-		before_suite(what)
+		await before_suite(what)
 	elif what is VestDefs.Case:
 		_prepare_for_case(what)
 
 		on_case_begin.emit(what)
-		before_case(what)
+		await before_case(what)
 	else:
 		push_error("Beginning unknown object: %s" % [what])
 
 func _finish(what: Object):
 	if what == self:
 		on_finish.emit()
-		after_all()
+		await after_all()
 	elif what is VestDefs.Suite:
 		on_suite_finish.emit(what)
-		after_suite(what)
+		await after_suite(what)
 	elif what is VestDefs.Case:
 		on_case_finish.emit(what)
-		after_case(what)
+		await after_case(what)
 	else:
 		push_error("Finishing unknown object: %s" % [what])
 
