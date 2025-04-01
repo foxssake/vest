@@ -6,7 +6,13 @@ extends Object
 #
 # See examples/custom-data-types.test.gd
 
-static func serialize(data: Variant) -> Variant:
+const MAX_DEPTH := 128
+
+static func serialize(data: Variant, max_depth: int = MAX_DEPTH) -> Variant:
+	if max_depth <= 0:
+		push_error("Data structure too deep to serialize! Is there a circular reference?")
+		return str(data)
+
 	match typeof(data):
 		# Numbers
 		TYPE_BOOL, TYPE_INT, TYPE_FLOAT:
@@ -34,18 +40,18 @@ static func serialize(data: Variant) -> Variant:
 		TYPE_OBJECT:
 			var object := data as Object
 			if object.has_method("_to_vest"):
-				return serialize(object._to_vest())
+				return serialize(object._to_vest(), max_depth - 1)
 			return str(object)
 
 		# Arrays
 		TYPE_PACKED_BYTE_ARRAY, TYPE_PACKED_INT32_ARRAY, TYPE_PACKED_INT64_ARRAY, \
 		TYPE_PACKED_FLOAT32_ARRAY, TYPE_PACKED_FLOAT64_ARRAY, TYPE_PACKED_STRING_ARRAY, \
 		TYPE_PACKED_VECTOR2_ARRAY, TYPE_PACKED_VECTOR3_ARRAY, TYPE_PACKED_COLOR_ARRAY:
-			return serialize(Array(data))
+			return serialize(Array(data), max_depth - 1)
 
 		TYPE_ARRAY:
 			var array := data as Array
-			return array.map(func(it): return serialize(it))
+			return array.map(func(it): return serialize(it, max_depth - 1))
 		
 		# Dictionary
 		TYPE_DICTIONARY:
@@ -54,7 +60,7 @@ static func serialize(data: Variant) -> Variant:
 
 			for key in dict:
 				var value = dict.get(key)
-				result[serialize(key)] = serialize(value)
+				result[serialize(key, max_depth - 1)] = serialize(value, max_depth - 1)
 			return result
 
 		# Default
