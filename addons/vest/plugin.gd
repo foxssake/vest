@@ -5,25 +5,30 @@ var bottom_control: Control
 
 static var SETTINGS := [
 	{
-		"name": "vest/general/sources_root",
+		"name": "vest/runner_timeout",
+		"value": 8.0,
+		"type": TYPE_FLOAT
+	},
+	{
+		"name": "vest/sources_root",
 		"value": "res://",
 		"type": TYPE_STRING,
 		"hint": PROPERTY_HINT_DIR
 	},
 	{
-		"name": "vest/general/tests_root",
+		"name": "vest/tests_root",
 		"value": "res://tests/",
 		"type": TYPE_STRING,
 		"hint": PROPERTY_HINT_DIR
 	},
 	{
-		"name": "vest/general/test_name_patterns",
+		"name": "vest/test_name_patterns",
 		"value": PackedStringArray(["*.test.gd", "test_*.gd"]),
 		"type": TYPE_PACKED_STRING_ARRAY,
 		"hint": PROPERTY_HINT_DIR
 	},
 	{
-		"name": "vest/general/new_test_location",
+		"name": "vest/new_test_location",
 		"value": Vest.NEW_TEST_MIRROR_DIR_STRUCTURE,
 		"type": TYPE_INT,
 		"hint": PROPERTY_HINT_ENUM,

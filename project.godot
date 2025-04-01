@@ -32,4 +32,4 @@ import/blender/enabled=false
 
 [vest]
 
-general/sources_root="res://src/"
+sources_root="res://src/"
