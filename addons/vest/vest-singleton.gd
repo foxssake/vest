@@ -6,6 +6,7 @@ class_name Vest
 ## @tutorial(Printing custom messages): https://foxssake.github.io/vest/latest/user-guide/printing-custom-messages/
 
 const Icons := preload("res://addons/vest/icons/vest-icons.gd")
+const Timeout := preload("res://addons/vest/timeout.gd")
 const __ := preload("res://addons/vest/vest-internals.gd")
 
 const NEW_TEST_MIRROR_DIR_STRUCTURE := 0
@@ -49,6 +50,10 @@ static func until(condition: Callable, timeout: float = 5., interval: float = 0.
 
 	return ERR_TIMEOUT
 
+# TODO: Docs
+static func timeout(duration: float = 5.0, interval: float = 0.0) -> Timeout:
+	return Timeout.new(duration, interval, _scene_tree)
+
 ## Wait for [param duration] seconds.
 ## [br][br]
 ## Returns [constant OK] on success.[br]
@@ -62,17 +67,21 @@ static func sleep(duration: float) -> Error:
 	return OK
 
 # TODO: Docs
+static func get_runner_timeout() -> float:
+	return ProjectSettings.get_setting("vest/runner_timeout", 8.0)
+
+# TODO: Docs
 static func get_sources_root() -> String:
-	return ProjectSettings.get_setting("vest/general/sources_root", "res://")
+	return ProjectSettings.get_setting("vest/sources_root", "res://")
 
 # TODO: Docs
 static func get_tests_root() -> String:
-	return ProjectSettings.get_setting("vest/general/tests_root", "res://tests/")
+	return ProjectSettings.get_setting("vest/tests_root", "res://tests/")
 
 # TODO: Docs
 static func get_test_name_patterns() -> Array[FilenamePattern]:
 	# TODO: Memoize
-	var pattern_strings := ProjectSettings.get_setting("vest/general/test_name_patterns") as PackedStringArray
+	var pattern_strings := ProjectSettings.get_setting("vest/test_name_patterns") as PackedStringArray
 	var patterns := [] as Array[FilenamePattern]
 	patterns.assign(Array(pattern_strings).map(func(it): return FilenamePattern.new(it)))
 
@@ -80,7 +89,7 @@ static func get_test_name_patterns() -> Array[FilenamePattern]:
 
 # TODO: Docs
 static func get_new_test_location_preference() -> int:
-	return ProjectSettings.get_setting("vest/general/new_test_location", NEW_TEST_MIRROR_DIR_STRUCTURE)
+	return ProjectSettings.get_setting("vest/new_test_location", NEW_TEST_MIRROR_DIR_STRUCTURE)
 
 ## Get the current time, in seconds.
 ## [br][br]
