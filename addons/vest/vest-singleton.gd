@@ -56,14 +56,18 @@ static func timeout(duration: float = 5.0, interval: float = 0.0) -> Timeout:
 
 ## Wait for [param duration] seconds.
 ## [br][br]
+## Waiting for 0 seconds will wait until the next
+## [signal SceneTree.process_frame].
+## [br][br]
 ## Returns [constant OK] on success.[br]
 ## Returns [constant ERR_UNAVAILABLE] if no [SceneTree] is available.
-static func sleep(duration: float) -> Error:
+static func sleep(duration: float = 0.) -> Error:
 	if not _scene_tree:
 		push_warning("Missing reference to SceneTree, will return immediately!")
 		return ERR_UNAVAILABLE
 
-	await _scene_tree.create_timer(duration).timeout
+	if is_zero_approx(duration): await _scene_tree.process_frame
+	else: await _scene_tree.create_timer(duration).timeout
 	return OK
 
 # TODO: Docs

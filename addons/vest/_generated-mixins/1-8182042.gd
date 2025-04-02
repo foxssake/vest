@@ -71,7 +71,7 @@ func _get_suite() -> VestDefs.Suite:
 					[method["name"], param_provider_name]
 				)
 
-			var params = call(param_provider_name)
+			var params = await call(param_provider_name)
 			if not params is Array or not params.all(func(it): return it is Array):
 				push_warning(
 					"Can't run parametrized test \"%s\", provider \"%s\" didn't return array or arrays: %s" % \

@@ -93,31 +93,31 @@ func _with_result(status: int, message: String, data: Dictionary):
 
 func _begin(what: Object):
 	if what == self:
-		on_begin.emit()
-		before_all()
+		await _emit_async(on_begin)
+		await before_all()
 	elif what is VestDefs.Suite:
-		on_suite_begin.emit(what)
-		before_suite(what)
+		await _emit_async(on_suite_begin, [what])
+		await before_suite(what)
 	elif what is VestDefs.Case:
 		_prepare_for_case(what)
 
-		on_case_begin.emit(what)
-		before_case(what)
+		await _emit_async(on_case_begin, [what])
+		await before_case(what)
 	else:
-		push_error("Beginning unknown object: %s" % [what])
+		assert(false, "Beginning unknown object: %s" % [what])
 
 func _finish(what: Object):
 	if what == self:
-		on_finish.emit()
-		after_all()
+		await _emit_async(on_finish)
+		await after_all()
 	elif what is VestDefs.Suite:
-		on_suite_finish.emit(what)
-		after_suite(what)
+		await _emit_async(on_suite_finish, [what])
+		await after_suite(what)
 	elif what is VestDefs.Case:
-		on_case_finish.emit(what)
-		after_case(what)
+		await _emit_async(on_case_finish, [what])
+		await after_case(what)
 	else:
-		push_error("Finishing unknown object: %s" % [what])
+		assert(false, "Finishing unknown object: %s" % [what])
 
 func _prepare_for_case(case_def: VestDefs.Case):
 	_result = VestResult.Case.new()
@@ -139,3 +139,14 @@ func _find_userland_stack_location() -> Array:
 		return ["<unknown>", -1]
 	else:
 		return [trimmed_stack[0]["source"], trimmed_stack[0]["line"]]
+
+func _emit_async(p_signal: Signal, p_args: Array = []) -> void:
+	for connection in p_signal.get_connections():
+		var callable := connection["callable"] as Callable
+		var flags := connection["flags"] as ConnectFlags
+
+		if flags & CONNECT_DEFERRED:
+			# TODO: Document call order and that deferred handlers are not awaited
+			(func(): callable.callv(p_args)).call_deferred()
+		else:
+			await callable.callv(p_args)
