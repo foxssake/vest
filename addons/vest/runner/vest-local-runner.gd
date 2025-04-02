@@ -34,9 +34,9 @@ func run_glob(glob: String) -> VestResult.Suite:
 	return result
 
 func _run_case(case: VestDefs.Case, test_instance: VestTest) -> VestResult.Case:
-	test_instance._begin(case)
+	await test_instance._begin(case)
 	await case.callback.call()
-	test_instance._finish(case)
+	await test_instance._finish(case)
 
 	return test_instance._get_result()
 
@@ -44,7 +44,7 @@ func _run_suite(suite: VestDefs.Suite, test_instance: VestTest) -> VestResult.Su
 	var result := VestResult.Suite.new()
 	result.suite = suite
 
-	test_instance._begin(suite)
+	await test_instance._begin(suite)
 
 	for subsuite in suite.suites:
 		var suite_result := await _run_suite(subsuite, test_instance)
@@ -54,6 +54,6 @@ func _run_suite(suite: VestDefs.Suite, test_instance: VestTest) -> VestResult.Su
 		var case_result := await _run_case(case, test_instance)
 		result.cases.append(case_result)
 
-	test_instance._finish(suite)
+	await test_instance._finish(suite)
 
 	return result
