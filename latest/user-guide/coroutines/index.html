@@ -677,17 +677,28 @@ you need to wait for signals or other coroutines.</p>
 
 <span class="k">func</span><span class="w"> </span><span class="n">suite</span><span class="p">():</span>
 <span class="w">  </span><span class="c1"># Coroutines are also supported when defining tests</span>
-<span class="w">  </span><span class="n">await</span><span class="w"> </span><span class="n">Vest</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="w">  </span><span class="n">await</span><span class="w"> </span><span class="n">Vest</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span>
 
-<span class="w">  </span><span class="n">test</span><span class="p">(</span><span class="s2">&quot;Think of a number&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">():</span>
-<span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">await</span><span class="w"> </span><span class="n">think_of_a_number</span><span class="p">()</span>
+<span class="w">  </span><span class="c1"># Async define()&#39;s are supported too</span>
+<span class="w">  </span><span class="c1"># NOTE: Make sure to `await` async defines!</span>
+<span class="w">  </span><span class="n">await</span><span class="w"> </span><span class="n">define</span><span class="p">(</span><span class="s2">&quot;Async suite&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">():</span>
+<span class="w">    </span><span class="c1"># Think a bit before specifying the test</span>
+<span class="w">    </span><span class="n">await</span><span class="w"> </span><span class="n">Vest</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span>
 
-<span class="w">    </span><span class="n">expect_contains</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">),</span><span class="w"> </span><span class="n">number</span><span class="p">)</span>
+<span class="w">    </span><span class="n">test</span><span class="p">(</span><span class="s2">&quot;Think of a number&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">():</span>
+<span class="w">      </span><span class="k">var</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">await</span><span class="w"> </span><span class="n">think_of_a_number</span><span class="p">()</span>
+
+<span class="w">      </span><span class="n">expect_contains</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">),</span><span class="w"> </span><span class="n">number</span><span class="p">)</span>
+<span class="w">    </span><span class="p">)</span>
 <span class="w">  </span><span class="p">)</span>
+
+<span class="c1"># Async signal handlers are also supported</span>
+<span class="n">on_begin</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">func</span><span class="p">():</span><span class="w"> </span><span class="n">await</span><span class="w"> </span><span class="n">Vest</span><span class="o">.</span><span class="n">sleep</span><span class="p">())</span>
+<span class="n">on_finish</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">func</span><span class="p">():</span><span class="w"> </span><span class="n">await</span><span class="w"> </span><span class="n">Vest</span><span class="o">.</span><span class="n">sleep</span><span class="p">())</span>
 
 <span class="k">func</span><span class="w"> </span><span class="n">think_of_a_number</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="p">:</span>
 <span class="w">  </span><span class="c1"># Think for a bit</span>
-<span class="w">  </span><span class="n">await</span><span class="w"> </span><span class="n">Vest</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>
+<span class="w">  </span><span class="n">await</span><span class="w"> </span><span class="n">Vest</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span>
 <span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nb">randi</span><span class="p">()</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">10</span>
 </code></pre></div>
 </div>
@@ -702,9 +713,15 @@ you need to wait for signals or other coroutines.</p>
 
 <span class="w">  </span><span class="n">expect_contains</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">),</span><span class="w"> </span><span class="n">number</span><span class="p">)</span>
 
+<span class="k">func</span><span class="w"> </span><span class="n">before_all</span><span class="p">():</span>
+<span class="w">  </span><span class="n">await</span><span class="w"> </span><span class="n">Vest</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span>
+
+<span class="k">func</span><span class="w"> </span><span class="n">after_all</span><span class="p">():</span>
+<span class="w">  </span><span class="n">await</span><span class="w"> </span><span class="n">Vest</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span>
+
 <span class="k">func</span><span class="w"> </span><span class="n">think_of_a_number</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="p">:</span>
 <span class="w">  </span><span class="c1"># Think for a bit</span>
-<span class="w">  </span><span class="n">await</span><span class="w"> </span><span class="n">Vest</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>
+<span class="w">  </span><span class="n">await</span><span class="w"> </span><span class="n">Vest</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span>
 <span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nb">randi</span><span class="p">()</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">10</span>
 </code></pre></div>
 </div>
@@ -712,6 +729,12 @@ you need to wait for signals or other coroutines.</p>
 </div>
 <p>Coroutines are supported in tests ( both with <code>test()</code> and test methods ), and
 in suite definitions ( both in <code>define()</code> and suite methods ).</p>
+<p>As shown, asynchronous lifecycle hooks are also supported.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Make sure to <code>await</code> when using <code>define()</code> with coroutines! Otherwise,
+Godot may run into a stack overflow.</p>
+</div>
 
 
 
