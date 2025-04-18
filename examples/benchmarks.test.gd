@@ -33,6 +33,20 @@ func suite():
 		expect(psa.get_iters_per_sec() > 100_000, "PackedStringArray was too slow!")
 	)
 
+	test("Array serialization", func():
+		var buffer := StreamPeerBuffer.new()
+
+		benchmark("Array", func():
+			buffer.clear()
+			buffer.put_var([1, 2, 3, 4])
+		).with_metric("Size", func(): return buffer.get_size()).once()
+
+		benchmark("PackedInt32Array", func():
+			buffer.clear()
+			buffer.put_var(PackedInt32Array([1, 2, 3, 4]))
+		).with_metric("Size", func(): return buffer.get_size()).once().attach_metric("Size", func(): return buffer.get_size())
+	)
+
 func test_random_id_generation():
 	var length := 16
 	var charset := "abcdefghijklmnopqrstuvwxyz0123456789"

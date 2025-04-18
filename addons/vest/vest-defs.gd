@@ -101,6 +101,7 @@ class Benchmark:
 
 	var _max_iterations: int = -1
 	var _max_duration: float = -1.0
+	var _custom_metrics: Dictionary = {}
 
 	var _test: VestTest
 
@@ -116,10 +117,18 @@ class Benchmark:
 		_max_duration = p_duration
 		return self
 
+	## Attaches a custom metric value to the benchmark result.
+	## [br][br]
+	## Call before running the benchmark with either [method once] or
+	## [method run].
+	func with_metric(name: String, callback: Callable) -> Benchmark:
+		_custom_metrics[name] = callback
+		return self
+
 	## Run the benchmark only once.
 	func once() -> Benchmark:
 		_max_iterations = 1
-		_max_duration = 0.0
+		_max_duration = 1.0
 		return run()
 
 	## Run the benchmark with the configured limits.
@@ -168,9 +177,16 @@ class Benchmark:
 
 	func _to_data() -> Dictionary:
 		var result := {}
+
+		# Add custom metrics
+		for metric_name in _custom_metrics:
+			result[metric_name] = _custom_metrics[metric_name].call()
+
+		# Add benchmark data
 		result["name"] = name
 		result["iterations"] = _iterations
 		result["duration"] = "%.4fms" % [_duration * 1000.0]
 		result["iters/sec"] = get_iters_per_sec()
 		result["average iteration time"] = "%.4fms" % [get_avg_iteration_time() * 1000.0]
+
 		return result
