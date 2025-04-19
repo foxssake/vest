@@ -102,7 +102,11 @@ class Benchmark:
 	var _max_iterations: int = -1
 	var _max_duration: float = -1.0
 	var _enable_builtin_measures: bool = true
+
 	var _measures: Array[VestMetrics.Measure] = []
+	var _metric_signals: Dictionary = {} # metric name to signal
+
+	signal _on_emit_template(value: Variant)
 
 	var _test: VestTest
 
@@ -119,27 +123,35 @@ class Benchmark:
 		return self
 
 	func with_measure(measure: VestMetrics.Measure) -> Benchmark:
+		# Append measure
 		_measures.append(measure)
+
+		# Connect to appropriate signal
+		var metric := measure.get_metric_name()
+		if not _metric_signals.has(metric):
+			_metric_signals[metric] = Signal(_on_emit_template)
+		(_metric_signals[metric] as Signal).connect(measure.ingest)
+
 		return self
 
 	func measure_value(metric: StringName) -> Benchmark:
-		_measures.append(VestMetrics.LastValueMeasure.new(metric))
+		with_measure(VestMetrics.LastValueMeasure.new(metric))
 		return self
 
 	func measure_average(metric: StringName) -> Benchmark:
-		_measures.append(VestMetrics.AverageMeasure.new(metric))
+		with_measure(VestMetrics.AverageMeasure.new(metric))
 		return self
 
 	func measure_max(metric: StringName) -> Benchmark:
-		_measures.append(VestMetrics.MaxMeasure.new(metric))
+		with_measure(VestMetrics.MaxMeasure.new(metric))
 		return self
 
 	func measure_min(metric: StringName) -> Benchmark:
-		_measures.append(VestMetrics.MinMeasure.new(metric))
+		with_measure(VestMetrics.MinMeasure.new(metric))
 		return self
 
 	func measure_sum(metric: StringName) -> Benchmark:
-		_measures.append(VestMetrics.SumMeasure.new(metric))
+		with_measure(VestMetrics.SumMeasure.new(metric))
 		return self
 
 	func without_builtin_measures() -> Benchmark:
@@ -205,10 +217,8 @@ class Benchmark:
 		return true
 
 	func _emit(metric: StringName, value: Variant) -> void:
-		# TODO: Measure perf impact and optimize
-		for measure in _measures:
-			if measure.get_metric_name() == metric:
-				measure.ingest(value)
+		assert(_metric_signals.has(metric), "Trying to emit a metric that's not measured!")
+		(_metric_signals[metric] as Signal).emit(value)
 
 	func _to_data() -> Dictionary:
 		var result := {}
