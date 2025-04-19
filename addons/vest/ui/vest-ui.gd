@@ -155,7 +155,7 @@ func _render_data(case: VestResult.Case, tree: Tree, parent: TreeItem):
 		for benchmark in data["benchmarks"]:
 			var benchmark_item = tree.create_item(header_item)
 			benchmark_item.set_text(0, benchmark["name"])
-			benchmark_item.set_text(1, benchmark["duration"])
+			if benchmark.has("duration"): benchmark_item.set_text(1, benchmark["duration"])
 
 			for measurement in benchmark.keys():
 				if measurement == "name": continue

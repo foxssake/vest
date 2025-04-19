@@ -101,7 +101,8 @@ class Benchmark:
 
 	var _max_iterations: int = -1
 	var _max_duration: float = -1.0
-	var _custom_metrics: Dictionary = {}
+	var _enable_builtin_measures: bool = true
+	var _measures: Array[VestMetrics.Measure] = []
 
 	var _test: VestTest
 
@@ -117,12 +118,32 @@ class Benchmark:
 		_max_duration = p_duration
 		return self
 
-	## Attaches a custom metric value to the benchmark result.
-	## [br][br]
-	## Call before running the benchmark with either [method once] or
-	## [method run].
-	func with_metric(name: String, callback: Callable) -> Benchmark:
-		_custom_metrics[name] = callback
+	func with_measure(measure: VestMetrics.Measure) -> Benchmark:
+		_measures.append(measure)
+		return self
+
+	func measure_value(metric: StringName) -> Benchmark:
+		_measures.append(VestMetrics.LastValueMeasure.new(metric))
+		return self
+
+	func measure_average(metric: StringName) -> Benchmark:
+		_measures.append(VestMetrics.AverageMeasure.new(metric))
+		return self
+
+	func measure_max(metric: StringName) -> Benchmark:
+		_measures.append(VestMetrics.MaxMeasure.new(metric))
+		return self
+
+	func measure_min(metric: StringName) -> Benchmark:
+		_measures.append(VestMetrics.MinMeasure.new(metric))
+		return self
+
+	func measure_sum(metric: StringName) -> Benchmark:
+		_measures.append(VestMetrics.SumMeasure.new(metric))
+		return self
+
+	func without_builtin_measures() -> Benchmark:
+		_enable_builtin_measures = false
 		return self
 
 	## Run the benchmark only once.
@@ -136,7 +157,7 @@ class Benchmark:
 		# Run benchmark
 		while _is_within_limits():
 			var t_start := Vest.time()
-			callback.call()
+			callback.call(_emit)
 
 			_duration += Vest.time() - t_start
 			_iterations += 1
@@ -168,6 +189,14 @@ class Benchmark:
 	func get_avg_iteration_time() -> float:
 		return _duration / _iterations
 
+	func get_measurement(metric: StringName, measurement: StringName) -> Variant:
+		for measure in _measures:
+			if measure.get_metric_name() == metric and measure.get_measure_name() == measurement:
+				return measure.get_value()
+
+		assert(false, "Measurement not found!")
+		return null
+
 	func _is_within_limits():
 		if _max_iterations >= 0 and _iterations >= _max_iterations:
 			return false
@@ -175,18 +204,28 @@ class Benchmark:
 			return false
 		return true
 
+	func _emit(metric: StringName, value: Variant) -> void:
+		# TODO: Measure perf impact and optimize
+		for measure in _measures:
+			if measure.get_metric_name() == metric:
+				measure.ingest(value)
+
 	func _to_data() -> Dictionary:
 		var result := {}
 
-		# Add custom metrics
-		for metric_name in _custom_metrics:
-			result[metric_name] = _custom_metrics[metric_name].call()
+		# Add custom measures
+		for measure in _measures:
+			var name := "%s - %s" % [measure.get_metric_name(), measure.get_measure_name().capitalize()]
+			result[name] = str(measure.get_value())
+
+		# Add builtin measures
+		if _enable_builtin_measures:
+			result["iterations"] = _iterations
+			result["duration"] = "%.4fms" % [_duration * 1000.0]
+			result["iters/sec"] = get_iters_per_sec()
+			result["average iteration time"] = "%.4fms" % [get_avg_iteration_time() * 1000.0]
 
 		# Add benchmark data
 		result["name"] = name
-		result["iterations"] = _iterations
-		result["duration"] = "%.4fms" % [_duration * 1000.0]
-		result["iters/sec"] = get_iters_per_sec()
-		result["average iteration time"] = "%.4fms" % [get_avg_iteration_time() * 1000.0]
 
 		return result

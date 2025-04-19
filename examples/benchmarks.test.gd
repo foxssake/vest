@@ -8,20 +8,20 @@ func suite():
 		var length := 16
 		var charset := "abcdefghijklmnopqrstuvwxyz0123456789"
 
-		var concat := benchmark("String concatenation", func():
+		var concat := benchmark("String concatenation", func(__):
 			var _id := ""
 			for i in range(length):
 				_id += charset[randi() % charset.length()]
 		).with_iterations(1_000).run()
 
-		var rangemap := benchmark("Range mapping", func():
+		var rangemap := benchmark("Range mapping", func(__):
 			var _id := "".join(
 				range(length)
 					.map(func(__): return charset[randi() % charset.length()])
 				)
 		).with_iterations(1_000).run()
 
-		var psa := benchmark("PackedStringArray", func():
+		var psa := benchmark("PackedStringArray", func(__):
 			var chars := PackedStringArray()
 			for i in range(length):
 				chars.append(charset[randi() % charset.length()])
@@ -36,35 +36,46 @@ func suite():
 	test("Array serialization", func():
 		var buffer := StreamPeerBuffer.new()
 
-		benchmark("Array", func():
+		var array := benchmark("Array", func(emit: Callable):
 			buffer.clear()
 			buffer.put_var([1, 2, 3, 4])
-		).with_metric("Size", func(): return buffer.get_size()).once()
+			emit.call(&"Size", buffer.get_size())
+		)\
+			.without_builtin_measures()\
+			.measure_value(&"Size")\
+			.once()
 
-		benchmark("PackedInt32Array", func():
+		var packed_array := benchmark("PackedInt32Array", func(emit):
 			buffer.clear()
 			buffer.put_var(PackedInt32Array([1, 2, 3, 4]))
-		).with_metric("Size", func(): return buffer.get_size()).once().attach_metric("Size", func(): return buffer.get_size())
+			emit.call(&"Size", buffer.get_size())
+		)\
+			.without_builtin_measures()\
+			.measure_value(&"Size")\
+			.once()
+
+		expect(array.get_measurement(&"Size", &"value") < 80, "Array too large!")
+		expect(packed_array.get_measurement(&"Size", &"value") < 80, "PackedArray too large!")
 	)
 
 func test_random_id_generation():
 	var length := 16
 	var charset := "abcdefghijklmnopqrstuvwxyz0123456789"
 
-	var concat := benchmark("String concatenation", func():
+	var concat := benchmark("String concatenation", func(__):
 		var _id := ""
 		for i in range(length):
 			_id += charset[randi() % charset.length()]
 	).with_iterations(1_000).run()
 
-	var rangemap := benchmark("Range mapping", func():
+	var rangemap := benchmark("Range mapping", func(__):
 		var _id := "".join(
 			range(length)
 				.map(func(__): return charset[randi() % charset.length()])
 			)
 	).with_iterations(1_000).run()
 
-	var psa := benchmark("PackedStringArray", func():
+	var psa := benchmark("PackedStringArray", func(__):
 		var chars := PackedStringArray()
 		for i in range(length):
 			chars.append(charset[randi() % charset.length()])
