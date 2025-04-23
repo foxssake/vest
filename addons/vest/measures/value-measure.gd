@@ -1,4 +1,6 @@
-extends Vest.Measure
+extends VestMeasure
+
+## Measures the value of a metric, retaining only the last emitted value.
 
 var _value: Variant = null
 

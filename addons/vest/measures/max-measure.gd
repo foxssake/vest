@@ -1,4 +1,6 @@
-extends Vest.Measure
+extends VestMeasure
+
+## Measures the maximum of a metric.
 
 var _max: Variant
 var _has: bool = false

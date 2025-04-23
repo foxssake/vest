@@ -1,4 +1,6 @@
-extends Vest.Measure
+extends VestMeasure
+
+## Measures the sum of a metric.
 
 var _sum: Variant
 var _has: bool = false

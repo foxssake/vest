@@ -8,7 +8,6 @@ class_name Vest
 const Icons := preload("res://addons/vest/icons/vest-icons.gd")
 const Timeout := preload("res://addons/vest/timeout.gd")
 
-const Measure := preload("res://addons/vest/measures/measure.gd")
 const ValueMeasure := preload("res://addons/vest/measures/value-measure.gd")
 const SumMeasure := preload("res://addons/vest/measures/sum-measure.gd")
 const AverageMeasure := preload("res://addons/vest/measures/average-measure.gd")

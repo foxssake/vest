@@ -1,4 +1,6 @@
-extends Vest.Measure
+extends VestMeasure
+
+## Measures the average of a metric.
 
 var _sum: Variant
 var _count: int = 0

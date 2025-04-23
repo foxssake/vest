@@ -123,7 +123,12 @@ class Benchmark:
 		_max_duration = p_duration
 		return self
 
-	func with_measure(measure: Vest.Measure) -> Benchmark:
+	## Add a custom measurement.
+	## [br][br]
+	## There are many built-in measurements, see [method measure_value],
+	## [method measure_average], [method measure_sum], [method measure_min],
+	## and [method measure_max].
+	func with_measure(measure: VestMeasure) -> Benchmark:
 		# Append measure
 		_measures.append(measure)
 
@@ -135,26 +140,37 @@ class Benchmark:
 
 		return self
 
+	## Measure the value of [param metric].
+	## [br][br]
+	## The last value emitted will be included in the report.
 	func measure_value(metric: StringName) -> Benchmark:
 		with_measure(Vest.ValueMeasure.new(metric))
 		return self
 
+	## Measure the average of [param metric].
 	func measure_average(metric: StringName) -> Benchmark:
 		with_measure(Vest.AverageMeasure.new(metric))
 		return self
 
+	## Measure the maximum value of [param metric].
 	func measure_max(metric: StringName) -> Benchmark:
 		with_measure(Vest.MaxMeasure.new(metric))
 		return self
 
+	## Measure the minimum value of [param metric].
 	func measure_min(metric: StringName) -> Benchmark:
 		with_measure(Vest.MinMeasure.new(metric))
 		return self
 
+	## Measure the sum of all emissions of [param metric].
 	func measure_sum(metric: StringName) -> Benchmark:
 		with_measure(Vest.SumMeasure.new(metric))
 		return self
 
+	## Disable the builtin measurements.
+	## [br][br]
+	## This will stop iterations, durations, iters/sec, and average iteration
+	## time from being reported. They're enabled by default.
 	func without_builtin_measures() -> Benchmark:
 		_enable_builtin_measures = false
 		return self
@@ -211,6 +227,12 @@ class Benchmark:
 	func get_avg_iteration_time() -> float:
 		return _duration / _iterations
 
+	## Get the value of a measurement.
+	## [br][br]
+	## Measurements can be taken from the benchmark report, e.g. "Size - Value"
+	## corresponds to [code]get_measurement(&"Size", &"value")[/code].
+	## [br][br]
+	## The returned value can be used for assertions.
 	func get_measurement(metric: StringName, measurement: StringName) -> Variant:
 		for measure in _measures:
 			if measure.get_metric_name() == metric and measure.get_measure_name() == measurement:

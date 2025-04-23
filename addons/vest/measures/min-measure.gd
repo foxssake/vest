@@ -1,4 +1,6 @@
-extends Vest.Measure
+extends VestMeasure
+
+## Measures the minimum of a metric.
 
 var _min: Variant
 var _has: bool = false
