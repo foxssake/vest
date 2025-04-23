@@ -105,6 +105,7 @@ class Benchmark:
 
 	var _measures: Array[VestMetrics.Measure] = []
 	var _metric_signals: Dictionary = {} # metric name to signal
+	var _emit_buffer: Array = []
 
 	signal _on_emit_template(value: Variant)
 
@@ -174,6 +175,11 @@ class Benchmark:
 			_duration += Vest.time() - t_start
 			_iterations += 1
 
+			# Metric emits are buffered, so they don't influence runtime measure
+			# much
+			# This call flushes the buffered metric emissions
+			_flush_emits()
+
 		# Report
 		var result_data := _test._get_result().data
 		var benchmarks := result_data.get("benchmarks", []) as Array
@@ -217,8 +223,17 @@ class Benchmark:
 		return true
 
 	func _emit(metric: StringName, value: Variant) -> void:
-		assert(_metric_signals.has(metric), "Trying to emit a metric that's not measured!")
-		(_metric_signals[metric] as Signal).emit(value)
+		_emit_buffer.push_back([metric, value])
+
+	func _flush_emits() -> void:
+		for emit in _emit_buffer:
+			var metric := emit[0] as StringName
+			var value = emit[1]
+
+			if not _metric_signals.has(metric): continue
+			(_metric_signals.get(metric) as Signal).emit(value)
+
+		_emit_buffer.clear()
 
 	func _to_data() -> Dictionary:
 		var result := {}
