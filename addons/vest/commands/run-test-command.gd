@@ -23,6 +23,7 @@ func _run(is_debug: bool) -> void:
 
 	var edited_script := script_editor.get_current_script()
 	if not edited_script:
+		# TODO: Polyfilled toast mechanism so user can see these warns
 		push_warning("No script to run! Open a script in the script editor.")
 		return
 
@@ -30,7 +31,7 @@ func _run(is_debug: bool) -> void:
 		push_warning("Currently open script is not a test! Extend VestTest.")
 		return
 
-	print("Running test \"%s\"" % [edited_script.resource_path])
+	print_verbose("Running test \"%s\"" % [edited_script.resource_path])
 	var vest_ui := VestUI._get_ui()
 	vest_ui.run_script(edited_script, is_debug)
 
