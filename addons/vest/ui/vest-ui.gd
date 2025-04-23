@@ -15,11 +15,13 @@ class_name VestUI
 var _run_on_save: bool = false
 
 static var _icon_size := 16
-
-signal on_debug()
+static var _instance: VestUI
 
 static func get_icon_size() -> int:
 	return _icon_size
+
+static func _get_ui() -> VestUI:
+	return _instance
 
 func handle_resource_saved(resource: Resource):
 	if not resource is Script or not visible:
@@ -49,10 +51,32 @@ func run_all(is_debug: bool = false):
 	var test_duration := Vest.time() - test_start
 
 	# Render individual results
+	ingest_results(results, test_duration)
+
+func run_script(script: Script, is_debug: bool = false) -> void:
+	Vest._register_scene_tree(get_tree())
+	var runner := VestDaemonRunner.new()
+
+	clear_results()
+	_set_placeholder_text("Waiting for results...")
+
+	var test_start := Vest.time()
+	var results: VestResult.Suite
+	if not is_debug:
+		results = await runner.run_script(script)
+	else:
+		results = await runner.with_debug().run_script(script)
+
+	var test_duration := Vest.time() - test_start
+
+	# Render individual results
+	ingest_results(results, test_duration)
+
+func ingest_results(results: VestResult.Suite, duration: float = -1.) -> void:
 	clear_results()
 	if results:
 		_render_result(results, results_tree)
-		_render_summary(results, test_duration)
+		_render_summary(results, duration)
 	else:
 		_set_placeholder_text("Test run failed!")
 
@@ -80,6 +104,7 @@ func _ready():
 	debug_button.pressed.connect(func(): run_all(true))
 
 	_icon_size = int(16. * Vest._get_editor_interface().get_editor_scale())
+	_instance = self
 
 func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 	if what is VestResult.Suite:
@@ -118,7 +143,10 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 		push_error("Rendering unknown object: %s" % [what])
 
 func _render_summary(results: VestResult.Suite, test_duration: float):
-	summary_label.text = "Ran %d tests in %.2fms" % [results.size(), test_duration * 1000.]
+	if test_duration > 0:
+		summary_label.text = "Ran %d tests in %.2fms" % [results.size(), test_duration * 1000.]
+	else:
+		summary_label.text = "Ran %d tests" % [results.size()]
 	summary_icon.visible = true
 	summary_icon.texture = _get_status_icon(results)
 	summary_icon.custom_minimum_size = Vector2i.ONE * VestUI.get_icon_size() # TODO: Check
