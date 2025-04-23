@@ -7,6 +7,13 @@ class_name Vest
 
 const Icons := preload("res://addons/vest/icons/vest-icons.gd")
 const Timeout := preload("res://addons/vest/timeout.gd")
+
+const ValueMeasure := preload("res://addons/vest/measures/value-measure.gd")
+const SumMeasure := preload("res://addons/vest/measures/sum-measure.gd")
+const AverageMeasure := preload("res://addons/vest/measures/average-measure.gd")
+const MinMeasure := preload("res://addons/vest/measures/min-measure.gd")
+const MaxMeasure := preload("res://addons/vest/measures/max-measure.gd")
+
 const __ := preload("res://addons/vest/vest-internals.gd")
 
 const NEW_TEST_MIRROR_DIR_STRUCTURE := 0
@@ -27,15 +34,15 @@ static func message(p_message: String):
 ## [br][br]
 ## This method will start a loop, each time waiting [param interval] seconds.
 ## On each iteration, [param condition] is called. If its result is true, or the
-## [param timeout] has been exceeded, the loop stops.
+## [param duration] has been exceeded, the loop stops.
 ## [br][br]
-## If [param timeout] is 0., the loop may run infinitely, without timeout.
+## If [param duration] is 0., the loop may run infinitely, without timeout.
 ## [br][br]
 ## Returns [constant OK] if [param condition] was true.[br]
-## Returns [constant ERR_TIMEOUT] if [param timeout] was exceeded.[br]
+## Returns [constant ERR_TIMEOUT] if [param duration] was exceeded.[br]
 ## Returns [constant ERR_UNAVAILABLE] if no [SceneTree] is available.
-static func until(condition: Callable, timeout: float = 5., interval: float = 0.0) -> Error:
-	var deadline := time() + timeout
+static func until(condition: Callable, duration: float = 5., interval: float = 0.0) -> Error:
+	var deadline := time() + duration
 
 	if not _scene_tree:
 		push_warning("Missing reference to SceneTree, will return immediately!")
@@ -45,7 +52,7 @@ static func until(condition: Callable, timeout: float = 5., interval: float = 0.
 		if condition.call():
 			return OK
 
-		if is_zero_approx(timeout): await _scene_tree.process_frame
+		if is_zero_approx(duration): await _scene_tree.process_frame
 		else: await _scene_tree.create_timer(interval).timeout
 
 	return ERR_TIMEOUT

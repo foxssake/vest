@@ -101,6 +101,13 @@ class Benchmark:
 
 	var _max_iterations: int = -1
 	var _max_duration: float = -1.0
+	var _enable_builtin_measures: bool = true
+
+	var _measures: Array[Vest.Measure] = []
+	var _metric_signals: Dictionary = {} # metric name to signal
+	var _emit_buffer: Array = []
+
+	signal _on_emit_template(value: Variant)
 
 	var _test: VestTest
 
@@ -116,10 +123,62 @@ class Benchmark:
 		_max_duration = p_duration
 		return self
 
+	## Add a custom measurement.
+	## [br][br]
+	## There are many built-in measurements, see [method measure_value],
+	## [method measure_average], [method measure_sum], [method measure_min],
+	## and [method measure_max].
+	func with_measure(measure: VestMeasure) -> Benchmark:
+		# Append measure
+		_measures.append(measure)
+
+		# Connect to appropriate signal
+		var metric := measure.get_metric_name()
+		if not _metric_signals.has(metric):
+			_metric_signals[metric] = Signal(_on_emit_template)
+		(_metric_signals[metric] as Signal).connect(measure.ingest)
+
+		return self
+
+	## Measure the value of [param metric].
+	## [br][br]
+	## The last value emitted will be included in the report.
+	func measure_value(metric: StringName) -> Benchmark:
+		with_measure(Vest.ValueMeasure.new(metric))
+		return self
+
+	## Measure the average of [param metric].
+	func measure_average(metric: StringName) -> Benchmark:
+		with_measure(Vest.AverageMeasure.new(metric))
+		return self
+
+	## Measure the maximum value of [param metric].
+	func measure_max(metric: StringName) -> Benchmark:
+		with_measure(Vest.MaxMeasure.new(metric))
+		return self
+
+	## Measure the minimum value of [param metric].
+	func measure_min(metric: StringName) -> Benchmark:
+		with_measure(Vest.MinMeasure.new(metric))
+		return self
+
+	## Measure the sum of all emissions of [param metric].
+	func measure_sum(metric: StringName) -> Benchmark:
+		with_measure(Vest.SumMeasure.new(metric))
+		return self
+
+	## Disable the builtin measurements.
+	## [br][br]
+	## This will stop iterations, durations, iters/sec, and average iteration
+	## time from being reported. They're enabled by default.
+	func without_builtin_measures() -> Benchmark:
+		_enable_builtin_measures = false
+		return self
+
 	## Run the benchmark only once.
 	func once() -> Benchmark:
 		_max_iterations = 1
-		_max_duration = 0.0
+		_max_duration = 1.0
 		return run()
 
 	## Run the benchmark with the configured limits.
@@ -127,10 +186,19 @@ class Benchmark:
 		# Run benchmark
 		while _is_within_limits():
 			var t_start := Vest.time()
-			callback.call()
+			callback.call(_emit)
+			var duration := Vest.time() - t_start
 
-			_duration += Vest.time() - t_start
+			_duration += duration
 			_iterations += 1
+
+			# Emit runtime
+			_emit(&"duration", duration)
+
+			# Metric emits are buffered, so they don't influence runtime measure
+			# much
+			# This call flushes the buffered metric emissions
+			_flush_emits()
 
 		# Report
 		var result_data := _test._get_result().data
@@ -159,6 +227,20 @@ class Benchmark:
 	func get_avg_iteration_time() -> float:
 		return _duration / _iterations
 
+	## Get the value of a measurement.
+	## [br][br]
+	## Measurements can be taken from the benchmark report, e.g. "Size - Value"
+	## corresponds to [code]get_measurement(&"Size", &"value")[/code].
+	## [br][br]
+	## The returned value can be used for assertions.
+	func get_measurement(metric: StringName, measurement: StringName) -> Variant:
+		for measure in _measures:
+			if measure.get_metric_name() == metric and measure.get_measure_name() == measurement:
+				return measure.get_value()
+
+		assert(false, "Measurement not found!")
+		return null
+
 	func _is_within_limits():
 		if _max_iterations >= 0 and _iterations >= _max_iterations:
 			return false
@@ -166,11 +248,35 @@ class Benchmark:
 			return false
 		return true
 
+	func _emit(metric: StringName, value: Variant) -> void:
+		_emit_buffer.push_back([metric, value])
+
+	func _flush_emits() -> void:
+		for emit in _emit_buffer:
+			var metric := emit[0] as StringName
+			var value = emit[1]
+
+			if not _metric_signals.has(metric): continue
+			(_metric_signals.get(metric) as Signal).emit(value)
+
+		_emit_buffer.clear()
+
 	func _to_data() -> Dictionary:
 		var result := {}
+
+		# Add custom measures
+		for measure in _measures:
+			var measure_name := "%s - %s" % [measure.get_metric_name(), measure.get_measure_name().capitalize()]
+			result[measure_name] = str(measure.get_value())
+
+		# Add builtin measures
+		if _enable_builtin_measures:
+			result["iterations"] = _iterations
+			result["duration"] = "%.4fms" % [_duration * 1000.0]
+			result["iters/sec"] = get_iters_per_sec()
+			result["average iteration time"] = "%.4fms" % [get_avg_iteration_time() * 1000.0]
+
+		# Add benchmark data
 		result["name"] = name
-		result["iterations"] = _iterations
-		result["duration"] = "%.4fms" % [_duration * 1000.0]
-		result["iters/sec"] = get_iters_per_sec()
-		result["average iteration time"] = "%.4fms" % [get_avg_iteration_time() * 1000.0]
+
 		return result

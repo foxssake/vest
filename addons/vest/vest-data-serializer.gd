@@ -41,7 +41,7 @@ static func serialize(data: Variant, max_depth: int = MAX_DEPTH) -> Variant:
 			var object := data as Object
 			if object.has_method("_to_vest"):
 				return serialize(object._to_vest(), max_depth - 1)
-			return str(object)
+			return str(object) # TODO: Convert to dictionary instead
 
 		# Arrays
 		TYPE_PACKED_BYTE_ARRAY, TYPE_PACKED_INT32_ARRAY, TYPE_PACKED_INT64_ARRAY, \
