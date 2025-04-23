@@ -35,7 +35,7 @@ static func flush() -> void:
 		run_params = VestCLI.Params.new()
 
 	var data := {
-		"test_glob": test_glob,
+		"test_glob": test_glob if test_glob else "",
 		"run_params": run_params.to_args()
 	}
 

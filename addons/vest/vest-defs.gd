@@ -103,7 +103,7 @@ class Benchmark:
 	var _max_duration: float = -1.0
 	var _enable_builtin_measures: bool = true
 
-	var _measures: Array[Vest.Measure] = []
+	var _measures: Array[VestMeasure] = []
 	var _metric_signals: Dictionary = {} # metric name to signal
 	var _emit_buffer: Array = []
 
