@@ -103,7 +103,7 @@ class Benchmark:
 	var _max_duration: float = -1.0
 	var _enable_builtin_measures: bool = true
 
-	var _measures: Array[VestMetrics.Measure] = []
+	var _measures: Array[Vest.Measure] = []
 	var _metric_signals: Dictionary = {} # metric name to signal
 	var _emit_buffer: Array = []
 
@@ -123,7 +123,7 @@ class Benchmark:
 		_max_duration = p_duration
 		return self
 
-	func with_measure(measure: VestMetrics.Measure) -> Benchmark:
+	func with_measure(measure: Vest.Measure) -> Benchmark:
 		# Append measure
 		_measures.append(measure)
 
@@ -136,23 +136,23 @@ class Benchmark:
 		return self
 
 	func measure_value(metric: StringName) -> Benchmark:
-		with_measure(VestMetrics.LastValueMeasure.new(metric))
+		with_measure(Vest.ValueMeasure.new(metric))
 		return self
 
 	func measure_average(metric: StringName) -> Benchmark:
-		with_measure(VestMetrics.AverageMeasure.new(metric))
+		with_measure(Vest.AverageMeasure.new(metric))
 		return self
 
 	func measure_max(metric: StringName) -> Benchmark:
-		with_measure(VestMetrics.MaxMeasure.new(metric))
+		with_measure(Vest.MaxMeasure.new(metric))
 		return self
 
 	func measure_min(metric: StringName) -> Benchmark:
-		with_measure(VestMetrics.MinMeasure.new(metric))
+		with_measure(Vest.MinMeasure.new(metric))
 		return self
 
 	func measure_sum(metric: StringName) -> Benchmark:
-		with_measure(VestMetrics.SumMeasure.new(metric))
+		with_measure(Vest.SumMeasure.new(metric))
 		return self
 
 	func without_builtin_measures() -> Benchmark:
@@ -171,9 +171,13 @@ class Benchmark:
 		while _is_within_limits():
 			var t_start := Vest.time()
 			callback.call(_emit)
+			var duration := Vest.time() - t_start
 
-			_duration += Vest.time() - t_start
+			_duration += duration
 			_iterations += 1
+
+			# Emit runtime
+			_emit(&"duration", duration)
 
 			# Metric emits are buffered, so they don't influence runtime measure
 			# much
@@ -240,8 +244,8 @@ class Benchmark:
 
 		# Add custom measures
 		for measure in _measures:
-			var name := "%s - %s" % [measure.get_metric_name(), measure.get_measure_name().capitalize()]
-			result[name] = str(measure.get_value())
+			var measure_name := "%s - %s" % [measure.get_metric_name(), measure.get_measure_name().capitalize()]
+			result[measure_name] = str(measure.get_value())
 
 		# Add builtin measures
 		if _enable_builtin_measures:
