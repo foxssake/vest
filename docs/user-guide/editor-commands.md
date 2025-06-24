@@ -52,3 +52,10 @@ create one is presented.
 If the currently open script is a test, *vest* will try to find the script it
 tests and open that.
 
+
+!!!tip
+    Editor commands are influenced by the [Project settings] - take a look to
+    customize command behavior.
+
+
+[Project settings]: ./project-settings.md
