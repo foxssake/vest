@@ -50,6 +50,8 @@ The test results will show up in the results panel.
 If something doesn't work as expected, use the ![Debug](../assets/ui/debug.svg)
 Debug button after setting breakpoints in your code.
 
+You can also run tests using [editor commands].
+
 With your first test done, head over to the *User Guide* for more info on what
 *vest* can do.
 
@@ -57,3 +59,4 @@ With your first test done, head over to the *User Guide* for more info on what
 [Writing tests]: ../user-guide/writing-tests.md
 [Assertions]: ../user-guide/assertions.md
 [*vest* UI]: ../user-guide/running-from-ui.md
+[editor commands]: ../user-guide/editor-commands.md

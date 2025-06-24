@@ -1,7 +1,7 @@
 # Writing tests
 
 *Vest* defines tests as a set of *suites*. Each *suite* may contain test
-*cases*, *benchmarks*, and even nested *suites*.
+*cases*, *benchmarks*, and even *nested suites*.
 
 For example, the suite could cover the class ( unit )  being tested, with each
 method receiving its own suite of requirements, each being covered by a test
