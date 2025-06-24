@@ -8,26 +8,28 @@
       
       
       
-        <link rel="canonical" href="https://foxssake.github.io/vest/latest/">
+        <link rel="canonical" href="https://foxssake.github.io/vest/latest/user-guide/editor-commands/">
       
       
+        <link rel="prev" href="../assertions/">
       
-        <link rel="next" href="getting-started/installing-vest/">
+      
+        <link rel="next" href="../parameterized-tests/">
       
       
-      <link rel="icon" href="assets/vest-favicon.png">
+      <link rel="icon" href="../../assets/vest-favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
     
     
       
-        <title>vest</title>
+        <title>Editor commands - vest</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.342714a4.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -46,9 +48,9 @@
       
     
     
-      <link rel="stylesheet" href="assets/mkdocs_puml/puml.css">
+      <link rel="stylesheet" href="../../assets/mkdocs_puml/puml.css">
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -72,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#features" class="md-skip">
+        <a href="#editor-commands" class="md-skip">
           Skip to content
         </a>
       
@@ -92,9 +94,9 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="vest" class="md-header__button md-logo" aria-label="vest" data-md-component="logo">
+    <a href="../.." title="vest" class="md-header__button md-logo" aria-label="vest" data-md-component="logo">
       
-  <img src="assets/vest-logo.png" alt="logo">
+  <img src="../../assets/vest-logo.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -111,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home
+              Editor commands
             
           </span>
         </div>
@@ -149,9 +151,9 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="vest" class="md-nav__button md-logo" aria-label="vest" data-md-component="logo">
+    <a href="../.." title="vest" class="md-nav__button md-logo" aria-label="vest" data-md-component="logo">
       
-  <img src="assets/vest-logo.png" alt="logo">
+  <img src="../../assets/vest-logo.png" alt="logo">
 
     </a>
     vest
@@ -163,30 +165,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Home
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -197,51 +179,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#features" class="md-nav__link">
-    <span class="md-ellipsis">
-      Features
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
-    <span class="md-ellipsis">
-      Overview
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#compatibility" class="md-nav__link">
-    <span class="md-ellipsis">
-      Compatibility
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -291,7 +228,7 @@
   
   
     <li class="md-nav__item">
-      <a href="getting-started/installing-vest/" class="md-nav__link">
+      <a href="../../getting-started/installing-vest/" class="md-nav__link">
         
   
   
@@ -314,7 +251,7 @@
   
   
     <li class="md-nav__item">
-      <a href="getting-started/your-first-test/" class="md-nav__link">
+      <a href="../../getting-started/your-first-test/" class="md-nav__link">
         
   
   
@@ -341,18 +278,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
@@ -368,7 +307,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             User Guide
@@ -382,7 +321,7 @@
   
   
     <li class="md-nav__item">
-      <a href="user-guide/writing-tests/" class="md-nav__link">
+      <a href="../writing-tests/" class="md-nav__link">
         
   
   
@@ -405,7 +344,7 @@
   
   
     <li class="md-nav__item">
-      <a href="user-guide/test-outcomes/" class="md-nav__link">
+      <a href="../test-outcomes/" class="md-nav__link">
         
   
   
@@ -428,7 +367,7 @@
   
   
     <li class="md-nav__item">
-      <a href="user-guide/assertions/" class="md-nav__link">
+      <a href="../assertions/" class="md-nav__link">
         
   
   
@@ -448,10 +387,32 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="user-guide/editor-commands/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Editor commands
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -462,6 +423,62 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#run-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      Run test
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#debug-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      Debug test
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create test
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#go-to-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      Go to test
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -474,7 +491,7 @@
   
   
     <li class="md-nav__item">
-      <a href="user-guide/parameterized-tests/" class="md-nav__link">
+      <a href="../parameterized-tests/" class="md-nav__link">
         
   
   
@@ -497,7 +514,7 @@
   
   
     <li class="md-nav__item">
-      <a href="user-guide/lifecycle-hooks/" class="md-nav__link">
+      <a href="../lifecycle-hooks/" class="md-nav__link">
         
   
   
@@ -520,7 +537,7 @@
   
   
     <li class="md-nav__item">
-      <a href="user-guide/mocks/" class="md-nav__link">
+      <a href="../mocks/" class="md-nav__link">
         
   
   
@@ -543,7 +560,7 @@
   
   
     <li class="md-nav__item">
-      <a href="user-guide/benchmarking/" class="md-nav__link">
+      <a href="../benchmarking/" class="md-nav__link">
         
   
   
@@ -566,7 +583,7 @@
   
   
     <li class="md-nav__item">
-      <a href="user-guide/capturing-signals/" class="md-nav__link">
+      <a href="../capturing-signals/" class="md-nav__link">
         
   
   
@@ -589,7 +606,7 @@
   
   
     <li class="md-nav__item">
-      <a href="user-guide/coroutines/" class="md-nav__link">
+      <a href="../coroutines/" class="md-nav__link">
         
   
   
@@ -612,7 +629,7 @@
   
   
     <li class="md-nav__item">
-      <a href="user-guide/printing-custom-messages/" class="md-nav__link">
+      <a href="../printing-custom-messages/" class="md-nav__link">
         
   
   
@@ -635,7 +652,7 @@
   
   
     <li class="md-nav__item">
-      <a href="user-guide/running-from-ui/" class="md-nav__link">
+      <a href="../running-from-ui/" class="md-nav__link">
         
   
   
@@ -658,7 +675,7 @@
   
   
     <li class="md-nav__item">
-      <a href="user-guide/running-from-cli/" class="md-nav__link">
+      <a href="../running-from-cli/" class="md-nav__link">
         
   
   
@@ -681,7 +698,7 @@
   
   
     <li class="md-nav__item">
-      <a href="user-guide/running-on-ci/" class="md-nav__link">
+      <a href="../running-on-ci/" class="md-nav__link">
         
   
   
@@ -721,6 +738,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -729,27 +748,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#features" class="md-nav__link">
+  <a href="#run-test" class="md-nav__link">
     <span class="md-ellipsis">
-      Features
+      Run test
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
+  <a href="#debug-test" class="md-nav__link">
     <span class="md-ellipsis">
-      Overview
+      Debug test
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#compatibility" class="md-nav__link">
+  <a href="#create-test" class="md-nav__link">
     <span class="md-ellipsis">
-      Compatibility
+      Create test
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#go-to-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      Go to test
     </span>
   </a>
   
@@ -771,54 +799,44 @@
 
 
 
-  <h1>Home</h1>
-
-<p><a href="https://github.com/foxssake/vest/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/github/license/foxssake/vest" /></a>
-<a href="https://github.com/foxssake/vest/releases"><img alt="GitHub Release" src="https://img.shields.io/github/v/release/foxssake/vest" /></a>
-<a href="https://foxssake.github.io/vest/"><img alt="Documentation" src="https://img.shields.io/badge/Docs-github.io-blue" /></a>
-<a href="https://discord.gg/xWGh4GskG5"><img alt="Discord" src="https://img.shields.io/discord/1253434107656933447?logo=discord&amp;label=Discord" /></a>
-<a href="https://ko-fi.com/T6T8WZD0W"><img alt="ko-fi" src="https://img.shields.io/badge/Support%20on-ko--fi-ff5e5b?logo=ko-fi" /></a></p>
-<p>A unit testing library for <a href="https://godotengine.org/">Godot</a>.</p>
-<h2 id="features">Features</h2>
-<ul>
-<li>✨ Define tests with test methods or programmatically with <code>define()</code></li>
-<li>📝 Parameterized tests to conveniently define multiple tests</li>
-<li>🎭 Mock classes dynamically, for simpler unit testing</li>
-<li>⚡ Run benchmarks, to find the best performing implementations</li>
-<li>🗒️ Generate reports in <a href="https://testanything.org/">TAP</a> format, to integrate with other test harnesses</li>
-<li>🔁 <a href="https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/gdscript_basics.html#awaiting-signals-or-coroutines">Coroutines</a> for asynchronous cases</li>
-<li>▶️ In-editor UI for convenient testing</li>
-<li>🤖 Support for running in CI</li>
-</ul>
-<h2 id="overview">Overview</h2>
-<p>A testing addon for <a href="https://godotengine.org/">Godot</a>, <em>vest</em> aims to bring all the features of a
-full-fledged testing framework, while staying as lightweight and nonintrusive
-as possible.</p>
-<p>Tests written with <em>vest</em> look as follows:</p>
-<div class="highlight"><pre><span></span><code><span class="k">extends</span><span class="w"> </span><span class="n">VestTest</span>
-
-<span class="c1"># Specify name shown in reports</span>
-<span class="k">func</span><span class="w"> </span><span class="n">get_suite_name</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="p">:</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;pow()&quot;</span>
-
-<span class="c1"># With define():</span>
-<span class="k">func</span><span class="w"> </span><span class="n">suite</span><span class="p">():</span>
-<span class="w">  </span><span class="n">test</span><span class="p">(</span><span class="s2">&quot;exp 0 should return 1&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">():</span>
-<span class="w">    </span><span class="n">expect_equal</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nb">pow</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span>
-<span class="w">  </span><span class="p">)</span>
-<span class="w">  </span><span class="n">test</span><span class="p">(</span><span class="s2">&quot;exp 1 should return input&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">():</span>
-<span class="w">    </span><span class="n">expect_equal</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span><span class="w"> </span><span class="nb">pow</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p">))</span>
-<span class="w">  </span><span class="p">)</span>
-
-<span class="c1"># With test methods:</span>
-<span class="k">func</span><span class="w"> </span><span class="n">test_exp_0_should_return_1</span><span class="p">():</span>
-<span class="w">  </span><span class="n">expect_equal</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nb">pow</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span>
-
-<span class="k">func</span><span class="w"> </span><span class="n">test_exp_1_should_return_inpt</span><span class="p">():</span>
-<span class="w">  </span><span class="n">expect_equal</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span><span class="w"> </span><span class="nb">pow</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p">))</span>
-</code></pre></div>
-<h2 id="compatibility">Compatibility</h2>
-<p>Godot v4.1.4 and up</p>
+<h1 id="editor-commands">Editor commands</h1>
+<p><em>Vest</em> defines multiple editor commands that are added to Godot's <em>command
+palette</em> and can also be accessed by keyboard shortcuts:</p>
+<p><img alt="Command palette" src="../../assets/editor-commands.png" /></p>
+<h2 id="run-test">Run test</h2>
+<p>Shortcut: <span class="keys"><kbd class="key-f7">F7</kbd></span></p>
+<p>Runs the currently open script as a <em>vest</em> test. If the script is not a test, a
+warning is printed and nothing happens.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You'll need to select <em>Vest</em> on the bottom panel to see the test results,
+as addons can't change the focused panels by themselves.</p>
+</div>
+<h2 id="debug-test">Debug test</h2>
+<p>Shortcut: <span class="keys"><kbd class="key-control">Ctrl</kbd><span>+</span><kbd class="key-f7">F7</kbd></span></p>
+<p>Runs the currently open script, in <em>debug mode</em>. This means that any
+breakpoints or other debugger configurations you've set will be active.</p>
+<p>If the script is not a test, a warning is printed and nothing will happen.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You'll need to select <em>Vest</em> on the bottom panel to see the test results,
+as addons can't change the focused panels by themselves.</p>
+</div>
+<h2 id="create-test">Create test</h2>
+<p>Shortcut: <span class="keys"><kbd class="key-control">Ctrl</kbd><span>+</span><kbd class="key-shift">Shift</kbd><span>+</span><kbd class="key-t">T</kbd></span></p>
+<p>Opens Godot's Create Script dialog pre-filled with the appropriate base class
+and script path, based on the project settings. A convenient way to create a
+test for the currently open script, in the right directory with the right file
+name.</p>
+<p>If the currently open script is already a test, nothing happens.</p>
+<h2 id="go-to-test">Go to test</h2>
+<p>Shortcut: <span class="keys"><kbd class="key-control">Ctrl</kbd><span>+</span><kbd class="key-t">T</kbd></span></p>
+<p>Quickly switch between the test and the script being tested. If multiple tests
+are found for the currently open script, a pop-up menu opens with the
+candidates. If no tests are found for the currently open script, an option to
+create one is presented.</p>
+<p>If the currently open script is a test, <em>vest</em> will try to find the script it
+tests and open that.</p>
 
 
 
@@ -867,12 +885,12 @@ as possible.</p>
     
     
       
-      <script id="__config" type="application/json">{"base": ".", "features": [], "search": "assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="assets/javascripts/bundle.13a4f30d.min.js"></script>
+      <script src="../../assets/javascripts/bundle.13a4f30d.min.js"></script>
       
-        <script src="assets/mkdocs_puml/puml.js"></script>
+        <script src="../../assets/mkdocs_puml/puml.js"></script>
       
     
   </body>
