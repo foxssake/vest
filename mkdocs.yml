@@ -15,8 +15,10 @@ plugins:
         enabled: false
 markdown_extensions:
   - admonition
+  - attr_list
   - def_list
   - pymdownx.details
+  - pymdownx.keys
   - pymdownx.highlight
   - pymdownx.superfences
   - pymdownx.tabbed:
@@ -33,6 +35,7 @@ nav:
     - 'user-guide/writing-tests.md'
     - 'user-guide/test-outcomes.md'
     - 'user-guide/assertions.md'
+    - 'user-guide/editor-commands.md'
     - 'user-guide/parameterized-tests.md'
     - 'user-guide/lifecycle-hooks.md'
     - 'user-guide/mocks.md'
