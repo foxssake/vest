@@ -56,8 +56,8 @@ class CustomData:
 		_value = p_value
 
 	func equals(other):
-    if other == null:
-      return false
+		if other == null:
+			return false
 		if not (other is CustomData):
 			return false
 		return other._value == _value
