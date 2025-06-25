@@ -549,6 +549,57 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#custom-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Custom metrics
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Custom metrics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#emitting-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Emitting metrics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#specifying-measurements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Specifying measurements
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementing-custom-measurements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementing custom measurements
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inspecting-measurements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inspecting measurements
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -770,6 +821,57 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#custom-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Custom metrics
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Custom metrics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#emitting-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Emitting metrics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#specifying-measurements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Specifying measurements
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementing-custom-measurements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementing custom measurements
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inspecting-measurements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inspecting measurements
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -803,20 +905,20 @@ performance meets your criteria.</p>
 <span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">length</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="mi">16</span>
 <span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">charset</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;abcdefghijklmnopqrstuvwxyz0123456789&quot;</span>
 
-<span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">concat</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">benchmark</span><span class="p">(</span><span class="s2">&quot;String concatenation&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">():</span>
+<span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">concat</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">benchmark</span><span class="p">(</span><span class="s2">&quot;String concatenation&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">(</span><span class="n">__</span><span class="p">):</span>
 <span class="w">      </span><span class="k">var</span><span class="w"> </span><span class="n">_id</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
 <span class="w">      </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">):</span>
 <span class="w">        </span><span class="n">_id</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">charset</span><span class="p">[</span><span class="nb">randi</span><span class="p">()</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">charset</span><span class="o">.</span><span class="n">length</span><span class="p">()]</span>
 <span class="w">    </span><span class="p">)</span><span class="o">.</span><span class="n">with_iterations</span><span class="p">(</span><span class="mi">1</span><span class="n">_000</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 
-<span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">rangemap</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">benchmark</span><span class="p">(</span><span class="s2">&quot;Range mapping&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">():</span>
+<span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">rangemap</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">benchmark</span><span class="p">(</span><span class="s2">&quot;Range mapping&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">(</span><span class="n">__</span><span class="p">):</span>
 <span class="w">      </span><span class="k">var</span><span class="w"> </span><span class="n">_id</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
 <span class="w">        </span><span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">)</span>
 <span class="w">          </span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">func</span><span class="p">(</span><span class="n">__</span><span class="p">):</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">charset</span><span class="p">[</span><span class="nb">randi</span><span class="p">()</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">charset</span><span class="o">.</span><span class="n">length</span><span class="p">()])</span>
 <span class="w">        </span><span class="p">)</span>
 <span class="w">    </span><span class="p">)</span><span class="o">.</span><span class="n">with_iterations</span><span class="p">(</span><span class="mi">1</span><span class="n">_000</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 
-<span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">psa</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">benchmark</span><span class="p">(</span><span class="s2">&quot;PackedStringArray&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">():</span>
+<span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">psa</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">benchmark</span><span class="p">(</span><span class="s2">&quot;PackedStringArray&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">(</span><span class="n">__</span><span class="p">):</span>
 <span class="w">      </span><span class="k">var</span><span class="w"> </span><span class="n">chars</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="nb nb-Type">PackedStringArray</span><span class="p">()</span>
 <span class="w">      </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">):</span>
 <span class="w">        </span><span class="n">chars</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">charset</span><span class="p">[</span><span class="nb">randi</span><span class="p">()</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">charset</span><span class="o">.</span><span class="n">length</span><span class="p">()])</span>
@@ -839,20 +941,20 @@ performance meets your criteria.</p>
 <span class="w">  </span><span class="k">var</span><span class="w"> </span><span class="n">length</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="mi">16</span>
 <span class="w">  </span><span class="k">var</span><span class="w"> </span><span class="n">charset</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;abcdefghijklmnopqrstuvwxyz0123456789&quot;</span>
 
-<span class="w">  </span><span class="k">var</span><span class="w"> </span><span class="n">concat</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">benchmark</span><span class="p">(</span><span class="s2">&quot;String concatenation&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">():</span>
+<span class="w">  </span><span class="k">var</span><span class="w"> </span><span class="n">concat</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">benchmark</span><span class="p">(</span><span class="s2">&quot;String concatenation&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">(</span><span class="n">__</span><span class="p">):</span>
 <span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">_id</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
 <span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">):</span>
 <span class="w">      </span><span class="n">_id</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">charset</span><span class="p">[</span><span class="nb">randi</span><span class="p">()</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">charset</span><span class="o">.</span><span class="n">length</span><span class="p">()]</span>
 <span class="w">  </span><span class="p">)</span><span class="o">.</span><span class="n">with_iterations</span><span class="p">(</span><span class="mi">1</span><span class="n">_000</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 
-<span class="w">  </span><span class="k">var</span><span class="w"> </span><span class="n">rangemap</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">benchmark</span><span class="p">(</span><span class="s2">&quot;Range mapping&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">():</span>
+<span class="w">  </span><span class="k">var</span><span class="w"> </span><span class="n">rangemap</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">benchmark</span><span class="p">(</span><span class="s2">&quot;Range mapping&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">(</span><span class="n">__</span><span class="p">):</span>
 <span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">_id</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
 <span class="w">      </span><span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">)</span>
 <span class="w">        </span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">func</span><span class="p">(</span><span class="n">__</span><span class="p">):</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">charset</span><span class="p">[</span><span class="nb">randi</span><span class="p">()</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">charset</span><span class="o">.</span><span class="n">length</span><span class="p">()])</span>
 <span class="w">      </span><span class="p">)</span>
 <span class="w">  </span><span class="p">)</span><span class="o">.</span><span class="n">with_iterations</span><span class="p">(</span><span class="mi">1</span><span class="n">_000</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 
-<span class="w">  </span><span class="k">var</span><span class="w"> </span><span class="n">psa</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">benchmark</span><span class="p">(</span><span class="s2">&quot;PackedStringArray&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">():</span>
+<span class="w">  </span><span class="k">var</span><span class="w"> </span><span class="n">psa</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">benchmark</span><span class="p">(</span><span class="s2">&quot;PackedStringArray&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">(</span><span class="n">__</span><span class="p">):</span>
 <span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">chars</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="nb nb-Type">PackedStringArray</span><span class="p">()</span>
 <span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">):</span>
 <span class="w">      </span><span class="n">chars</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">charset</span><span class="p">[</span><span class="nb">randi</span><span class="p">()</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">charset</span><span class="o">.</span><span class="n">length</span><span class="p">()])</span>
@@ -876,6 +978,159 @@ the benchmark is only ran once.</p>
 <p>The specified benchmark is returned as an object, that can be inspected. This
 can be useful in many situations, including custom reporting and asserting for
 key performance metrics.</p>
+<h2 id="custom-metrics">Custom metrics</h2>
+<p>Aside from pure performance, <em>vest</em> can measure arbitrary custom values in
+tests. This is done by emitting named <em>metrics</em>. These <em>metrics</em> are then
+processed into the specified <em>measurements</em> by <em>vest</em>.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">define()</label><label for="__tabbed_2_2">methods</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="k">extends</span><span class="w"> </span><span class="n">VestTest</span>
+
+<span class="k">func</span><span class="w"> </span><span class="n">get_suite_name</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="p">:</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;Benchmarks&quot;</span>
+
+<span class="k">func</span><span class="w"> </span><span class="n">suite</span><span class="p">():</span>
+<span class="w">  </span><span class="n">test</span><span class="p">(</span><span class="s2">&quot;Array serialization&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">():</span>
+<span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">buffer</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">StreamPeerBuffer</span><span class="o">.</span><span class="n">new</span><span class="p">()</span>
+
+<span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">benchmark</span><span class="p">(</span><span class="s2">&quot;Array&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">(</span><span class="n">emit</span><span class="p">:</span><span class="w"> </span><span class="n">Callable</span><span class="p">):</span>
+<span class="w">      </span><span class="n">buffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="w">      </span><span class="n">buffer</span><span class="o">.</span><span class="n">put_var</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">])</span>
+<span class="w">      </span><span class="n">emit</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="o">&amp;</span><span class="s2">&quot;Size&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">buffer</span><span class="o">.</span><span class="n">get_size</span><span class="p">())</span>
+<span class="w">    </span><span class="p">)</span>\
+<span class="w">      </span><span class="o">.</span><span class="n">without_builtin_measures</span><span class="p">()</span>\
+<span class="w">      </span><span class="o">.</span><span class="n">measure_value</span><span class="p">(</span><span class="o">&amp;</span><span class="s2">&quot;Size&quot;</span><span class="p">)</span>\
+<span class="w">      </span><span class="o">.</span><span class="n">once</span><span class="p">()</span>
+
+<span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">packed_array</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">benchmark</span><span class="p">(</span><span class="s2">&quot;PackedInt32Array&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">(</span><span class="n">emit</span><span class="p">):</span>
+<span class="w">      </span><span class="n">buffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="w">      </span><span class="n">buffer</span><span class="o">.</span><span class="n">put_var</span><span class="p">(</span><span class="nb nb-Type">PackedInt32Array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">]))</span>
+<span class="w">      </span><span class="n">emit</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="o">&amp;</span><span class="s2">&quot;Size&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">buffer</span><span class="o">.</span><span class="n">get_size</span><span class="p">())</span>
+<span class="w">    </span><span class="p">)</span>\
+<span class="w">      </span><span class="o">.</span><span class="n">without_builtin_measures</span><span class="p">()</span>\
+<span class="w">      </span><span class="o">.</span><span class="n">measure_value</span><span class="p">(</span><span class="o">&amp;</span><span class="s2">&quot;Size&quot;</span><span class="p">)</span>\
+<span class="w">      </span><span class="o">.</span><span class="n">once</span><span class="p">()</span>
+
+<span class="w">    </span><span class="n">expect</span><span class="p">(</span><span class="n">array</span><span class="o">.</span><span class="n">get_measurement</span><span class="p">(</span><span class="o">&amp;</span><span class="s2">&quot;Size&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="s2">&quot;value&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">80</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Array too large!&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">expect</span><span class="p">(</span><span class="n">packed_array</span><span class="o">.</span><span class="n">get_measurement</span><span class="p">(</span><span class="o">&amp;</span><span class="s2">&quot;Size&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="s2">&quot;value&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">80</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;PackedArray too large!&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="k">extends</span><span class="w"> </span><span class="n">VestTest</span>
+
+<span class="k">func</span><span class="w"> </span><span class="n">get_suite_name</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="p">:</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;Benchmarks&quot;</span>
+
+<span class="k">func</span><span class="w"> </span><span class="n">test_array_serialization</span><span class="p">():</span>
+<span class="w">  </span><span class="k">var</span><span class="w"> </span><span class="n">buffer</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">StreamPeerBuffer</span><span class="o">.</span><span class="n">new</span><span class="p">()</span>
+
+<span class="w">  </span><span class="k">var</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">benchmark</span><span class="p">(</span><span class="s2">&quot;Array&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">(</span><span class="n">emit</span><span class="p">:</span><span class="w"> </span><span class="n">Callable</span><span class="p">):</span>
+<span class="w">    </span><span class="n">buffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="w">    </span><span class="n">buffer</span><span class="o">.</span><span class="n">put_var</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">])</span>
+<span class="w">    </span><span class="n">emit</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="o">&amp;</span><span class="s2">&quot;Size&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">buffer</span><span class="o">.</span><span class="n">get_size</span><span class="p">())</span>
+<span class="w">  </span><span class="p">)</span>\
+<span class="w">    </span><span class="o">.</span><span class="n">without_builtin_measures</span><span class="p">()</span>\
+<span class="w">    </span><span class="o">.</span><span class="n">measure_value</span><span class="p">(</span><span class="o">&amp;</span><span class="s2">&quot;Size&quot;</span><span class="p">)</span>\
+<span class="w">    </span><span class="o">.</span><span class="n">once</span><span class="p">()</span>
+
+<span class="w">  </span><span class="k">var</span><span class="w"> </span><span class="n">packed_array</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">benchmark</span><span class="p">(</span><span class="s2">&quot;PackedInt32Array&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">(</span><span class="n">emit</span><span class="p">):</span>
+<span class="w">    </span><span class="n">buffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="w">    </span><span class="n">buffer</span><span class="o">.</span><span class="n">put_var</span><span class="p">(</span><span class="nb nb-Type">PackedInt32Array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">]))</span>
+<span class="w">    </span><span class="n">emit</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="o">&amp;</span><span class="s2">&quot;Size&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">buffer</span><span class="o">.</span><span class="n">get_size</span><span class="p">())</span>
+<span class="w">  </span><span class="p">)</span>\
+<span class="w">    </span><span class="o">.</span><span class="n">without_builtin_measures</span><span class="p">()</span>\
+<span class="w">    </span><span class="o">.</span><span class="n">measure_value</span><span class="p">(</span><span class="o">&amp;</span><span class="s2">&quot;Size&quot;</span><span class="p">)</span>\
+<span class="w">    </span><span class="o">.</span><span class="n">once</span><span class="p">()</span>
+
+<span class="w">  </span><span class="n">expect</span><span class="p">(</span><span class="n">array</span><span class="o">.</span><span class="n">get_measurement</span><span class="p">(</span><span class="o">&amp;</span><span class="s2">&quot;Size&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="s2">&quot;value&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">80</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Array too large!&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="n">expect</span><span class="p">(</span><span class="n">packed_array</span><span class="o">.</span><span class="n">get_measurement</span><span class="p">(</span><span class="o">&amp;</span><span class="s2">&quot;Size&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="s2">&quot;value&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">80</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;PackedArray too large!&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If the built-in measurements are not needed for your test, call
+<code>.without_builtin_measures()</code> on your benchmark.</p>
+</div>
+<h3 id="emitting-metrics">Emitting metrics</h3>
+<p>Every benchmark function receives a special parameter - the <code>emit()</code> Callable.
+Inside the benchmark, this can be called to emit custom metrics during testing.</p>
+<p>Metrics are <code>StringName</code>s, since they are usually hard-coded and take on a
+limited set of values.</p>
+<p>To emit a custom metric value, call the method with the metric name and the
+value to emit:</p>
+<div class="highlight"><pre><span></span><code><span class="n">emit</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="o">&amp;</span><span class="s2">&quot;Metric name&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">15.0</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="specifying-measurements">Specifying measurements</h3>
+<p>In order to turn these custom metric values into reportable data, they are
+processed using <em>measurements</em>. Each measurement processes the incoming metric
+values differently.</p>
+<p>Each measurement has a name, which are specified next to the method.</p>
+<dl>
+<dt><code>.measure_value()</code> ⇒ <code>value</code></dt>
+<dd>Retain the last emitted value of the specified metric. Useful for metrics
+  that are emitted only once.</dd>
+<dt><code>.measure_average()</code> ⇒ <code>average</code></dt>
+<dd>Calculate the average of the emitted values.</dd>
+<dt><code>.measure_max()</code> ⇒ <code>max</code></dt>
+<dd>Retain the largest of the emitted values.</dd>
+<dt><code>.measure_min()</code> ⇒ <code>min</code></dt>
+<dd>Retain the smallest of the emitted values.</dd>
+<dt><code>.measure_sum()</code> ⇒ <code>sum</code></dt>
+<dd>Retain the sum of the emitted values.</dd>
+</dl>
+<h3 id="implementing-custom-measurements">Implementing custom measurements</h3>
+<p>If the built-in measurements are not enough, you can implement your own, custom
+measurements as well.</p>
+<p>To do so, create a class that extends the <code>VestMeasure</code> class and implement its
+methods flagged with <em>override</em> in its docs. Take a median measure for example:</p>
+<div class="highlight"><pre><span></span><code><span class="k">extends</span><span class="w"> </span><span class="n">VestMeasure</span>
+<span class="k">class_name</span><span class="w"> </span><span class="n">MedianMeasure</span>
+
+<span class="c1">## Measures the median of a metric.</span>
+
+<span class="k">var</span><span class="w"> </span><span class="n">_values</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">Array</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[]</span>
+<span class="k">var</span><span class="w"> </span><span class="n">_count</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="k">var</span><span class="w"> </span><span class="n">_is_sorted</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">bool</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">false</span>
+
+<span class="k">func</span><span class="w"> </span><span class="n">get_measure_name</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="p">:</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;median&quot;</span>
+
+<span class="k">func</span><span class="w"> </span><span class="n">get_value</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Variant</span><span class="p">:</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">_values</span><span class="o">.</span><span class="n">is_empty</span><span class="p">():</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nb nb-Type">null</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">_is_sorted</span><span class="p">:</span>
+<span class="w">        </span><span class="n">_values</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="w">        </span><span class="n">_is_sorted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">true</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">_values</span><span class="p">[</span><span class="n">_values</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span>
+
+<span class="k">func</span><span class="w"> </span><span class="n">ingest</span><span class="p">(</span><span class="n">value</span><span class="p">:</span><span class="w"> </span><span class="n">Variant</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">void</span><span class="p">:</span>
+<span class="w">    </span><span class="n">_is_sorted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">false</span>
+<span class="w">    </span><span class="n">_values</span><span class="o">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</code></pre></div>
+<p>Once that's done, call <code>.with_measure()</code> on your benchmark, passing in an
+instance of your custom measurement class:</p>
+<div class="highlight"><pre><span></span><code><span class="k">var</span><span class="w"> </span><span class="n">rng</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">benchmark</span><span class="p">(</span><span class="s2">&quot;Random values&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">(</span><span class="n">emit</span><span class="p">:</span><span class="w"> </span><span class="n">Callable</span><span class="p">):</span>
+<span class="w">  </span><span class="n">emit</span><span class="p">(</span><span class="o">&amp;</span><span class="s2">&quot;Random&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">randf</span><span class="p">())</span>
+<span class="p">)</span>\
+<span class="w">  </span><span class="o">.</span><span class="n">with_measure</span><span class="p">(</span><span class="n">MedianMeasure</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="o">&amp;</span><span class="s2">&quot;Random&quot;</span><span class="p">))</span>\
+<span class="w">  </span><span class="o">.</span><span class="n">with_iterations</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>\
+<span class="w">  </span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</code></pre></div>
+<p>This new measurement will show up in the test report.</p>
+<h3 id="inspecting-measurements">Inspecting measurements</h3>
+<p>Each measurement has a name, as specified in the previous chapters. Query the
+measured value ( as it appears in the report ) by combining the metric and
+measurement names:</p>
+<div class="highlight"><pre><span></span><code><span class="n">rng</span><span class="o">.</span><span class="n">get_measurement</span><span class="p">(</span><span class="o">&amp;</span><span class="s2">&quot;Random&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="s2">&quot;median&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>This returns a value that can be inspected and asserted against like any other
+numeric value.</p>
 
 
 
