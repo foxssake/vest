@@ -96,7 +96,7 @@ key performance metrics.
 
 Aside from pure performance, *vest* can measure arbitrary custom values in
 tests. This is done by emitting named *metrics*. These *metrics* are then
-processed into the specified *measurements* by *vest.
+processed into the specified *measurements* by *vest*.
 
 === "define()"
     ```gdscript
@@ -163,6 +163,10 @@ processed into the specified *measurements* by *vest.
       expect(packed_array.get_measurement(&"Size", &"value") < 80, "PackedArray too large!")
     ```
 
+!!!tip
+    If the built-in measurements are not needed for your test, call
+    `.without_builtin_measures()` on your benchmark.
+
 ### Emitting metrics
 
 Every benchmark function receives a special parameter - the `emit()` Callable.
@@ -208,18 +212,49 @@ If the built-in measurements are not enough, you can implement your own, custom
 measurements as well.
 
 To do so, create a class that extends the `VestMeasure` class and implement its
-methods flagged with *override* in its docs.
+methods flagged with *override* in its docs. Take a median measure for example:
+
+```gdscript
+extends VestMeasure
+class_name MedianMeasure
+
+## Measures the median of a metric.
+
+var _values: Array = []
+var _count: int = 0
+var _is_sorted: bool = false
+
+func get_measure_name() -> String:
+	return "median"
+
+func get_value() -> Variant:
+	if _values.is_empty():
+		return null
+
+	if not _is_sorted:
+		_values.sort()
+		_is_sorted = true
+
+	return _values[_values.size() / 2]
+
+func ingest(value: Variant) -> void:
+	_is_sorted = false
+	_values.push_back(value)
+```
 
 Once that's done, call `.with_measure()` on your benchmark, passing in an
 instance of your custom measurement class:
 
 ```gdscript
-benchmark("Benchmark with custom measurement", func(emit: Callable):
-  # ...
+var rng := benchmark("Random values", func(emit: Callable):
+  emit(&"Random", randf())
 )\
-  .with_measure(CustomMeasure.new())\
+  .with_measure(MedianMeasure.new(&"Random"))\
+  .with_iterations(1000)\
   .run()
 ```
+
+This new measurement will show up in the test report.
 
 ### Inspecting measurements
 
@@ -228,7 +263,7 @@ measured value ( as it appears in the report ) by combining the metric and
 measurement names:
 
 ```gdscript
-benchmark(...).get_measurement(&"Measurement", &"value")
+rng.get_measurement(&"Random", &"median")
 ```
 
 This returns a value that can be inspected and asserted against like any other
