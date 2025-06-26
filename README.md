@@ -56,7 +56,7 @@ func test_exp_1_should_return_inpt():
 ## Install
 
 <!-- TODO: Update after release -->
-* [Godot AssetLibrary](https://godotengine.org/asset-library/asset?filter=vest&category=&godot_version=&cost=&sort=updated)
+* [Godot AssetLibrary](https://godotengine.org/asset-library/asset/3758)
 * [GitHub release](https://github.com/foxssake/vest/releases)
 * [Source](https://github.com/foxssake/vest/archive/refs/heads/main.zip)
 
