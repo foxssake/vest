@@ -1,3 +1,4 @@
+@tool
 extends Object
 
 static var _path: String

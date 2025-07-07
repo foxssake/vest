@@ -1,3 +1,4 @@
+@tool
 extends Node
 
 static var _instance = null
@@ -19,7 +20,7 @@ func debug_test():
 
 func _run(is_debug: bool) -> void:
 	var editor_interface := Vest._get_editor_interface()
-	var script_editor := editor_interface.get_script_editor()
+	var script_editor := editor_interface.get_script_editor() as ScriptEditor
 
 	var edited_script := script_editor.get_current_script()
 	if not edited_script:
@@ -43,17 +44,16 @@ func _is_ancestor_of(base_script: Script, script: Script) -> bool:
 		script = script.get_base_script()
 	return false
 
-func _get_editor_interface() -> EditorInterface:
-	return Vest._get_editor_interface()
-
 func _ready():
 	_instance = self
-	_get_editor_interface().get_command_palette().add_command("Run test", "vest/run-test", run_test, "F7")
-	_get_editor_interface().get_command_palette().add_command("Debug test", "vest/debug-test", debug_test, "Ctrl+F7")
+	var editor := Vest._get_editor_interface()
+	editor.get_command_palette().add_command("Run test", "vest/run-test", run_test, "F7")
+	editor.get_command_palette().add_command("Debug test", "vest/debug-test", debug_test, "Ctrl+F7")
 
 func _exit_tree():
-	_get_editor_interface().get_command_palette().remove_command("vest/run-test")
-	_get_editor_interface().get_command_palette().remove_command("vest/debug-test")
+	var editor := Vest._get_editor_interface()
+	editor.get_command_palette().remove_command("vest/run-test")
+	editor.get_command_palette().remove_command("vest/debug-test")
 
 func _shortcut_input(event):
 	if event is InputEventKey:
