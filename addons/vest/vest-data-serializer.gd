@@ -1,3 +1,4 @@
+@tool
 extends Object
 
 # Serializes any data into Godot builtin types ( strings, dicts, arrays, etc. ),

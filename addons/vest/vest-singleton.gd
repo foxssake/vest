@@ -1,3 +1,4 @@
+@tool
 extends Object
 class_name Vest
 
@@ -174,8 +175,13 @@ static func _get_messages() -> Array[String]:
 static func _register_scene_tree(scene_tree: SceneTree):
 	_scene_tree = scene_tree
 
-static func _get_editor_interface() -> EditorInterface:
-	return _editor_interface_provider.call()
+# HACK: Godot script compiler fails in 4.2+ if the return type is an engine singleton
+# The best we can do is return an object and cast at the call site
+static func _get_editor_interface() -> Object:
+	if Engine.get_version_info().hex >= 0x040200:
+		return Engine.get_singleton("EditorInterface")
+	else:
+		return _editor_interface_provider.call()
 
 static func _register_editor_interface_provider(provider: Callable):
 	_editor_interface_provider = provider

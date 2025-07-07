@@ -1,3 +1,4 @@
+@tool
 extends Node
 
 static var _instance: Vest.__.CreateTestCommand = null
@@ -12,10 +13,11 @@ static func execute() -> void:
 		push_warning("No instance of Create Test command found!")
 
 func create_test():
-	var edited_script := _get_editor_interface().get_script_editor().get_current_script()
+	var editor := Vest._get_editor_interface() as EditorInterface
+	var edited_script := editor.get_script_editor().get_current_script()
 
 	if not edited_script:
-		_get_editor_interface().get_script_editor().open_script_create_dialog("VestTest", "")
+		editor.get_script_editor().open_script_create_dialog("VestTest", "")
 		return
 
 	var script_path := edited_script.resource_path
@@ -31,7 +33,7 @@ func create_test():
 	var test_directory := get_test_directory(script_directory)
 	var test_path := Vest.path_join(test_directory, test_filename)
 
-	_get_editor_interface().get_script_editor().open_script_create_dialog("VestTest", test_path)
+	editor.get_script_editor().open_script_create_dialog("VestTest", test_path)
 
 func get_test_directory(script_dir: String) -> String:
 	match Vest.get_new_test_location_preference():
@@ -56,15 +58,14 @@ func get_mirrored_test_dir(script_dir: String) -> String:
 		var relative_to_root := script_dir.replace("res://", "")
 		return Vest.get_tests_root() + relative_to_root
 
-func _get_editor_interface() -> EditorInterface:
-	return Vest._get_editor_interface()
-
 func _ready():
 	_instance = self
-	_get_editor_interface().get_command_palette().add_command("Create test", "vest/create-test", create_test, "Ctrl+Shift+T")
+	var editor := Vest._get_editor_interface() as EditorInterface
+	editor.get_command_palette().add_command("Create test", "vest/create-test", create_test, "Ctrl+Shift+T")
 
 func _exit_tree():
-	_get_editor_interface().get_command_palette().remove_command("vest/create-test")
+	var editor := Vest._get_editor_interface() as EditorInterface
+	editor.get_command_palette().remove_command("vest/create-test")
 
 func _shortcut_input(event):
 	if event is InputEventKey:

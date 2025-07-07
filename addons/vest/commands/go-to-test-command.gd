@@ -1,3 +1,4 @@
+@tool
 extends Node
 
 static var _instance: Vest.__.GoToTestCommand = null
@@ -6,8 +7,8 @@ static func find() -> Vest.__.GoToTestCommand:
 	return _instance
 
 func go_to_test():
-	var interface := _get_editor_interface()
-	var edited_script := interface.get_script_editor().get_current_script()
+	var editor := Vest._get_editor_interface() as EditorInterface
+	var edited_script := editor.get_script_editor().get_current_script()
 	
 	if not edited_script:
 		# No script is being edited
@@ -21,7 +22,7 @@ func go_to_test():
 
 	if hits.size() == 1:
 		# Single hit, navigate to script asap
-		_get_editor_interface().edit_script(load(hits.front()))
+		editor.edit_script(load(hits.front()))
 	else:
 		# Multiple hits, let user choose which one to open
 		show_popup(hits)
@@ -54,6 +55,8 @@ func find_matching_scripts(script_path: String, search_filenames: Array[String])
 	return result
 
 func show_popup(matching_script_paths: Array[String]):
+	var editor := Vest._get_editor_interface() as EditorInterface
+
 	var popup := PopupMenu.new()
 	popup.min_size = Vector2(0, 0)
 	popup.size = Vector2(0, 0)
@@ -69,7 +72,7 @@ func show_popup(matching_script_paths: Array[String]):
 	popup.set_item_icon_max_width(popup.item_count - 1, VestUI.get_icon_size())
 
 	# Show popup at mouse pos
-	_get_editor_interface().popup_dialog(popup, Rect2i(
+	editor.popup_dialog(popup, Rect2i(
 		get_viewport().get_mouse_position(),
 		Vector2.ZERO
 	))
@@ -77,20 +80,19 @@ func show_popup(matching_script_paths: Array[String]):
 
 	popup.index_pressed.connect(func(idx: int):
 		if idx < matching_script_paths.size():
-			_get_editor_interface().edit_script(load(matching_script_paths[idx]))
+			editor.edit_script(load(matching_script_paths[idx]))
 		else:
 			Vest.__.CreateTestCommand.execute()
 	)
 
-func _get_editor_interface() -> EditorInterface:
-	return Vest._get_editor_interface()
-
 func _ready():
 	_instance = self
-	_get_editor_interface().get_command_palette().add_command("Go to test", "vest/go-test", go_to_test, "Ctrl+T")
+	var editor := Vest._get_editor_interface() as EditorInterface
+	editor.get_command_palette().add_command("Go to test", "vest/go-test", go_to_test, "Ctrl+T")
 
 func _exit_tree():
-	_get_editor_interface().get_command_palette().remove_command("vest/go-test")
+	var editor := Vest._get_editor_interface() as EditorInterface
+	editor.get_command_palette().remove_command("vest/go-test")
 
 func _shortcut_input(event):
 	if event is InputEventKey:

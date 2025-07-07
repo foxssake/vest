@@ -1,3 +1,4 @@
+@tool
 extends Object
 
 const Matchers := preload("res://addons/vest/vest-matchers.gd")
