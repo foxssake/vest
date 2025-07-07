@@ -7,8 +7,8 @@ static func find() -> Vest.__.GoToTestCommand:
 	return _instance
 
 func go_to_test():
-	var editor := Vest._get_editor_interface() as EditorInterface
-	var edited_script := editor.get_script_editor().get_current_script()
+	var editor := Vest._get_editor_interface()
+	var edited_script := editor.get_script_editor().get_current_script() as Script
 	
 	if not edited_script:
 		# No script is being edited
@@ -55,7 +55,7 @@ func find_matching_scripts(script_path: String, search_filenames: Array[String])
 	return result
 
 func show_popup(matching_script_paths: Array[String]):
-	var editor := Vest._get_editor_interface() as EditorInterface
+	var editor := Vest._get_editor_interface()
 
 	var popup := PopupMenu.new()
 	popup.min_size = Vector2(0, 0)
@@ -87,11 +87,11 @@ func show_popup(matching_script_paths: Array[String]):
 
 func _ready():
 	_instance = self
-	var editor := Vest._get_editor_interface() as EditorInterface
+	var editor := Vest._get_editor_interface()
 	editor.get_command_palette().add_command("Go to test", "vest/go-test", go_to_test, "Ctrl+T")
 
 func _exit_tree():
-	var editor := Vest._get_editor_interface() as EditorInterface
+	var editor := Vest._get_editor_interface()
 	editor.get_command_palette().remove_command("vest/go-test")
 
 func _shortcut_input(event):

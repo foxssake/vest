@@ -13,8 +13,8 @@ static func execute() -> void:
 		push_warning("No instance of Create Test command found!")
 
 func create_test():
-	var editor := Vest._get_editor_interface() as EditorInterface
-	var edited_script := editor.get_script_editor().get_current_script()
+	var editor := Vest._get_editor_interface()
+	var edited_script := editor.get_script_editor().get_current_script() as Script
 
 	if not edited_script:
 		editor.get_script_editor().open_script_create_dialog("VestTest", "")
@@ -60,11 +60,11 @@ func get_mirrored_test_dir(script_dir: String) -> String:
 
 func _ready():
 	_instance = self
-	var editor := Vest._get_editor_interface() as EditorInterface
+	var editor := Vest._get_editor_interface()
 	editor.get_command_palette().add_command("Create test", "vest/create-test", create_test, "Ctrl+Shift+T")
 
 func _exit_tree():
-	var editor := Vest._get_editor_interface() as EditorInterface
+	var editor := Vest._get_editor_interface()
 	editor.get_command_palette().remove_command("vest/create-test")
 
 func _shortcut_input(event):

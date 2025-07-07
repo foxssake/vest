@@ -19,8 +19,8 @@ func debug_test():
 	_run(true)
 
 func _run(is_debug: bool) -> void:
-	var editor_interface := Vest._get_editor_interface() as EditorInterface
-	var script_editor := editor_interface.get_script_editor()
+	var editor_interface := Vest._get_editor_interface()
+	var script_editor := editor_interface.get_script_editor() as ScriptEditor
 
 	var edited_script := script_editor.get_current_script()
 	if not edited_script:
@@ -46,12 +46,12 @@ func _is_ancestor_of(base_script: Script, script: Script) -> bool:
 
 func _ready():
 	_instance = self
-	var editor := Vest._get_editor_interface() as EditorInterface
+	var editor := Vest._get_editor_interface()
 	editor.get_command_palette().add_command("Run test", "vest/run-test", run_test, "F7")
 	editor.get_command_palette().add_command("Debug test", "vest/debug-test", debug_test, "Ctrl+F7")
 
 func _exit_tree():
-	var editor := Vest._get_editor_interface() as EditorInterface
+	var editor := Vest._get_editor_interface()
 	editor.get_command_palette().remove_command("vest/run-test")
 	editor.get_command_palette().remove_command("vest/debug-test")
 
