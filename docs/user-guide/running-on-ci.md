@@ -30,6 +30,10 @@ first time Godot opens and imports the project. For earlier versions ( 4.1, 4.2
 ), a separate *import* step might be needed for Godot to properly parse the
 project. After the import is done, the tests may be ran.
 
+!!!tip
+    We recommend using Godot v4.2.2 or later to run tests on CI. Earlier
+    versions may behave erratically.
+
 Let's see all of that in an example script:
 
 ```sh
