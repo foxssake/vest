@@ -58,7 +58,10 @@ static func until(condition: Callable, duration: float = 5., interval: float = 0
 
 	return ERR_TIMEOUT
 
-# TODO: Docs
+## Create a Timeout. Timeouts can be reused for multiple wait operations. This
+## is useful when a group of sequential tasks have a single shared deadline.
+## [br][br]
+## See [method until] for further info on the parameters.
 static func timeout(duration: float = 5.0, interval: float = 0.0) -> Timeout:
 	return Timeout.new(duration, interval, _scene_tree)
 
@@ -78,19 +81,48 @@ static func sleep(duration: float = 0.) -> Error:
 	else: await _scene_tree.create_timer(duration).timeout
 	return OK
 
-# TODO: Docs
+## Get the test runner's timeout in seconds.
+##
+## If the test runner doesn't finish running the tests in this time, it's
+## considered stuck. This value is read from the project settings.
+## [br][br]
+## For more info, see the 
+## [url=https://foxssake.github.io/vest/latest/user-guide/project-settings/#runner-timeout]user
+## guide[/url].
 static func get_runner_timeout() -> float:
 	return ProjectSettings.get_setting("vest/runner_timeout", 8.0)
 
-# TODO: Docs
+## Get the sources root for this project.
+##
+## This is directory is assumed root for all the implementations, and is used
+## for deriving paths to test suites. This value is read from the project
+## settings.
+## [br][br]
+## For more info, see the 
+## [url=https://foxssake.github.io/vest/latest/user-guide/project-settings/#sources-root]user
+## guide[/url].
 static func get_sources_root() -> String:
 	return ProjectSettings.get_setting("vest/sources_root", "res://")
 
-# TODO: Docs
+## Get the test sources root for this project.
+##
+## This is directory is assumed root for all the test suites, and is used
+## for deriving paths. This value is read from the project settings.
+## [br][br]
+## For more info, see the 
+## [url=https://foxssake.github.io/vest/latest/user-guide/project-settings/#tests-root]user
+## guide[/url].
 static func get_tests_root() -> String:
 	return ProjectSettings.get_setting("vest/tests_root", "res://tests/")
 
-# TODO: Docs
+## Get the list of configured test name patterns.
+##
+## These are used to recognize and generate filenames for test suites. This
+## value is read from the project settings.
+## [br][br]
+## For more info, see the 
+## [url=https://foxssake.github.io/vest/latest/user-guide/project-settings/#test-name-patterns]user
+## guide[/url].
 static func get_test_name_patterns() -> Array[FilenamePattern]:
 	# TODO: Memoize
 	var pattern_strings := ProjectSettings.get_setting("vest/test_name_patterns") as PackedStringArray
@@ -99,7 +131,13 @@ static func get_test_name_patterns() -> Array[FilenamePattern]:
 
 	return patterns
 
-# TODO: Docs
+## Get the preference for new test location.
+##
+## This setting determines what path to suggest when creating new tests.
+## [br][br]
+## For more info, see the 
+## [url=https://foxssake.github.io/vest/latest/user-guide/project-settings/#new-test-location]
+## user guide[/url].
 static func get_new_test_location_preference() -> int:
 	return ProjectSettings.get_setting("vest/new_test_location", NEW_TEST_MIRROR_DIR_STRUCTURE)
 
@@ -109,7 +147,7 @@ static func get_new_test_location_preference() -> int:
 static func time() -> float:
 	return Time.get_unix_time_from_system()
 
-# TODO: Docs
+## Traverse [param directory] recursively and call [param visitor] on each file.
 static func traverse_directory(directory: String, visitor: Callable, max_iters: int = 131072) -> void:
 	var da := DirAccess.open(directory)
 	da.include_navigational = false
@@ -137,7 +175,8 @@ static func traverse_directory(directory: String, visitor: Callable, max_iters: 
 			var file := path_join(da.get_current_dir(), file_name)
 			visitor.call(file)
 
-# TODO: Docs
+## Return all paths that match the glob [param pattern].
+## The matching is done using [method String.match].
 static func glob(pattern: String, max_iters: int = 131072) -> Array[String]:
 	if pattern.is_empty(): return []
 	var results: Array[String] = []
