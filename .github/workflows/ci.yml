@@ -9,6 +9,9 @@ on:
 
 jobs:
   test:
+    strategy:
+      matrix:
+        godot-version: [4.1.4, 4.2.0, 4.3.0, 4.4.0]
     name: Run tests
     runs-on: ubuntu-latest
     steps:
@@ -17,7 +20,7 @@ jobs:
       - name: Setup Godot
         uses: chickensoft-games/setup-godot@v1
         with:
-          version: 4.2.2
+          version: ${{ matrix.godot-version }}
           use-dotnet: false
           include-templates: false
       - name: Verify setup
