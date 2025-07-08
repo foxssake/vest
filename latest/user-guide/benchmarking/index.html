@@ -541,6 +541,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#batched-running-for-microbenchmarks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Batched running for microbenchmarks
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#inspecting-results" class="md-nav__link">
     <span class="md-ellipsis">
       Inspecting results
@@ -836,6 +845,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#batched-running-for-microbenchmarks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Batched running for microbenchmarks
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#inspecting-results" class="md-nav__link">
     <span class="md-ellipsis">
       Inspecting results
@@ -932,21 +950,21 @@ performance meets your criteria.</p>
 <span class="w">      </span><span class="k">var</span><span class="w"> </span><span class="n">_id</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
 <span class="w">      </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">):</span>
 <span class="w">        </span><span class="n">_id</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">charset</span><span class="p">[</span><span class="nb">randi</span><span class="p">()</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">charset</span><span class="o">.</span><span class="n">length</span><span class="p">()]</span>
-<span class="w">    </span><span class="p">)</span><span class="o">.</span><span class="n">with_iterations</span><span class="p">(</span><span class="mi">1</span><span class="n">_000</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="w">    </span><span class="p">)</span><span class="o">.</span><span class="n">with_batch_size</span><span class="p">(</span><span class="mi">10</span><span class="n">_000</span><span class="p">)</span><span class="o">.</span><span class="n">with_iterations</span><span class="p">(</span><span class="mi">100</span><span class="n">_000</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 
 <span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">rangemap</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">benchmark</span><span class="p">(</span><span class="s2">&quot;Range mapping&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">(</span><span class="n">__</span><span class="p">):</span>
 <span class="w">      </span><span class="k">var</span><span class="w"> </span><span class="n">_id</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
 <span class="w">        </span><span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">)</span>
 <span class="w">          </span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">func</span><span class="p">(</span><span class="n">__</span><span class="p">):</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">charset</span><span class="p">[</span><span class="nb">randi</span><span class="p">()</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">charset</span><span class="o">.</span><span class="n">length</span><span class="p">()])</span>
 <span class="w">        </span><span class="p">)</span>
-<span class="w">    </span><span class="p">)</span><span class="o">.</span><span class="n">with_iterations</span><span class="p">(</span><span class="mi">1</span><span class="n">_000</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="w">    </span><span class="p">)</span><span class="o">.</span><span class="n">with_batch_size</span><span class="p">(</span><span class="mi">10</span><span class="n">_000</span><span class="p">)</span><span class="o">.</span><span class="n">with_iterations</span><span class="p">(</span><span class="mi">100</span><span class="n">_000</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 
 <span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">psa</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">benchmark</span><span class="p">(</span><span class="s2">&quot;PackedStringArray&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">(</span><span class="n">__</span><span class="p">):</span>
 <span class="w">      </span><span class="k">var</span><span class="w"> </span><span class="n">chars</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="nb nb-Type">PackedStringArray</span><span class="p">()</span>
 <span class="w">      </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">):</span>
 <span class="w">        </span><span class="n">chars</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">charset</span><span class="p">[</span><span class="nb">randi</span><span class="p">()</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">charset</span><span class="o">.</span><span class="n">length</span><span class="p">()])</span>
 <span class="w">      </span><span class="k">var</span><span class="w"> </span><span class="n">_id</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">chars</span><span class="p">)</span>
-<span class="w">    </span><span class="p">)</span><span class="o">.</span><span class="n">with_iterations</span><span class="p">(</span><span class="mi">1</span><span class="n">_000</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="w">    </span><span class="p">)</span><span class="o">.</span><span class="n">with_batch_size</span><span class="p">(</span><span class="mi">10</span><span class="n">_000</span><span class="p">)</span><span class="o">.</span><span class="n">with_iterations</span><span class="p">(</span><span class="mi">100</span><span class="n">_000</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 
 <span class="w">    </span><span class="n">expect</span><span class="p">(</span><span class="n">concat</span><span class="o">.</span><span class="n">get_iters_per_sec</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">100</span><span class="n">_000</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Concatenation was too slow!&quot;</span><span class="p">)</span>
 <span class="w">    </span><span class="n">expect</span><span class="p">(</span><span class="n">rangemap</span><span class="o">.</span><span class="n">get_iters_per_sec</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">100</span><span class="n">_000</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Rangemapping was too slow!&quot;</span><span class="p">)</span>
@@ -968,21 +986,21 @@ performance meets your criteria.</p>
 <span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">_id</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
 <span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">):</span>
 <span class="w">      </span><span class="n">_id</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">charset</span><span class="p">[</span><span class="nb">randi</span><span class="p">()</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">charset</span><span class="o">.</span><span class="n">length</span><span class="p">()]</span>
-<span class="w">  </span><span class="p">)</span><span class="o">.</span><span class="n">with_iterations</span><span class="p">(</span><span class="mi">1</span><span class="n">_000</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="w">  </span><span class="p">)</span><span class="o">.</span><span class="n">with_batch_size</span><span class="p">(</span><span class="mi">10</span><span class="n">_000</span><span class="p">)</span><span class="o">.</span><span class="n">with_iterations</span><span class="p">(</span><span class="mi">100</span><span class="n">_000</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 
 <span class="w">  </span><span class="k">var</span><span class="w"> </span><span class="n">rangemap</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">benchmark</span><span class="p">(</span><span class="s2">&quot;Range mapping&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">(</span><span class="n">__</span><span class="p">):</span>
 <span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">_id</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
 <span class="w">      </span><span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">)</span>
 <span class="w">        </span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">func</span><span class="p">(</span><span class="n">__</span><span class="p">):</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">charset</span><span class="p">[</span><span class="nb">randi</span><span class="p">()</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">charset</span><span class="o">.</span><span class="n">length</span><span class="p">()])</span>
 <span class="w">      </span><span class="p">)</span>
-<span class="w">  </span><span class="p">)</span><span class="o">.</span><span class="n">with_iterations</span><span class="p">(</span><span class="mi">1</span><span class="n">_000</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="w">  </span><span class="p">)</span><span class="o">.</span><span class="n">with_batch_size</span><span class="p">(</span><span class="mi">10</span><span class="n">_000</span><span class="p">)</span><span class="o">.</span><span class="n">with_iterations</span><span class="p">(</span><span class="mi">100</span><span class="n">_000</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 
 <span class="w">  </span><span class="k">var</span><span class="w"> </span><span class="n">psa</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">benchmark</span><span class="p">(</span><span class="s2">&quot;PackedStringArray&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">(</span><span class="n">__</span><span class="p">):</span>
 <span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">chars</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="nb nb-Type">PackedStringArray</span><span class="p">()</span>
 <span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">):</span>
 <span class="w">      </span><span class="n">chars</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">charset</span><span class="p">[</span><span class="nb">randi</span><span class="p">()</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">charset</span><span class="o">.</span><span class="n">length</span><span class="p">()])</span>
 <span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">_id</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">chars</span><span class="p">)</span>
-<span class="w">  </span><span class="p">)</span><span class="o">.</span><span class="n">with_iterations</span><span class="p">(</span><span class="mi">1</span><span class="n">_000</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="w">  </span><span class="p">)</span><span class="o">.</span><span class="n">with_batch_size</span><span class="p">(</span><span class="mi">10</span><span class="n">_000</span><span class="p">)</span><span class="o">.</span><span class="n">with_iterations</span><span class="p">(</span><span class="mi">100</span><span class="n">_000</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 
 <span class="w">  </span><span class="n">expect</span><span class="p">(</span><span class="n">concat</span><span class="o">.</span><span class="n">get_iters_per_sec</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">100</span><span class="n">_000</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Concatenation was too slow!&quot;</span><span class="p">)</span>
 <span class="w">  </span><span class="n">expect</span><span class="p">(</span><span class="n">rangemap</span><span class="o">.</span><span class="n">get_iters_per_sec</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">100</span><span class="n">_000</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Rangemapping was too slow!&quot;</span><span class="p">)</span>
@@ -997,6 +1015,15 @@ run. You can apply limits on how long or how many times to run the callable
 with <code>.with_duration()</code> or <code>.with_iterations()</code>. If no limits are specified,
 the benchmark is only ran once.</p>
 <p>With the limits in place, call <code>.run()</code> to perform the benchmark.</p>
+<h2 id="batched-running-for-microbenchmarks">Batched running for microbenchmarks</h2>
+<p>When the benchmarked code is small, simple, or in general runs really fast, it
+might be difficult to measure. The underlying hardware might not have the
+necessary precision for measuring the runtime in this case.</p>
+<p>To fix that, <em>vest</em> can run the benchmarked code in <em>batches</em>. So, instead of
+running the code one time and measuring that, it runs the code many times, and
+measures the full runtime of that batch. This is then repeated until the
+maximum duration or iteration count is reached.</p>
+<p>To specify the batch size, call <code>.with_batch_size()</code> on the benchmark object.</p>
 <h2 id="inspecting-results">Inspecting results</h2>
 <p>The specified benchmark is returned as an object, that can be inspected. This
 can be useful in many situations, including custom reporting and asserting for
