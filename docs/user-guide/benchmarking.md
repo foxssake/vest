@@ -20,21 +20,21 @@ performance meets your criteria.
           var _id := ""
           for i in range(length):
             _id += charset[randi() % charset.length()]
-        ).with_iterations(1_000).run()
+        ).with_batch_size(10_000).with_iterations(100_000).run()
 
         var rangemap := benchmark("Range mapping", func(__):
           var _id := "".join(
             range(length)
               .map(func(__): return charset[randi() % charset.length()])
             )
-        ).with_iterations(1_000).run()
+        ).with_batch_size(10_000).with_iterations(100_000).run()
 
         var psa := benchmark("PackedStringArray", func(__):
           var chars := PackedStringArray()
           for i in range(length):
             chars.append(charset[randi() % charset.length()])
           var _id := "".join(chars)
-        ).with_iterations(1_000).run()
+        ).with_batch_size(10_000).with_iterations(100_000).run()
 
         expect(concat.get_iters_per_sec() > 100_000, "Concatenation was too slow!")
         expect(rangemap.get_iters_per_sec() > 100_000, "Rangemapping was too slow!")
@@ -56,21 +56,21 @@ performance meets your criteria.
         var _id := ""
         for i in range(length):
           _id += charset[randi() % charset.length()]
-      ).with_iterations(1_000).run()
+      ).with_batch_size(10_000).with_iterations(100_000).run()
 
       var rangemap := benchmark("Range mapping", func(__):
         var _id := "".join(
           range(length)
             .map(func(__): return charset[randi() % charset.length()])
           )
-      ).with_iterations(1_000).run()
+      ).with_batch_size(10_000).with_iterations(100_000).run()
 
       var psa := benchmark("PackedStringArray", func(__):
         var chars := PackedStringArray()
         for i in range(length):
           chars.append(charset[randi() % charset.length()])
         var _id := "".join(chars)
-      ).with_iterations(1_000).run()
+      ).with_batch_size(10_000).with_iterations(100_000).run()
 
       expect(concat.get_iters_per_sec() > 100_000, "Concatenation was too slow!")
       expect(rangemap.get_iters_per_sec() > 100_000, "Rangemapping was too slow!")
@@ -85,6 +85,19 @@ with `.with_duration()` or `.with_iterations()`. If no limits are specified,
 the benchmark is only ran once.
 
 With the limits in place, call `.run()` to perform the benchmark.
+
+## Batched running for microbenchmarks
+
+When the benchmarked code is small, simple, or in general runs really fast, it
+might be difficult to measure. The underlying hardware might not have the
+necessary precision for measuring the runtime in this case.
+
+To fix that, *vest* can run the benchmarked code in *batches*. So, instead of
+running the code one time and measuring that, it runs the code many times, and
+measures the full runtime of that batch. This is then repeated until the
+maximum duration or iteration count is reached.
+
+To specify the batch size, call `.with_batch_size()` on the benchmark object.
 
 ## Inspecting results
 
