@@ -13,18 +13,28 @@ func suite():
 		["int", 782, 782],
 		["float", 78.2, 78.2],
 		["string", "foo", "foo"],
-		["vector", Vector3.ONE, "(1, 1, 1)"],
-		["color", Color.RED, "(1, 0, 0, 1)"],
-		["array", ["foo", Vector3.ONE], ["foo", "(1, 1, 1)"]],
+		["array", ["foo", [1, 2]], ["foo", [1, 2]]],
 		["PackedByteArray", PackedByteArray([1, 75, 3]), [1, 75, 3]],
 		["object", SerializableObject.of(2), { "value": 2 }],
-		["dictionary", { Vector3.ONE: SerializableObject.of(2) }, { "(1, 1, 1)": { "value": 2 } }],
+		["dictionary", { Vector3i.ONE: SerializableObject.of(2) }, { "(1, 1, 1)": { "value": 2 } }],
 		["nested",
 			{ "foo": SerializableObject.of([1, SerializableObject.of(2)]) },
 			{ "foo": { "value": [1, { "value": 2 }] } }
 		],
 		["circular reference", ref_a, { "value": { "value": { "value": { "value": "SerializableObject" }}}}]
 	]
+
+	# Godot 4.4 stringifies slightly differently, these cases depend on version
+	if Engine.get_version_info().hex >= 0x040400:
+		cases += [
+			["vector", Vector3.ONE, "(1.0, 1.0, 1.0)"],
+			["color", Color.RED, "(1.0, 0.0, 0.0, 1.0)"]
+		]
+	else:
+		cases += [
+			["vector", Vector3.ONE, "(1, 1, 1)"],
+			["color", Color.RED, "(1, 0, 0, 1)"],
+		]
 
 	for case in cases:
 		var name := case[0] as String

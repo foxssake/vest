@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://bp8g7j7774mwi"]
 
-[ext_resource type="Script" path="res://addons/vest/ui/vest-ui.gd" id="1_cct3x"]
+[ext_resource type="Script" uid="uid://i36by1fk3oss" path="res://addons/vest/ui/vest-ui.gd" id="1_cct3x"]
 [ext_resource type="Texture2D" uid="uid://r4y6ihamgino" path="res://addons/vest/icons/run.svg" id="2_q3lni"]
 [ext_resource type="Texture2D" uid="uid://dwhlyf5eyiect" path="res://addons/vest/icons/debug.svg" id="3_mcbjt"]
 [ext_resource type="Texture2D" uid="uid://ctdipwc8sklwo" path="res://addons/vest/icons/clear.svg" id="4_rjham"]
