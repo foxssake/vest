@@ -833,6 +833,11 @@ respected by Godot.</p>
 first time Godot opens and imports the project. For earlier versions ( 4.1, 4.2
 ), a separate <em>import</em> step might be needed for Godot to properly parse the
 project. After the import is done, the tests may be ran.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>We recommend using Godot v4.2.2 or later to run tests on CI. Earlier
+versions may behave erratically.</p>
+</div>
 <p>Let's see all of that in an example script:</p>
 <div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Import project&quot;</span>
 godot<span class="w"> </span>--headless<span class="w"> </span>--import<span class="w"> </span>.
