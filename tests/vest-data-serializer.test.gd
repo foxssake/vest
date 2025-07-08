@@ -25,7 +25,8 @@ func suite():
 			{ "foo": SerializableObject.of([1, SerializableObject.of(2)]) },
 			{ "foo": { "value": [1, { "value": 2 }] } }
 		],
-		["circular reference", ref_a, { "value": { "value": { "value": { "value": "SerializableObject" }}}}]
+		["circular reference", ref_a, { "value": { "value": { "value": { "value": "SerializableObject" }}}}],
+		["null", null, null]
 	]
 
 	for case in cases:

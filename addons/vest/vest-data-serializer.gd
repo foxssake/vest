@@ -16,6 +16,9 @@ static func serialize(data: Variant, max_depth: int = MAX_DEPTH) -> Variant:
 
 	var depth := max_depth - 1
 
+	if data == null:
+		return null
+
 	match typeof(data):
 		# Numbers
 		TYPE_BOOL, TYPE_INT, TYPE_FLOAT:
