@@ -98,6 +98,7 @@ class Benchmark:
 
 	var _iterations: int = 0
 	var _duration: float = 0.0
+	var _batch_size: int = 1
 
 	var _max_iterations: int = -1
 	var _max_duration: float = -1.0
@@ -121,6 +122,20 @@ class Benchmark:
 	## The duration limit is in [i]seconds[/i].
 	func with_duration(p_duration: float) -> Benchmark:
 		_max_duration = p_duration
+		return self
+
+	## Set the batch size for running the benchmark.
+	## [br][br]
+	## When the batch size is greater than one, benchmark runs won't be measured
+	## one by one, but in batches.
+	## [br][br]
+	## This can be useful when running microbenchmarks, where an individual test
+	## run is too fast to accurately measure.
+	func with_batch_size(p_batch_size: int) -> Benchmark:
+		if p_batch_size >= 1:
+			_batch_size = p_batch_size
+		else:
+			push_error("Invalid batch size set for benchmark %s: %d! Ignoring." % [name, p_batch_size])
 		return self
 
 	## Add a custom measurement.
@@ -185,12 +200,14 @@ class Benchmark:
 	func run() -> Benchmark:
 		# Run benchmark
 		while _is_within_limits():
+			var batch_runs := mini(_batch_size, _get_remaining_iterations())
 			var t_start := Vest.time()
-			callback.call(_emit)
+			for __ in batch_runs:
+				callback.call(_emit)
 			var duration := Vest.time() - t_start
 
 			_duration += duration
-			_iterations += 1
+			_iterations += batch_runs
 
 			# Emit runtime
 			_emit(&"duration", duration)
@@ -241,12 +258,18 @@ class Benchmark:
 		assert(false, "Measurement not found!")
 		return null
 
-	func _is_within_limits():
-		if _max_iterations >= 0 and _iterations >= _max_iterations:
-			return false
-		if _max_duration >= 0.0 and _duration >= _max_duration:
-			return false
-		return true
+	func _is_within_limits() -> bool:
+		return _get_remaining_iterations() > 0 and _get_remaining_time() > 0.
+
+	func _get_remaining_time() -> float:
+		if _max_duration >= 0.0:
+			return _max_duration - _duration
+		return INF
+
+	func _get_remaining_iterations() -> int:
+		if _max_iterations >= 0:
+			return _max_iterations - _iterations
+		return _batch_size + 1
 
 	func _emit(metric: StringName, value: Variant) -> void:
 		_emit_buffer.push_back([metric, value])
