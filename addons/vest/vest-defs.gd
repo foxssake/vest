@@ -226,6 +226,17 @@ class Benchmark:
 		# Set test to pass by default if no asserts are added
 		_test.ok("", result_data)
 
+		# Warn user when running benchmarks in too small batches
+		var avg_batch_time := get_avg_iteration_time() * _batch_size
+		var batch_threshold := 0.001 # 1ms
+		if avg_batch_time <= batch_threshold and _enable_builtin_measures:
+			Vest.message((
+				"Benchmark \"%s\" has run with an average of %.6fms per batch. " +
+				"This is probably faster than what can be reliably measured. " +
+				"To avoid this warning, increase the batch size to at least %s.") %
+				[name, avg_batch_time * 1000., ceil(_batch_size * batch_threshold / avg_batch_time * 1.1)]
+			)
+
 		return self
 
 	## Get the number of iterations ran.
