@@ -166,13 +166,13 @@ static func traverse_directory(directory: String, visitor: Callable, max_iters: 
 
 		# Add directories to queue
 		for dir_name in da.get_directories():
-			var dir := path_join(da.get_current_dir(), dir_name)
+			var dir := da.get_current_dir().path_join(dir_name)
 			if not dir_history.has(dir) and not dir_queue.has(dir):
 				dir_queue.append(dir)
 
 		# Visit files
 		for file_name in da.get_files():
-			var file := path_join(da.get_current_dir(), file_name)
+			var file := da.get_current_dir().path_join(file_name)
 			visitor.call(file)
 
 ## Return all paths that match the glob [param pattern].
@@ -197,13 +197,6 @@ static func glob(pattern: String, max_iters: int = 131072) -> Array[String]:
 	, max_iters)
 
 	return results
-
-# TODO: Remove - there's String.path_join
-static func path_join(a: String, b: String) -> String:
-	if a.ends_with("/"):
-		return a + b
-	else:
-		return a + "/" + b
 
 static func _clear_messages():
 	_messages.clear()
