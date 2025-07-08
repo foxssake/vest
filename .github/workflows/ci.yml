@@ -10,6 +10,7 @@ on:
 jobs:
   test:
     strategy:
+      fail-fast: false
       matrix:
         godot-version: [4.2.2, 4.3.0, 4.4.0]
     name: Run tests
