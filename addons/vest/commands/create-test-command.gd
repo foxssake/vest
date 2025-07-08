@@ -31,7 +31,7 @@ func create_test():
 	var preferred_pattern := Vest.get_test_name_patterns()[0]
 	var test_filename := preferred_pattern.substitute(script_filename)
 	var test_directory := get_test_directory(script_directory)
-	var test_path := Vest.path_join(test_directory, test_filename)
+	var test_path := test_directory.path_join(test_filename)
 
 	editor.get_script_editor().open_script_create_dialog("VestTest", test_path)
 
