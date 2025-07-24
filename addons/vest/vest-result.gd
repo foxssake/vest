@@ -26,9 +26,17 @@ class Suite:
 
 	## Get the number of test cases in the suite.[br]
 	## Includes the number of test cases in the suite, and recursively sums up
-	## the test cases in any of the nested suites.
+	## the test cases in any of the nested suites.[br]
+	## To count only the direct descendants, see [method plan_size].
 	func size() -> int:
 		return cases.size() + subsuites.reduce(func(acc, it): return acc + it.size(), 0)
+
+	## Return the number of items in the test plan.[br]
+	## Includes the number of test cases and subsuites in the suite. As opposed
+	## to [method size], this method doesn't include the test cases of the
+	## subsuites.
+	func plan_size() -> int:
+		return cases.size() + subsuites.size()
 
 	## Get the aggregate result of the test cases and suites contained in the
 	## suite.
