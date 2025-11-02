@@ -11,7 +11,7 @@ enum {			## Result status enum
 	TEST_FAIL,	## Test has failed
 	TEST_SKIP,	## Test was skipped
 	TEST_PASS,	## Test passed
-	TEST_MAX
+	TEST_MAX	## Represents the size of the result status enum
 }
 
 ## Test suite results.
@@ -53,6 +53,7 @@ class Suite:
 	func get_aggregate_status_string() -> String:
 		return VestResult.get_status_string(get_aggregate_status())
 
+	## Get an array of result statuses contained in the suite.
 	func get_unique_statuses() -> Array[int]:
 		var result := [] as Array[int]
 		for kase in cases:

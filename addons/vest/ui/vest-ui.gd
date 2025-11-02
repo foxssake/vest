@@ -134,7 +134,7 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 		item.set_text(0, what.suite.name)
 		item.set_text(1, what.get_aggregate_status_string().capitalize())
 
-		item.set_icon(0, _get_status_icon(what))
+		item.set_icon(0, get_status_icon(what))
 		item.set_icon_max_width(0, VestUI.get_icon_size())
 
 		tree.item_activated.connect(func():
@@ -156,7 +156,7 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 		item.set_text(1, what.get_status_string().capitalize())
 		item.collapsed = what.status == VestResult.TEST_PASS
 
-		item.set_icon(0, _get_status_icon(what))
+		item.set_icon(0, get_status_icon(what))
 		item.set_icon_max_width(0, VestUI.get_icon_size())
 
 		_render_data(what, tree, item)
@@ -174,7 +174,7 @@ func _render_summary(results: VestResult.Suite, test_duration: float):
 	else:
 		summary_label.text = "Ran %d tests" % [results.size()]
 	summary_icon.visible = true
-	summary_icon.texture = _get_status_icon(results)
+	summary_icon.texture = get_status_icon(results)
 	summary_icon.custom_minimum_size = Vector2i.ONE * VestUI.get_icon_size() # TODO: Check
 
 func _render_data(case: VestResult.Case, tree: Tree, parent: TreeItem):
@@ -253,27 +253,6 @@ func _set_placeholder_text(text: String):
 
 func _navigate(file: String, line: int):
 	Vest._get_editor_interface().edit_script(load(file), line)
-
-# TODO: Delete
-func _get_status_icon(what: Variant) -> Texture2D:
-	if what is VestResult.Suite:
-		return _get_status_icon(what.get_aggregate_status())
-	elif what is VestResult.Case:
-		if what.data.has("benchmarks"):
-			if what.status == VestResult.TEST_FAIL:
-				return Vest.Icons.benchmark_fail
-			else:
-				return Vest.Icons.benchmark
-		else:
-			return _get_status_icon(what.status)
-	elif what is int:
-		match(what):
-			VestResult.TEST_VOID: return Vest.Icons.result_void
-			VestResult.TEST_TODO: return Vest.Icons.result_todo
-			VestResult.TEST_SKIP: return Vest.Icons.result_skip
-			VestResult.TEST_FAIL: return Vest.Icons.result_fail
-			VestResult.TEST_PASS: return Vest.Icons.result_pass
-	return null
 
 static func get_status_icon(what: Variant) -> Texture2D:
 	if what is VestResult.Suite:
