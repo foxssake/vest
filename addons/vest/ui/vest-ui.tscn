@@ -89,15 +89,16 @@ icon = ExtResource("6_wy3v7")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Visibility Button" type="Button" parent="VBoxContainer/Bottom Line"]
+[node name="Filter Results Button" type="Button" parent="VBoxContainer/Bottom Line"]
 unique_name_in_owner = true
 layout_mode = 2
+tooltip_text = "Filter results"
 text = "      "
 icon = ExtResource("6_xkbs5")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Visibility Popup" parent="VBoxContainer/Bottom Line/Visibility Button" instance=ExtResource("13_72bup")]
+[node name="Visibility Popup" parent="VBoxContainer/Bottom Line/Filter Results Button" instance=ExtResource("13_72bup")]
 unique_name_in_owner = true
 visible = false
 

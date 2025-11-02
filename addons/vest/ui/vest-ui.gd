@@ -7,7 +7,7 @@ const VisibilityPopup := preload("res://addons/vest/ui/visibility-popup.gd")
 @onready var run_all_button := %"Run All Button" as Button
 @onready var debug_button := %"Debug Button" as Button
 @onready var run_on_save_button := %"Run on Save Button" as Button
-@onready var visibility_button := %"Visibility Button" as Button
+@onready var filter_results_button := %"Filter Results Button" as Button
 @onready var visibility_popup := %"Visibility Popup" as VisibilityPopup
 @onready var clear_button := %"Clear Button" as Button
 @onready var refresh_mixins_button := %"Refresh Mixins Button" as Button
@@ -112,8 +112,8 @@ func _ready():
 
 	debug_button.pressed.connect(func(): run_all(true))
 
-	visibility_button.pressed.connect(func():
-		visibility_popup.position = visibility_button.get_screen_position()
+	filter_results_button.pressed.connect(func():
+		visibility_popup.position = filter_results_button.get_screen_position()
 		visibility_popup.show()
 	)
 

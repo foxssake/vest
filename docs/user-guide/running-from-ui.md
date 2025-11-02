@@ -25,6 +25,11 @@ While each element has its tooltip or description, here's an overview:
 
     Useful for getting quick feedback while implementing tests.
 
+![Filter results](../assets/ui/visibility.svg) Filter results
+:   Opens a menu to specify which tests to display in the results.
+
+    Useful for drilling down into results, e.g. showing only failed tests.
+
 ![Refresh mixins](../assets/ui/refresh.svg) Refresh mixins
 :   Vest's `VestTest` class is generated from multiple *mixin* classes. In case
     any of these change, use the *Refresh mixins* button to update the generated

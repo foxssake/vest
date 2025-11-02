@@ -72,7 +72,7 @@
 !!!note
     Since the example above uses `print()`, run it in debug mode to see the
     test output. For printing messages that show up in the test report, see
-    [Custom messages].
+    [Printing custom messages].
 
 ## Hook methods and signals
 
@@ -123,4 +123,4 @@ For signals, connect your handlers to them either in a `suite()` method, or in
     most sense for you!
 
 
-[Custom messages]: ./custom-messages.md
+[Printing custom messages]: ./printing-custom-messages.md
