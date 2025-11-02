@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://dbgbcglqh42ya"]
+
+[ext_resource type="Script" path="res://addons/vest/ui/visibility-popup.gd" id="1_21m7j"]
+[ext_resource type="Texture2D" uid="uid://bpyua1ic4p47h" path="res://addons/vest/icons/visibility.svg" id="2_uwl0o"]
+[ext_resource type="Texture2D" uid="uid://buuq6qptg3vll" path="res://addons/vest/icons/hidden.svg" id="3_7kmct"]
+
+[sub_resource type="Theme" id="Theme_l01ra"]
+Button/colors/icon_normal_color = Color(1, 1, 1, 0.501961)
+Button/colors/icon_pressed_color = Color(1, 1, 1, 1)
+
+[node name="Visibility Popup" type="PopupPanel"]
+size = Vector2i(128, 179)
+visible = true
+theme = SubResource("Theme_l01ra")
+script = ExtResource("1_21m7j")
+
+[node name="Buttons Container" type="VBoxContainer" parent="."]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 124.0
+offset_bottom = 175.0
+
+[node name="Statuses Container" type="VBoxContainer" parent="Buttons Container"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="All Button" type="Button" parent="Buttons Container"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "All"
+icon = ExtResource("2_uwl0o")
+expand_icon = true
+
+[node name="None Button" type="Button" parent="Buttons Container"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "None"
+icon = ExtResource("3_7kmct")
+expand_icon = true

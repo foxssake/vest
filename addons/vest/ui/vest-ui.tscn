@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bp8g7j7774mwi"]
+[gd_scene load_steps=10 format=3 uid="uid://bp8g7j7774mwi"]
 
 [ext_resource type="Script" path="res://addons/vest/ui/vest-ui.gd" id="1_cct3x"]
 [ext_resource type="Texture2D" uid="uid://r4y6ihamgino" path="res://addons/vest/icons/run.svg" id="2_q3lni"]
@@ -8,11 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bmqjme87oq3xx" path="res://addons/vest/icons/pass.svg" id="6_mef67"]
 [ext_resource type="Texture2D" uid="uid://c711af0y1s2ct" path="res://addons/vest/icons/run-save.svg" id="6_wy3v7"]
 [ext_resource type="Texture2D" uid="uid://bpyua1ic4p47h" path="res://addons/vest/icons/visibility.svg" id="6_xkbs5"]
-[ext_resource type="Texture2D" uid="uid://ci8hqm6meom3h" path="res://addons/vest/icons/void.svg" id="7_03yvu"]
-[ext_resource type="Texture2D" uid="uid://meh1sny670to" path="res://addons/vest/icons/todo.svg" id="8_ohk7p"]
-[ext_resource type="Texture2D" uid="uid://de5ileacgwme1" path="res://addons/vest/icons/fail.svg" id="9_x4l26"]
-[ext_resource type="Texture2D" uid="uid://cx4htkmtgdk5l" path="res://addons/vest/icons/skip.svg" id="10_7o43u"]
-[ext_resource type="Texture2D" uid="uid://buuq6qptg3vll" path="res://addons/vest/icons/hidden.svg" id="12_ga2ua"]
+[ext_resource type="PackedScene" uid="uid://dbgbcglqh42ya" path="res://addons/vest/ui/visibility-popup.tscn" id="13_72bup"]
 
 [node name="Vest UI" type="Control"]
 custom_minimum_size = Vector2(0, 144)
@@ -93,45 +89,17 @@ icon = ExtResource("6_wy3v7")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Visibility Button" type="MenuButton" parent="VBoxContainer/Bottom Line"]
+[node name="Visibility Button" type="Button" parent="VBoxContainer/Bottom Line"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "      "
 icon = ExtResource("6_xkbs5")
 icon_alignment = 1
 expand_icon = true
-item_count = 7
-popup/item_0/text = "Void"
-popup/item_0/icon = ExtResource("7_03yvu")
-popup/item_0/checkable = 1
-popup/item_0/checked = true
-popup/item_0/id = 0
-popup/item_1/text = "Todo"
-popup/item_1/icon = ExtResource("8_ohk7p")
-popup/item_1/checkable = 1
-popup/item_1/checked = true
-popup/item_1/id = 1
-popup/item_2/text = "Fail"
-popup/item_2/icon = ExtResource("9_x4l26")
-popup/item_2/checkable = 1
-popup/item_2/checked = true
-popup/item_2/id = 2
-popup/item_3/text = "Skip"
-popup/item_3/icon = ExtResource("10_7o43u")
-popup/item_3/checkable = 1
-popup/item_3/checked = true
-popup/item_3/id = 3
-popup/item_4/text = "Pass"
-popup/item_4/icon = ExtResource("6_mef67")
-popup/item_4/checkable = 1
-popup/item_4/checked = true
-popup/item_4/id = 4
-popup/item_5/text = "All"
-popup/item_5/icon = ExtResource("6_xkbs5")
-popup/item_5/id = 5
-popup/item_6/text = "None"
-popup/item_6/icon = ExtResource("12_ga2ua")
-popup/item_6/id = 6
+
+[node name="Visibility Popup" parent="VBoxContainer/Bottom Line/Visibility Button" instance=ExtResource("13_72bup")]
+unique_name_in_owner = true
+visible = false
 
 [node name="VSeparator3" type="VSeparator" parent="VBoxContainer/Bottom Line"]
 layout_mode = 2

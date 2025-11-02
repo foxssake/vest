@@ -2,10 +2,13 @@
 extends Control
 class_name VestUI
 
+const VisibilityPopup := preload("res://addons/vest/ui/visibility-popup.gd")
+
 @onready var run_all_button := %"Run All Button" as Button
 @onready var debug_button := %"Debug Button" as Button
 @onready var run_on_save_button := %"Run on Save Button" as Button
-@onready var visibility_button := %"Visibility Button" as MenuButton
+@onready var visibility_button := %"Visibility Button" as Button
+@onready var visibility_popup := %"Visibility Popup" as VisibilityPopup
 @onready var clear_button := %"Clear Button" as Button
 @onready var refresh_mixins_button := %"Refresh Mixins Button" as Button
 @onready var results_tree := %"Results Tree" as Tree
@@ -14,7 +17,6 @@ class_name VestUI
 @onready var glob_line_edit := %"Glob LineEdit" as LineEdit
 
 var _run_on_save: bool = false
-var _status_visibility: Dictionary = {}
 var _results: VestResult.Suite = null
 
 static var _icon_size := 16
@@ -110,22 +112,14 @@ func _ready():
 
 	debug_button.pressed.connect(func(): run_all(true))
 
-	# Populate visibility menu and filters
-	for status in range(VestResult.TEST_MAX):
-		_status_visibility[status] = true
-	_render_visibility_filter()
+	visibility_button.pressed.connect(func():
+		visibility_popup.position = visibility_button.get_screen_position()
+		visibility_popup.show()
+	)
 
-	visibility_button.get_popup().id_pressed.connect(func(id: int):
-		if id >= VestResult.TEST_MAX:
-			for status in _status_visibility.keys():
-				_status_visibility[status] = id == VestResult.TEST_MAX
-		else:
-			_status_visibility[id] = not _status_visibility[id]
-
-		_render_visibility_filter()
-		if _results:
-			clear_results()
-			_render_result(_results, results_tree)
+	visibility_popup.on_change.connect(func():
+		clear_results()
+		_render_result(_results, results_tree)
 	)
 
 	_instance = self
@@ -134,7 +128,7 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 	if what is VestResult.Suite:
 		# Skip if no statuses match the visibility filter
 		if not what.get_unique_statuses()\
-			.any(func(status): return _status_visibility[status]):
+			.any(func(status): return visibility_popup.get_visibility_for(status)):
 			return
 		var item := tree.create_item(parent)
 		item.set_text(0, what.suite.name)
@@ -153,7 +147,7 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 		for case in what.cases:
 			_render_result(case, tree, item)
 	elif what is VestResult.Case:
-		if not _status_visibility[what.status]:
+		if not visibility_popup.get_visibility_for(what.status):
 			# Case not visible, skip
 			return
 
@@ -173,19 +167,6 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 		)
 	else:
 		push_error("Rendering unknown object: %s" % [what])
-
-func _render_visibility_filter() -> void:
-	var visibility_popup := visibility_button.get_popup()
-	visibility_popup.clear()
-	for status in _status_visibility.keys():
-		visibility_popup.add_icon_check_item(_get_status_icon(status), VestResult.get_status_string(status).capitalize(), status)
-		visibility_popup.set_item_icon_max_width(visibility_popup.item_count - 1, get_icon_size())
-		visibility_popup.set_item_checked(visibility_popup.item_count - 1, _status_visibility[status])
-
-	visibility_popup.add_icon_item(Vest.Icons.visible, "All", VestResult.TEST_MAX)
-	visibility_popup.set_item_icon_max_width(visibility_popup.item_count - 1, get_icon_size())
-	visibility_popup.add_icon_item(Vest.Icons.hidden, "None", VestResult.TEST_MAX + 1)
-	visibility_popup.set_item_icon_max_width(visibility_popup.item_count - 1, get_icon_size())
 
 func _render_summary(results: VestResult.Suite, test_duration: float):
 	if test_duration > 0:
@@ -273,6 +254,7 @@ func _set_placeholder_text(text: String):
 func _navigate(file: String, line: int):
 	Vest._get_editor_interface().edit_script(load(file), line)
 
+# TODO: Delete
 func _get_status_icon(what: Variant) -> Texture2D:
 	if what is VestResult.Suite:
 		return _get_status_icon(what.get_aggregate_status())
@@ -284,6 +266,26 @@ func _get_status_icon(what: Variant) -> Texture2D:
 				return Vest.Icons.benchmark
 		else:
 			return _get_status_icon(what.status)
+	elif what is int:
+		match(what):
+			VestResult.TEST_VOID: return Vest.Icons.result_void
+			VestResult.TEST_TODO: return Vest.Icons.result_todo
+			VestResult.TEST_SKIP: return Vest.Icons.result_skip
+			VestResult.TEST_FAIL: return Vest.Icons.result_fail
+			VestResult.TEST_PASS: return Vest.Icons.result_pass
+	return null
+
+static func get_status_icon(what: Variant) -> Texture2D:
+	if what is VestResult.Suite:
+		return get_status_icon(what.get_aggregate_status())
+	elif what is VestResult.Case:
+		if what.data.has("benchmarks"):
+			if what.status == VestResult.TEST_FAIL:
+				return Vest.Icons.benchmark_fail
+			else:
+				return Vest.Icons.benchmark
+		else:
+			return get_status_icon(what.status)
 	elif what is int:
 		match(what):
 			VestResult.TEST_VOID: return Vest.Icons.result_void
