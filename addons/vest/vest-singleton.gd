@@ -15,6 +15,8 @@ const AverageMeasure := preload("res://addons/vest/measures/average-measure.gd")
 const MinMeasure := preload("res://addons/vest/measures/min-measure.gd")
 const MaxMeasure := preload("res://addons/vest/measures/max-measure.gd")
 
+const TestingTree := preload("res://addons/vest/vest-tree.gd")
+
 const __ := preload("res://addons/vest/vest-internals.gd")
 
 const NEW_TEST_MIRROR_DIR_STRUCTURE := 0
