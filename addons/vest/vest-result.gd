@@ -59,8 +59,8 @@ class Suite:
 		for kase in cases:
 			if not result.has(kase.status):
 				result.push_back(kase.status)
-		for suite in subsuites:
-			for status in suite.get_unique_statuses():
+		for subsuite in subsuites:
+			for status in subsuite.get_unique_statuses():
 				if not result.has(status):
 					result.push_back(status)
 		return result
