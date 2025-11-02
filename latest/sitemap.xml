@@ -2,78 +2,78 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://foxssake.github.io/vest/latest/</loc>
-         <lastmod>2025-07-25</lastmod>
+         <lastmod>2025-11-02</lastmod>
     </url>
     <url>
          <loc>https://foxssake.github.io/vest/latest/getting-started/installing-vest/</loc>
-         <lastmod>2025-07-25</lastmod>
+         <lastmod>2025-11-02</lastmod>
     </url>
     <url>
          <loc>https://foxssake.github.io/vest/latest/getting-started/your-first-test/</loc>
-         <lastmod>2025-07-25</lastmod>
+         <lastmod>2025-11-02</lastmod>
     </url>
     <url>
          <loc>https://foxssake.github.io/vest/latest/user-guide/assertions/</loc>
-         <lastmod>2025-07-25</lastmod>
+         <lastmod>2025-11-02</lastmod>
     </url>
     <url>
          <loc>https://foxssake.github.io/vest/latest/user-guide/benchmarking/</loc>
-         <lastmod>2025-07-25</lastmod>
+         <lastmod>2025-11-02</lastmod>
     </url>
     <url>
          <loc>https://foxssake.github.io/vest/latest/user-guide/capturing-signals/</loc>
-         <lastmod>2025-07-25</lastmod>
+         <lastmod>2025-11-02</lastmod>
     </url>
     <url>
          <loc>https://foxssake.github.io/vest/latest/user-guide/coroutines/</loc>
-         <lastmod>2025-07-25</lastmod>
+         <lastmod>2025-11-02</lastmod>
     </url>
     <url>
          <loc>https://foxssake.github.io/vest/latest/user-guide/custom-types/</loc>
-         <lastmod>2025-07-25</lastmod>
+         <lastmod>2025-11-02</lastmod>
     </url>
     <url>
          <loc>https://foxssake.github.io/vest/latest/user-guide/editor-commands/</loc>
-         <lastmod>2025-07-25</lastmod>
+         <lastmod>2025-11-02</lastmod>
     </url>
     <url>
          <loc>https://foxssake.github.io/vest/latest/user-guide/lifecycle-hooks/</loc>
-         <lastmod>2025-07-25</lastmod>
+         <lastmod>2025-11-02</lastmod>
     </url>
     <url>
          <loc>https://foxssake.github.io/vest/latest/user-guide/mocks/</loc>
-         <lastmod>2025-07-25</lastmod>
+         <lastmod>2025-11-02</lastmod>
     </url>
     <url>
          <loc>https://foxssake.github.io/vest/latest/user-guide/parameterized-tests/</loc>
-         <lastmod>2025-07-25</lastmod>
+         <lastmod>2025-11-02</lastmod>
     </url>
     <url>
          <loc>https://foxssake.github.io/vest/latest/user-guide/printing-custom-messages/</loc>
-         <lastmod>2025-07-25</lastmod>
+         <lastmod>2025-11-02</lastmod>
     </url>
     <url>
          <loc>https://foxssake.github.io/vest/latest/user-guide/project-settings/</loc>
-         <lastmod>2025-07-25</lastmod>
+         <lastmod>2025-11-02</lastmod>
     </url>
     <url>
          <loc>https://foxssake.github.io/vest/latest/user-guide/running-from-cli/</loc>
-         <lastmod>2025-07-25</lastmod>
+         <lastmod>2025-11-02</lastmod>
     </url>
     <url>
          <loc>https://foxssake.github.io/vest/latest/user-guide/running-from-ui/</loc>
-         <lastmod>2025-07-25</lastmod>
+         <lastmod>2025-11-02</lastmod>
     </url>
     <url>
          <loc>https://foxssake.github.io/vest/latest/user-guide/running-on-ci/</loc>
-         <lastmod>2025-07-25</lastmod>
+         <lastmod>2025-11-02</lastmod>
     </url>
     <url>
          <loc>https://foxssake.github.io/vest/latest/user-guide/test-outcomes/</loc>
-         <lastmod>2025-07-25</lastmod>
+         <lastmod>2025-11-02</lastmod>
     </url>
     <url>
          <loc>https://foxssake.github.io/vest/latest/user-guide/writing-tests/</loc>
-         <lastmod>2025-07-25</lastmod>
+         <lastmod>2025-11-02</lastmod>
     </url>
 </urlset>
