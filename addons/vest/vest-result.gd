@@ -10,7 +10,8 @@ enum {			## Result status enum
 	TEST_TODO,	## Test is not implemented yet
 	TEST_FAIL,	## Test has failed
 	TEST_SKIP,	## Test was skipped
-	TEST_PASS	## Test passed
+	TEST_PASS,	## Test passed
+	TEST_MAX
 }
 
 ## Test suite results.
@@ -51,6 +52,17 @@ class Suite:
 	## Get the aggregate result of the test suite, as a string.
 	func get_aggregate_status_string() -> String:
 		return VestResult.get_status_string(get_aggregate_status())
+
+	func get_unique_statuses() -> Array[int]:
+		var result := [] as Array[int]
+		for kase in cases:
+			if not result.has(kase.status):
+				result.push_back(kase.status)
+		for suite in subsuites:
+			for status in suite.get_unique_statuses():
+				if not result.has(status):
+					result.push_back(status)
+		return result
 
 	## Get the count of test cases and nested suites with the given result
 	## status.

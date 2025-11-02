@@ -5,6 +5,7 @@ class_name VestUI
 @onready var run_all_button := %"Run All Button" as Button
 @onready var debug_button := %"Debug Button" as Button
 @onready var run_on_save_button := %"Run on Save Button" as Button
+@onready var visibility_button := %"Visibility Button" as MenuButton
 @onready var clear_button := %"Clear Button" as Button
 @onready var refresh_mixins_button := %"Refresh Mixins Button" as Button
 @onready var results_tree := %"Results Tree" as Tree
@@ -13,6 +14,8 @@ class_name VestUI
 @onready var glob_line_edit := %"Glob LineEdit" as LineEdit
 
 var _run_on_save: bool = false
+var _status_visibility: Dictionary = {}
+var _results: VestResult.Suite = null
 
 static var _icon_size := 16
 static var _instance: VestUI
@@ -74,6 +77,8 @@ func run_script(script: Script, is_debug: bool = false) -> void:
 
 func ingest_results(results: VestResult.Suite, duration: float = -1.) -> void:
 	clear_results()
+	_results = results
+
 	if results:
 		_render_result(results, results_tree)
 		_render_summary(results, duration)
@@ -89,6 +94,8 @@ func clear_results():
 	summary_icon.visible = false
 
 func _ready():
+	_icon_size = int(16. * Vest._get_editor_scale())
+
 	run_all_button.pressed.connect(run_all)
 	run_on_save_button.toggled.connect(func(toggled):
 		_run_on_save = toggled
@@ -103,11 +110,32 @@ func _ready():
 
 	debug_button.pressed.connect(func(): run_all(true))
 
-	_icon_size = int(16. * Vest._get_editor_interface().get_editor_scale())
+	# Populate visibility menu and filters
+	for status in range(VestResult.TEST_MAX):
+		_status_visibility[status] = true
+	_render_visibility_filter()
+
+	visibility_button.get_popup().id_pressed.connect(func(id: int):
+		if id >= VestResult.TEST_MAX:
+			for status in _status_visibility.keys():
+				_status_visibility[status] = id == VestResult.TEST_MAX
+		else:
+			_status_visibility[id] = not _status_visibility[id]
+
+		_render_visibility_filter()
+		if _results:
+			clear_results()
+			_render_result(_results, results_tree)
+	)
+
 	_instance = self
 
 func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 	if what is VestResult.Suite:
+		# Skip if no statuses match the visibility filter
+		if not what.get_unique_statuses()\
+			.any(func(status): return _status_visibility[status]):
+			return
 		var item := tree.create_item(parent)
 		item.set_text(0, what.suite.name)
 		item.set_text(1, what.get_aggregate_status_string().capitalize())
@@ -125,6 +153,10 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 		for case in what.cases:
 			_render_result(case, tree, item)
 	elif what is VestResult.Case:
+		if not _status_visibility[what.status]:
+			# Case not visible, skip
+			return
+
 		var item := tree.create_item(parent)
 		item.set_text(0, what.case.description)
 		item.set_text(1, what.get_status_string().capitalize())
@@ -141,6 +173,19 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 		)
 	else:
 		push_error("Rendering unknown object: %s" % [what])
+
+func _render_visibility_filter() -> void:
+	var visibility_popup := visibility_button.get_popup()
+	visibility_popup.clear()
+	for status in _status_visibility.keys():
+		visibility_popup.add_icon_check_item(_get_status_icon(status), VestResult.get_status_string(status).capitalize(), status)
+		visibility_popup.set_item_icon_max_width(visibility_popup.item_count - 1, get_icon_size())
+		visibility_popup.set_item_checked(visibility_popup.item_count - 1, _status_visibility[status])
+
+	visibility_popup.add_icon_item(Vest.Icons.visible, "All", VestResult.TEST_MAX)
+	visibility_popup.set_item_icon_max_width(visibility_popup.item_count - 1, get_icon_size())
+	visibility_popup.add_icon_item(Vest.Icons.hidden, "None", VestResult.TEST_MAX + 1)
+	visibility_popup.set_item_icon_max_width(visibility_popup.item_count - 1, get_icon_size())
 
 func _render_summary(results: VestResult.Suite, test_duration: float):
 	if test_duration > 0:
