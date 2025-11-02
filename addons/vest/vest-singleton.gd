@@ -209,12 +209,21 @@ static func _register_scene_tree(scene_tree: SceneTree):
 
 # HACK: Godot script compiler fails in 4.2+ if the return type is an engine singleton
 # The best we can do is return an object and assume the methods exist.
-# Casting is out of the question as well, also freaks out the script compiler.
+# Casting isn't possible either, also freaks out the script compiler.
 static func _get_editor_interface() -> Object:
 	if Engine.get_version_info().hex >= 0x040200:
 		return Engine.get_singleton("EditorInterface")
-	else:
+	elif is_instance_valid(_editor_interface_provider) and _editor_interface_provider.is_valid():
 		return _editor_interface_provider.call()
+	else:
+		return null
+
+static func _get_editor_scale() -> float:
+	var interface := _get_editor_interface()
+	if interface and interface.has_method("get_editor_scale"):
+		return interface.get_editor_scale()
+	else:
+		return 1.0
 
 static func _register_editor_interface_provider(provider: Callable):
 	_editor_interface_provider = provider

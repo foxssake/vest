@@ -2,9 +2,13 @@
 extends Control
 class_name VestUI
 
+const VisibilityPopup := preload("res://addons/vest/ui/visibility-popup.gd")
+
 @onready var run_all_button := %"Run All Button" as Button
 @onready var debug_button := %"Debug Button" as Button
 @onready var run_on_save_button := %"Run on Save Button" as Button
+@onready var filter_results_button := %"Filter Results Button" as Button
+@onready var visibility_popup := %"Visibility Popup" as VisibilityPopup
 @onready var clear_button := %"Clear Button" as Button
 @onready var refresh_mixins_button := %"Refresh Mixins Button" as Button
 @onready var results_tree := %"Results Tree" as Tree
@@ -13,6 +17,7 @@ class_name VestUI
 @onready var glob_line_edit := %"Glob LineEdit" as LineEdit
 
 var _run_on_save: bool = false
+var _results: VestResult.Suite = null
 
 static var _icon_size := 16
 static var _instance: VestUI
@@ -74,6 +79,8 @@ func run_script(script: Script, is_debug: bool = false) -> void:
 
 func ingest_results(results: VestResult.Suite, duration: float = -1.) -> void:
 	clear_results()
+	_results = results
+
 	if results:
 		_render_result(results, results_tree)
 		_render_summary(results, duration)
@@ -89,6 +96,8 @@ func clear_results():
 	summary_icon.visible = false
 
 func _ready():
+	_icon_size = int(16. * Vest._get_editor_scale())
+
 	run_all_button.pressed.connect(run_all)
 	run_on_save_button.toggled.connect(func(toggled):
 		_run_on_save = toggled
@@ -103,16 +112,29 @@ func _ready():
 
 	debug_button.pressed.connect(func(): run_all(true))
 
-	_icon_size = int(16. * Vest._get_editor_interface().get_editor_scale())
+	filter_results_button.pressed.connect(func():
+		visibility_popup.position = filter_results_button.get_screen_position()
+		visibility_popup.show()
+	)
+
+	visibility_popup.on_change.connect(func():
+		clear_results()
+		_render_result(_results, results_tree)
+	)
+
 	_instance = self
 
 func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 	if what is VestResult.Suite:
+		# Skip if no statuses match the visibility filter
+		if not what.get_unique_statuses()\
+			.any(func(status): return visibility_popup.get_visibility_for(status)):
+			return
 		var item := tree.create_item(parent)
 		item.set_text(0, what.suite.name)
 		item.set_text(1, what.get_aggregate_status_string().capitalize())
 
-		item.set_icon(0, _get_status_icon(what))
+		item.set_icon(0, get_status_icon(what))
 		item.set_icon_max_width(0, VestUI.get_icon_size())
 
 		tree.item_activated.connect(func():
@@ -125,12 +147,16 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 		for case in what.cases:
 			_render_result(case, tree, item)
 	elif what is VestResult.Case:
+		if not visibility_popup.get_visibility_for(what.status):
+			# Case not visible, skip
+			return
+
 		var item := tree.create_item(parent)
 		item.set_text(0, what.case.description)
 		item.set_text(1, what.get_status_string().capitalize())
 		item.collapsed = what.status == VestResult.TEST_PASS
 
-		item.set_icon(0, _get_status_icon(what))
+		item.set_icon(0, get_status_icon(what))
 		item.set_icon_max_width(0, VestUI.get_icon_size())
 
 		_render_data(what, tree, item)
@@ -148,7 +174,7 @@ func _render_summary(results: VestResult.Suite, test_duration: float):
 	else:
 		summary_label.text = "Ran %d tests" % [results.size()]
 	summary_icon.visible = true
-	summary_icon.texture = _get_status_icon(results)
+	summary_icon.texture = get_status_icon(results)
 	summary_icon.custom_minimum_size = Vector2i.ONE * VestUI.get_icon_size() # TODO: Check
 
 func _render_data(case: VestResult.Case, tree: Tree, parent: TreeItem):
@@ -228,9 +254,9 @@ func _set_placeholder_text(text: String):
 func _navigate(file: String, line: int):
 	Vest._get_editor_interface().edit_script(load(file), line)
 
-func _get_status_icon(what: Variant) -> Texture2D:
+static func get_status_icon(what: Variant) -> Texture2D:
 	if what is VestResult.Suite:
-		return _get_status_icon(what.get_aggregate_status())
+		return get_status_icon(what.get_aggregate_status())
 	elif what is VestResult.Case:
 		if what.data.has("benchmarks"):
 			if what.status == VestResult.TEST_FAIL:
@@ -238,7 +264,7 @@ func _get_status_icon(what: Variant) -> Texture2D:
 			else:
 				return Vest.Icons.benchmark
 		else:
-			return _get_status_icon(what.status)
+			return get_status_icon(what.status)
 	elif what is int:
 		match(what):
 			VestResult.TEST_VOID: return Vest.Icons.result_void

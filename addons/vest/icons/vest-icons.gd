@@ -20,3 +20,6 @@ const clear: Texture2D = preload("res://addons/vest/icons/clear.svg")
 const jump_to: Texture2D = preload("res://addons/vest/icons/jump-to.svg")
 const refresh: Texture2D = preload("res://addons/vest/icons/refresh.svg")
 const lightbulb: Texture2D = preload("res://addons/vest/icons/lightbulb.svg")
+
+const visible: Texture2D = preload("res://addons/vest/icons/visibility.svg")
+const hidden: Texture2D = preload("res://addons/vest/icons/hidden.svg")
