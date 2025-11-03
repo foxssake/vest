@@ -58,7 +58,7 @@ func run_all(is_debug: bool = false):
 	# Render individual results
 	ingest_results(results, test_duration)
 
-func run_script(script: Script, is_debug: bool = false) -> void:
+func run_script(script: Script, is_debug: bool = false, only_mode: int = VestDaemonRunner.ONLY_AUTO) -> void:
 	Vest._register_scene_tree(get_tree())
 	var runner := VestDaemonRunner.new()
 
@@ -68,9 +68,9 @@ func run_script(script: Script, is_debug: bool = false) -> void:
 	var test_start := Vest.time()
 	var results: VestResult.Suite
 	if not is_debug:
-		results = await runner.run_script(script)
+		results = await runner.run_script(script, only_mode)
 	else:
-		results = await runner.with_debug().run_script(script)
+		results = await runner.with_debug().run_script(script, only_mode)
 
 	var test_duration := Vest.time() - test_start
 

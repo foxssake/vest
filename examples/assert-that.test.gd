@@ -20,7 +20,7 @@ func test_exp_0_should_return_1():
 		.is_not_null()\
 		.is_equal_to(1)
 
-func test_exp_1_should_return_inpt():
+func test_exp_1_should_return_input():
 	assert_that(pow(128, 1))\
 		.is_not_null()\
 		.is_equal_to(128)

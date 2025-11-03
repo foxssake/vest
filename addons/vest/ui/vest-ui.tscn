@@ -107,7 +107,7 @@ layout_mode = 2
 
 [node name="Test Summary Icon" type="TextureRect" parent="VBoxContainer/Bottom Line"]
 unique_name_in_owner = true
-visible = false
+custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 size_flags_vertical = 4
 texture = ExtResource("6_mef67")
@@ -118,7 +118,7 @@ stretch_mode = 4
 unique_name_in_owner = true
 custom_minimum_size = Vector2(220, 0)
 layout_mode = 2
-text = "Ready"
+text = "Ran 4 tests in 831.49ms"
 
 [node name="VSeparator2" type="VSeparator" parent="VBoxContainer/Bottom Line"]
 layout_mode = 2

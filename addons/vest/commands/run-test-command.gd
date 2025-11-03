@@ -13,12 +13,20 @@ static func execute() -> void:
 		push_warning("No instance of Create Test command found!")
 
 func run_test():
-	_run(false)
+	_run(false, VestDaemonRunner.ONLY_DEFAULT)
 
 func debug_test():
-	_run(true)
+	_run(true, VestDaemonRunner.ONLY_DEFAULT)
 
-func _run(is_debug: bool) -> void:
+# TODO: Is this needed?
+func run_only():
+	_run(false, VestDaemonRunner.ONLY_ENABLED)
+
+# TODO: Is this needed?
+func debug_only():
+	_run(true, VestDaemonRunner.ONLY_ENABLED)
+
+func _run(is_debug: bool, only_mode: int) -> void:
 	var editor_interface := Vest._get_editor_interface()
 	var script_editor := editor_interface.get_script_editor() as ScriptEditor
 
@@ -34,7 +42,7 @@ func _run(is_debug: bool) -> void:
 
 	print_verbose("Running test \"%s\"" % [edited_script.resource_path])
 	var vest_ui := VestUI._get_ui()
-	vest_ui.run_script(edited_script, is_debug)
+	vest_ui.run_script(edited_script, is_debug, only_mode)
 
 func _is_ancestor_of(base_script: Script, script: Script) -> bool:
 	for i in range(128): # Prevent runaway loops

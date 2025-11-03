@@ -15,18 +15,20 @@ func with_debug() -> VestDaemonRunner:
 	return self
 
 ## Run a test script
-func run_script(script: Script) -> VestResult.Suite:
+func run_script(script: Script, only_mode: int = ONLY_DEFAULT) -> VestResult.Suite:
 	var params := VestCLI.Params.new()
 	params.run_file = script.resource_path
+	params.only_mode = only_mode
 
 	return await _run_with_params(params)
 
 ## Run test scripts matching glob
 ## [br][br]
 ## See [method String.match]
-func run_glob(glob: String) -> VestResult.Suite:
+func run_glob(glob: String, only_mode: int = ONLY_DEFAULT) -> VestResult.Suite:
 	var params := VestCLI.Params.new()
 	params.run_glob = glob
+	params.only_mode = only_mode
 
 	return await _run_with_params(params)
 

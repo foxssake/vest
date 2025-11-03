@@ -5,7 +5,6 @@ func get_suite_name() -> String:
 
 func suite_params():
 	define("CLI Params", func():
-
 		test("should serialize to args", func():
 			# Given
 			var params := VestCLI.Params.new()

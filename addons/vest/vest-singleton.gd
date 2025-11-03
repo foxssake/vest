@@ -213,7 +213,7 @@ static func _register_scene_tree(scene_tree: SceneTree):
 static func _get_editor_interface() -> Object:
 	if Engine.get_version_info().hex >= 0x040200:
 		return Engine.get_singleton("EditorInterface")
-	elif is_instance_valid(_editor_interface_provider) and _editor_interface_provider.is_valid():
+	elif _editor_interface_provider.is_valid():
 		return _editor_interface_provider.call()
 	else:
 		return null
