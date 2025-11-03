@@ -14,7 +14,7 @@ func run_script(script: Script, only_mode: int = ONLY_DEFAULT) -> VestResult.Sui
 
 	var results: VestResult.Suite = null
 	var suite = await test._get_suite()
-	
+
 	var run_only := false
 	match only_mode:
 		ONLY_DISABLED: run_only = false

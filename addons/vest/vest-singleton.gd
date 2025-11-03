@@ -86,7 +86,7 @@ static func sleep(duration: float = 0.) -> Error:
 ## If the test runner doesn't finish running the tests in this time, it's
 ## considered stuck. This value is read from the project settings.
 ## [br][br]
-## For more info, see the 
+## For more info, see the
 ## [url=https://foxssake.github.io/vest/latest/user-guide/project-settings/#runner-timeout]user
 ## guide[/url].
 static func get_runner_timeout() -> float:
@@ -98,7 +98,7 @@ static func get_runner_timeout() -> float:
 ## for deriving paths to test suites. This value is read from the project
 ## settings.
 ## [br][br]
-## For more info, see the 
+## For more info, see the
 ## [url=https://foxssake.github.io/vest/latest/user-guide/project-settings/#sources-root]user
 ## guide[/url].
 static func get_sources_root() -> String:
@@ -109,7 +109,7 @@ static func get_sources_root() -> String:
 ## This is directory is assumed root for all the test suites, and is used
 ## for deriving paths. This value is read from the project settings.
 ## [br][br]
-## For more info, see the 
+## For more info, see the
 ## [url=https://foxssake.github.io/vest/latest/user-guide/project-settings/#tests-root]user
 ## guide[/url].
 static func get_tests_root() -> String:
@@ -120,7 +120,7 @@ static func get_tests_root() -> String:
 ## These are used to recognize and generate filenames for test suites. This
 ## value is read from the project settings.
 ## [br][br]
-## For more info, see the 
+## For more info, see the
 ## [url=https://foxssake.github.io/vest/latest/user-guide/project-settings/#test-name-patterns]user
 ## guide[/url].
 static func get_test_name_patterns() -> Array[FilenamePattern]:
@@ -135,7 +135,7 @@ static func get_test_name_patterns() -> Array[FilenamePattern]:
 ##
 ## This setting determines what path to suggest when creating new tests.
 ## [br][br]
-## For more info, see the 
+## For more info, see the
 ## [url=https://foxssake.github.io/vest/latest/user-guide/project-settings/#new-test-location]
 ## user guide[/url].
 static func get_new_test_location_preference() -> int:
