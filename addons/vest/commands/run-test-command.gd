@@ -1,17 +1,6 @@
 @tool
 extends Node
 
-static var _instance = null
-
-static func find():
-	return _instance
-
-static func execute() -> void:
-	if _instance:
-		_instance.create_test()
-	else:
-		push_warning("No instance of Create Test command found!")
-
 func run_test():
 	_run(false, VestDaemonRunner.ONLY_DEFAULT)
 
@@ -53,7 +42,6 @@ func _is_ancestor_of(base_script: Script, script: Script) -> bool:
 	return false
 
 func _ready():
-	_instance = self
 	var editor := Vest._get_editor_interface()
 	editor.get_command_palette().add_command("Run test", "vest/run-test", run_test, "F7")
 	editor.get_command_palette().add_command("Debug test", "vest/debug-test", debug_test, "Ctrl+F7")

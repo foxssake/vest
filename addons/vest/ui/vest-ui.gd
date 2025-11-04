@@ -134,7 +134,7 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 		item.set_text(0, what.suite.name)
 		item.set_text(1, what.get_aggregate_status_string().capitalize())
 
-		item.set_icon(0, get_status_icon(what))
+		item.set_icon(0, VestUI.get_status_icon(what))
 		item.set_icon_max_width(0, VestUI.get_icon_size())
 
 		tree.item_activated.connect(func():
@@ -156,7 +156,7 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 		item.set_text(1, what.get_status_string().capitalize())
 		item.collapsed = what.status == VestResult.TEST_PASS
 
-		item.set_icon(0, get_status_icon(what))
+		item.set_icon(0, VestUI.get_status_icon(what))
 		item.set_icon_max_width(0, VestUI.get_icon_size())
 
 		_render_data(what, tree, item)
@@ -174,7 +174,7 @@ func _render_summary(results: VestResult.Suite, test_duration: float):
 	else:
 		summary_label.text = "Ran %d tests" % [results.size()]
 	summary_icon.visible = true
-	summary_icon.texture = get_status_icon(results)
+	summary_icon.texture = VestUI.get_status_icon(results)
 	summary_icon.custom_minimum_size = Vector2i.ONE * VestUI.get_icon_size() # TODO: Check
 
 func _render_data(case: VestResult.Case, tree: Tree, parent: TreeItem):

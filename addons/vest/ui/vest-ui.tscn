@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://bp8g7j7774mwi"]
 
-[ext_resource type="Script" path="res://addons/vest/ui/vest-ui.gd" id="1_cct3x"]
+[ext_resource type="Script" uid="uid://i36by1fk3oss" path="res://addons/vest/ui/vest-ui.gd" id="1_cct3x"]
 [ext_resource type="Texture2D" uid="uid://r4y6ihamgino" path="res://addons/vest/icons/run.svg" id="2_q3lni"]
 [ext_resource type="Texture2D" uid="uid://dwhlyf5eyiect" path="res://addons/vest/icons/debug.svg" id="3_mcbjt"]
 [ext_resource type="Texture2D" uid="uid://ctdipwc8sklwo" path="res://addons/vest/icons/clear.svg" id="4_rjham"]
@@ -107,7 +107,7 @@ layout_mode = 2
 
 [node name="Test Summary Icon" type="TextureRect" parent="VBoxContainer/Bottom Line"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(16, 16)
+visible = false
 layout_mode = 2
 size_flags_vertical = 4
 texture = ExtResource("6_mef67")
@@ -118,7 +118,7 @@ stretch_mode = 4
 unique_name_in_owner = true
 custom_minimum_size = Vector2(220, 0)
 layout_mode = 2
-text = "Ran 4 tests in 831.49ms"
+text = "Ready"
 
 [node name="VSeparator2" type="VSeparator" parent="VBoxContainer/Bottom Line"]
 layout_mode = 2
