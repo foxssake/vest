@@ -1,6 +1,6 @@
 # Running on CI
 
-By levaraging it's [CLI support], *vest* can be used on CI as well.
+By levaraging its [CLI support], *vest* can be used on CI as well.
 
 ## General use
 
