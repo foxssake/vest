@@ -20,7 +20,7 @@ class Params:
 	var report_file: String = ""
 
 	## How to handle tests marked as `only`
-	var only_mode: int = VestDaemonRunner.ONLY_DISABLED
+	var only_mode: int = Vest.__.ONLY_DISABLED
 
 	## Host to connect to for sending results
 	var host: String = ""
@@ -54,8 +54,8 @@ class Params:
 		if port != -1: result.append_array(["--vest-port", str(port)])
 
 		match only_mode:
-			VestDaemonRunner.ONLY_DISABLED: result.append("--no-only")
-			VestDaemonRunner.ONLY_ENABLED: result.append("--only")
+			Vest.__.ONLY_DISABLED: result.append("--no-only")
+			Vest.__.ONLY_ENABLED: result.append("--only")
 
 		return result
 
@@ -75,8 +75,8 @@ class Params:
 			elif arg == "--vest-report-format": result.report_format = val
 			elif arg == "--vest-port": result.port = val.to_int()
 			elif arg == "--vest-host": result.host = val
-			elif arg == "--no-only": result.only_mode = VestDaemonRunner.ONLY_DISABLED
-			elif arg == "--only": result.only_mode = VestDaemonRunner.ONLY_ENABLED
+			elif arg == "--no-only": result.only_mode = Vest.__.ONLY_DISABLED
+			elif arg == "--only": result.only_mode = Vest.__.ONLY_ENABLED
 
 		return result
 

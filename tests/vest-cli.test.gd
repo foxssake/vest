@@ -51,7 +51,7 @@ func suite_params():
 			expected.report_file = "vest-report.log"
 			expected.host = "127.0.0.1"
 			expected.port = 37852
-			expected.only_mode = VestDaemonRunner.ONLY_ENABLED
+			expected.only_mode = Vest.__.ONLY_ENABLED
 
 			# When
 			var actual := VestCLI.Params.parse(args)

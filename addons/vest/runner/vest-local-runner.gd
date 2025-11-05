@@ -2,7 +2,7 @@ extends "res://addons/vest/runner/vest-base-runner.gd"
 class_name VestLocalRunner
 
 ## Run a test script
-func run_script(script: Script, only_mode: int = ONLY_DEFAULT) -> VestResult.Suite:
+func run_script(script: Script, only_mode: int = Vest.__.ONLY_DEFAULT) -> VestResult.Suite:
 	if not script:
 		return null
 
@@ -17,9 +17,9 @@ func run_script(script: Script, only_mode: int = ONLY_DEFAULT) -> VestResult.Sui
 
 	var run_only := false
 	match only_mode:
-		ONLY_DISABLED: run_only = false
-		ONLY_AUTO: run_only = suite.has_only()
-		ONLY_ENABLED: run_only = true
+		Vest.__.ONLY_DISABLED: run_only = false
+		Vest.__.ONLY_AUTO: run_only = suite.has_only()
+		Vest.__.ONLY_ENABLED: run_only = true
 
 	await test._begin(test_instance)
 	results = await _run_suite(suite, test, run_only)
@@ -32,7 +32,7 @@ func run_script(script: Script, only_mode: int = ONLY_DEFAULT) -> VestResult.Sui
 ## Run test scripts matching glob
 ## [br][br]
 ## See [method String.match]
-func run_glob(glob: String, only_mode: int = ONLY_DEFAULT) -> VestResult.Suite:
+func run_glob(glob: String, only_mode: int = Vest.__.ONLY_DEFAULT) -> VestResult.Suite:
 	var result := VestResult.Suite.new()
 	result.suite = VestDefs.Suite.new()
 	result.suite.name = "Glob suite \"%s\"" % [glob]

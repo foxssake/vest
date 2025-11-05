@@ -2,18 +2,10 @@
 extends Node
 
 func run_test():
-	_run(false, VestDaemonRunner.ONLY_DEFAULT)
+	_run(false, Vest.__.ONLY_AUTO)
 
 func debug_test():
-	_run(true, VestDaemonRunner.ONLY_DEFAULT)
-
-# TODO: Is this needed?
-func run_only():
-	_run(false, VestDaemonRunner.ONLY_ENABLED)
-
-# TODO: Is this needed?
-func debug_only():
-	_run(true, VestDaemonRunner.ONLY_ENABLED)
+	_run(true, Vest.__.ONLY_AUTO)
 
 func _run(is_debug: bool, only_mode: int) -> void:
 	var editor_interface := Vest._get_editor_interface()
