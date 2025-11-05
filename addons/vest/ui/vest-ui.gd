@@ -3,6 +3,7 @@ extends Control
 class_name VestUI
 
 const VisibilityPopup := preload("res://addons/vest/ui/visibility-popup.gd")
+const ResultsPanel := preload("res://addons/vest/ui/results-panel.gd")
 
 @onready var run_all_button := %"Run All Button" as Button
 @onready var debug_button := %"Debug Button" as Button
@@ -11,7 +12,7 @@ const VisibilityPopup := preload("res://addons/vest/ui/visibility-popup.gd")
 @onready var visibility_popup := %"Visibility Popup" as VisibilityPopup
 @onready var clear_button := %"Clear Button" as Button
 @onready var refresh_mixins_button := %"Refresh Mixins Button" as Button
-@onready var results_tree := %"Results Tree" as Tree
+@onready var results_panel := %"Results Panel" as ResultsPanel
 @onready var summary_label := %"Tests Summary Label" as Label
 @onready var summary_icon := %"Test Summary Icon" as TextureRect
 @onready var glob_line_edit := %"Glob LineEdit" as LineEdit
@@ -43,8 +44,7 @@ func run_all(is_debug: bool = false):
 	Vest.__.LocalSettings.test_glob = test_glob
 	Vest.__.LocalSettings.flush()
 
-	clear_results()
-	_set_placeholder_text("Waiting for results...")
+	results_panel.set_spinner("Waiting for results...", Vest.Icons.debug)
 
 	var test_start := Vest.time()
 	var results: VestResult.Suite
@@ -62,8 +62,7 @@ func run_script(script: Script, is_debug: bool = false, only_mode: int = Vest.__
 	Vest._register_scene_tree(get_tree())
 	var runner := VestDaemonRunner.new()
 
-	clear_results()
-	_set_placeholder_text("Waiting for results...")
+	results_panel.set_spinner("Waiting for results...", Vest.Icons.debug)
 
 	var test_start := Vest.time()
 	var results: VestResult.Suite
@@ -82,21 +81,19 @@ func ingest_results(results: VestResult.Suite, duration: float = -1.) -> void:
 	_results = results
 
 	if results:
-		_render_result(results, results_tree)
+		results_panel.set_results(results)
 		_render_summary(results, duration)
 	else:
-		_set_placeholder_text("Test run failed!")
+		results_panel.set_spinner("Test run failed!", Vest.Icons.result_fail, false)
 
 func clear_results():
-	results_tree.clear()
-	for connection in results_tree.item_activated.get_connections():
-		connection["signal"].disconnect(connection["callable"])
-
+	results_panel.clear()
 	summary_label.text = ""
 	summary_icon.visible = false
 
 func _ready():
 	_icon_size = int(16. * Vest._get_editor_scale())
+	results_panel.visibility_popup = visibility_popup
 
 	run_all_button.pressed.connect(run_all)
 	run_on_save_button.toggled.connect(func(toggled):
@@ -119,54 +116,10 @@ func _ready():
 
 	visibility_popup.on_change.connect(func():
 		clear_results()
-		_render_result(_results, results_tree)
+		results_panel.set_results(_results) # TODO: Filter
 	)
 
 	_instance = self
-
-func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
-	if what is VestResult.Suite:
-		# Skip if no statuses match the visibility filter
-		if not what.get_unique_statuses()\
-			.any(func(status): return visibility_popup.get_visibility_for(status)):
-			return
-		var item := tree.create_item(parent)
-		item.set_text(0, what.suite.name)
-		item.set_text(1, what.get_aggregate_status_string().capitalize())
-
-		item.set_icon(0, VestUI.get_status_icon(what))
-		item.set_icon_max_width(0, VestUI.get_icon_size())
-
-		tree.item_activated.connect(func():
-			if tree.get_selected() == item:
-				_navigate(what.suite.definition_file, what.suite.definition_line)
-		)
-
-		for subsuite in what.subsuites:
-			_render_result(subsuite, tree, item)
-		for case in what.cases:
-			_render_result(case, tree, item)
-	elif what is VestResult.Case:
-		if not visibility_popup.get_visibility_for(what.status):
-			# Case not visible, skip
-			return
-
-		var item := tree.create_item(parent)
-		item.set_text(0, what.case.description)
-		item.set_text(1, what.get_status_string().capitalize())
-		item.collapsed = what.status == VestResult.TEST_PASS
-
-		item.set_icon(0, VestUI.get_status_icon(what))
-		item.set_icon_max_width(0, VestUI.get_icon_size())
-
-		_render_data(what, tree, item)
-
-		tree.item_activated.connect(func():
-			if tree.get_selected() == item:
-				_navigate(what.case.definition_file, what.case.definition_line)
-		)
-	else:
-		push_error("Rendering unknown object: %s" % [what])
 
 func _render_summary(results: VestResult.Suite, test_duration: float):
 	if test_duration > 0:
@@ -176,83 +129,6 @@ func _render_summary(results: VestResult.Suite, test_duration: float):
 	summary_icon.visible = true
 	summary_icon.texture = VestUI.get_status_icon(results)
 	summary_icon.custom_minimum_size = Vector2i.ONE * VestUI.get_icon_size() # TODO: Check
-
-func _render_data(case: VestResult.Case, tree: Tree, parent: TreeItem):
-	var data := case.data.duplicate()
-
-	if case.message:
-		var item := tree.create_item(parent)
-		item.set_text(0, case.message)
-
-		tree.item_activated.connect(func():
-			if tree.get_selected() == item:
-				# TODO: popup_dialog()
-				add_child(VestMessagePopup.of(case.message).window)
-		)
-
-	if data == null or data.is_empty():
-		return
-
-	if data.has("messages"):
-		var header_item := tree.create_item(parent)
-		header_item.set_text(0, "Messages")
-
-		for message in data["messages"]:
-			tree.create_item(header_item).set_text(0, message)
-
-		data.erase("messages")
-
-	if data.has("benchmarks"):
-		var header_item := tree.create_item(parent)
-		header_item.set_text(0, "Benchmarks")
-
-		for benchmark in data["benchmarks"]:
-			var benchmark_item = tree.create_item(header_item)
-			benchmark_item.set_text(0, benchmark["name"])
-			if benchmark.has("duration"): benchmark_item.set_text(1, benchmark["duration"])
-
-			for measurement in benchmark.keys():
-				if measurement == "name": continue
-
-				var measurement_item := tree.create_item(benchmark_item)
-				measurement_item.set_text(0, str(measurement).capitalize())
-				measurement_item.set_text(1, str(benchmark[measurement]))
-
-		data.erase("benchmarks")
-
-	if data.has("expect") and data.has("got"):
-		var header_item := tree.create_item(parent)
-		header_item.set_text(0, "Got:")
-		header_item.set_text(1, "Expected:")
-
-		var got_string := JSON.stringify(data["got"], "  ")
-		var expect_string := JSON.stringify(data["expect"], "  ")
-
-		var comparison_item := tree.create_item(header_item)
-		comparison_item.set_text(0, got_string)
-		comparison_item.set_text(1, expect_string)
-
-		tree.item_activated.connect(func():
-			# TODO: popup_dialog()
-			if tree.get_selected() in [header_item, comparison_item]:
-				add_child(VestComparisonPopup.of(expect_string, got_string).window)
-		)
-
-		data.erase("got")
-		data.erase("expect")
-
-	for key in data:
-		var item := tree.create_item(parent)
-		item.set_text(0, var_to_str(key))
-		item.set_text(1, var_to_str(data[key]))
-
-func _set_placeholder_text(text: String):
-	results_tree.clear()
-	var placeholder_root := results_tree.create_item()
-	results_tree.create_item(placeholder_root).set_text(0, text)
-
-func _navigate(file: String, line: int):
-	Vest._get_editor_interface().edit_script(load(file), line)
 
 static func get_status_icon(what: Variant) -> Texture2D:
 	if what is VestResult.Suite:
