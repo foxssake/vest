@@ -8,13 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://foxssake.github.io/vest/latest/user-guide/editor-commands/">
+        <link rel="canonical" href="https://foxssake.github.io/vest/latest/user-guide/running-tests-selectively/">
       
       
-        <link rel="prev" href="../assertions/">
+        <link rel="prev" href="../running-from-ui/">
       
       
-        <link rel="next" href="../parameterized-tests/">
+        <link rel="next" href="../running-from-cli/">
       
       
       <link rel="icon" href="../../assets/vest-favicon.png">
@@ -22,7 +22,7 @@
     
     
       
-        <title>Editor commands - vest</title>
+        <title>Running tests selectively - vest</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#editor-commands" class="md-skip">
+        <a href="#running-tests-selectively" class="md-skip">
           Skip to content
         </a>
       
@@ -113,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Editor commands
+              Running tests selectively
             
           </span>
         </div>
@@ -387,32 +387,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Editor commands
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../editor-commands/" class="md-nav__link">
         
   
   
@@ -423,62 +401,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#run-test" class="md-nav__link">
-    <span class="md-ellipsis">
-      Run test
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#debug-test" class="md-nav__link">
-    <span class="md-ellipsis">
-      Debug test
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#create-test" class="md-nav__link">
-    <span class="md-ellipsis">
-      Create test
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#go-to-test" class="md-nav__link">
-    <span class="md-ellipsis">
-      Go to test
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -718,10 +640,32 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../running-tests-selectively/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Running tests selectively
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -732,6 +676,44 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#specifying-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Specifying tests
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-the-selected-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running the selected tests
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -817,36 +799,18 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#run-test" class="md-nav__link">
+  <a href="#specifying-tests" class="md-nav__link">
     <span class="md-ellipsis">
-      Run test
+      Specifying tests
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#debug-test" class="md-nav__link">
+  <a href="#running-the-selected-tests" class="md-nav__link">
     <span class="md-ellipsis">
-      Debug test
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#create-test" class="md-nav__link">
-    <span class="md-ellipsis">
-      Create test
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#go-to-test" class="md-nav__link">
-    <span class="md-ellipsis">
-      Go to test
+      Running the selected tests
     </span>
   </a>
   
@@ -868,49 +832,61 @@
 
 
 
-<h1 id="editor-commands">Editor commands</h1>
-<p><em>Vest</em> defines multiple editor commands that are added to Godot's <em>command
-palette</em> and can also be accessed by keyboard shortcuts:</p>
-<p><img alt="Command palette" src="../../assets/editor-commands.png" /></p>
-<h2 id="run-test">Run test</h2>
-<p>Shortcut: <span class="keys"><kbd class="key-f7">F7</kbd></span></p>
-<p>Runs the currently open script as a <em>vest</em> test. If the script is not a test, a
-warning is printed and nothing happens.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>You'll need to select <em>Vest</em> on the bottom panel to see the test results,
-as addons can't change the focused panels by themselves.</p>
+<h1 id="running-tests-selectively">Running tests selectively</h1>
+<p>In certain cases, you only want to run a few select tests. This can be useful
+when trying to fix a specific test failure. With the focus being on one or few
+cases, it makes sense to only run those.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">define()</label><label for="__tabbed_1_2">methods</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="k">extends</span><span class="w"> </span><span class="n">VestTest</span>
+
+<span class="k">func</span><span class="w"> </span><span class="n">get_suite_name</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="p">:</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;Your first test&quot;</span>
+
+<span class="k">func</span><span class="w"> </span><span class="n">suite</span><span class="p">():</span>
+<span class="w">  </span><span class="n">test_only</span><span class="p">(</span><span class="s2">&quot;Addition&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">():</span>
+<span class="w">    </span><span class="n">expect_equal</span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span>
+<span class="w">  </span><span class="p">)</span>
+
+<span class="w">  </span><span class="n">test</span><span class="p">(</span><span class="s2">&quot;Subtraction&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">():</span>
+<span class="w">    </span><span class="c1"># This won&#39;t run</span>
+<span class="w">    </span><span class="n">expect_equal</span><span class="p">(</span><span class="mi">5</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+<span class="w">  </span><span class="p">)</span>
+</code></pre></div>
 </div>
-<h2 id="debug-test">Debug test</h2>
-<p>Shortcut: <span class="keys"><kbd class="key-control">Ctrl</kbd><span>+</span><kbd class="key-f7">F7</kbd></span></p>
-<p>Runs the currently open script, in <em>debug mode</em>. This means that any
-breakpoints or other debugger configurations you've set will be active.</p>
-<p>If the script is not a test, a warning is printed and nothing will happen.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>You'll need to select <em>Vest</em> on the bottom panel to see the test results,
-as addons can't change the focused panels by themselves.</p>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="k">extends</span><span class="w"> </span><span class="n">VestTest</span>
+
+<span class="k">func</span><span class="w"> </span><span class="n">get_suite_name</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="p">:</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;Your first test&quot;</span>
+
+<span class="k">func</span><span class="w"> </span><span class="n">test_addition__only</span><span class="p">():</span>
+<span class="w">  </span><span class="n">expect_equal</span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span>
+
+<span class="k">func</span><span class="w"> </span><span class="n">test_subtraction</span><span class="p">():</span>
+<span class="w">  </span><span class="c1"># This won&#39;t run</span>
+<span class="w">  </span><span class="n">expect_equal</span><span class="p">(</span><span class="mi">5</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div>
 </div>
-<h2 id="create-test">Create test</h2>
-<p>Shortcut: <span class="keys"><kbd class="key-control">Ctrl</kbd><span>+</span><kbd class="key-shift">Shift</kbd><span>+</span><kbd class="key-t">T</kbd></span></p>
-<p>Opens Godot's Create Script dialog pre-filled with the appropriate base class
-and script path, based on the project settings. A convenient way to create a
-test for the currently open script, in the right directory with the right file
-name.</p>
-<p>If the currently open script is already a test, nothing happens.</p>
-<h2 id="go-to-test">Go to test</h2>
-<p>Shortcut: <span class="keys"><kbd class="key-control">Ctrl</kbd><span>+</span><kbd class="key-t">T</kbd></span></p>
-<p>Quickly switch between the test and the script being tested. If multiple tests
-are found for the currently open script, a pop-up menu opens with the
-candidates. If no tests are found for the currently open script, an option to
-create one is presented.</p>
-<p>If the currently open script is a test, <em>vest</em> will try to find the script it
-tests and open that.</p>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>Editor commands are influenced by the <a href="../project-settings/">Project settings</a> - take a look to
-customize command behavior.</p>
 </div>
+</div>
+<h2 id="specifying-tests">Specifying tests</h2>
+<p>To run only a select set of tests, mark them with <code>only</code>. To define them, use
+<code>define_only()</code> and <code>test_only()</code>. Both of these work the same as their regular
+counterparts, with the difference that they mark their definitions for
+selective running.</p>
+<p>If a complete test suite is marked as <code>only</code> with <code>define_only()</code>, each of its
+test cases and subsuites will run.</p>
+<p>For test methods, add the <code>__only</code> suffix to the method name. The suffix is
+chosen so it doesn't shadow otherwise legitimate test case names.</p>
+<h2 id="running-the-selected-tests">Running the selected tests</h2>
+<p>When <a href="../running-from-ui/">running from the editor</a>, <em>vest</em> automatically detects if there's any
+tests marked as <code>only</code>. If yes, then only those will be ran. If no tests are
+marked, all tests will be ran.</p>
+<p>When <a href="../running-from-cli/">running from CLI</a>, <em>vest</em> defaults to ignoring the marks and runs all the
+tests. This is to make sure that all tests <a href="../running-on-ci/">run in CI</a>, unless otherwise
+specified. This can be overridden with <a href="../running-from-cli/#command-line-parameters">command line flags</a>.</p>
 
 
 

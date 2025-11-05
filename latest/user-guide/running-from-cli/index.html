@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://foxssake.github.io/vest/latest/user-guide/running-from-cli/">
       
       
-        <link rel="prev" href="../running-from-ui/">
+        <link rel="prev" href="../running-tests-selectively/">
       
       
         <link rel="next" href="../running-on-ci/">
@@ -640,6 +640,29 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../running-tests-selectively/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Running tests selectively
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -855,6 +878,11 @@ specified, no report will be written.</dd>
 <dt><code>--vest-report-file</code></dt>
 <dd>Specify the output file for saving the test report. The report will be
 printed to STDOUT if not specified.</dd>
+<dt><code>--only</code></dt>
+<dd>Only run marked tests. If no tests are marked, no tests will be ran. See
+<a href="../running-tests-selectively/">Running tests selectively</a>.</dd>
+<dt><code>--no-only</code></dt>
+<dd>Ignore <code>only</code> flags and run all tests. See <a href="../running-tests-selectively/">Running tests selectively</a>.</dd>
 <dt><code>--vest-host</code></dt>
 <dd><em>Internal only</em>. Specifies the host to connect to for sending test results.</dd>
 <dt><code>--vest-port</code></dt>
