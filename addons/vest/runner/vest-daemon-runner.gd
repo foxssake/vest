@@ -70,9 +70,8 @@ func _run_with_params(params: VestCLI.Params) -> VestResult.Suite:
 		if message is Dictionary:
 			results = message
 			on_partial_result.emit(VestResult.Suite._from_wire(results))
-		print("<<< ", message)
 
-		await Vest.sleep()
+		await Vest.sleep(0.1)
 
 	# TODO: Uhhh...
 	_stop()

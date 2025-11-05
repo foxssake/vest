@@ -17,6 +17,10 @@ const ResultsPanel := preload("res://addons/vest/ui/results-panel.gd")
 @onready var summary_icon := %"Test Summary Icon" as TextureRect
 @onready var glob_line_edit := %"Glob LineEdit" as LineEdit
 
+@onready var run_summary := %"Run Summary" as Control
+@onready var progress_indicator := %"Progress Indicator" as Control
+@onready var progress_animator := $"VBoxContainer/Bottom Line/Progress Indicator/Control/AnimationPlayer" as AnimationPlayer
+
 var _run_on_save: bool = false
 var _results: VestResult.Suite = null
 
@@ -48,6 +52,9 @@ func run_all(is_debug: bool = false):
 	Vest.__.LocalSettings.flush()
 
 	results_panel.set_spinner("Waiting for results...", Vest.Icons.debug)
+	progress_indicator.show()
+	progress_animator.play("spin")
+	run_summary.hide()
 
 	var test_start := Vest.time()
 	var results: VestResult.Suite
@@ -66,6 +73,9 @@ func run_script(script: Script, is_debug: bool = false, only_mode: int = Vest.__
 	var runner := VestDaemonRunner.new()
 
 	results_panel.set_spinner("Waiting for results...", Vest.Icons.debug)
+	progress_indicator.show()
+	progress_animator.play("spin")
+	run_summary.hide()
 
 	var test_start := Vest.time()
 	var results: VestResult.Suite
@@ -125,8 +135,11 @@ func _ready():
 	_instance = self
 
 func _render_summary(results: VestResult.Suite, test_duration: float):
+	progress_indicator.hide()
+	run_summary.show()
+
 	if test_duration > 0:
-		summary_label.text = "Ran %d tests in %.2fms" % [results.size(), test_duration * 1000.]
+		summary_label.text = "Ran %d tests in %s" % [results.size(), VestUI.format_duration(test_duration)]
 	else:
 		summary_label.text = "Ran %d tests" % [results.size()]
 	summary_icon.visible = true
@@ -152,3 +165,13 @@ static func get_status_icon(what: Variant) -> Texture2D:
 			VestResult.TEST_FAIL: return Vest.Icons.result_fail
 			VestResult.TEST_PASS: return Vest.Icons.result_pass
 	return null
+
+static func format_duration(duration: float) -> String:
+	if duration > 60.:
+		return "%.2fmin" % duration
+	elif duration > 1.:
+		return "%.2fs" % duration
+	elif duration > 0.001:
+		return "%.2fms" % [duration * 1000.]
+	else:
+		return "%.2fµs" % [duration * 1000_000.0]
