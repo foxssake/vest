@@ -1,5 +1,7 @@
 extends RefCounted
 
+signal on_partial_result(result: VestResult.Suite)
+
 func run_script(_script: Script, _only_mode: int = Vest.__.ONLY_DEFAULT) -> VestResult.Suite:
 	# OVERRIDE
 	return VestResult.Suite.new()

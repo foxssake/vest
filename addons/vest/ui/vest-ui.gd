@@ -39,6 +39,9 @@ func handle_resource_saved(resource: Resource):
 func run_all(is_debug: bool = false):
 	Vest._register_scene_tree(get_tree())
 	var runner := VestDaemonRunner.new()
+	runner.on_partial_result.connect(func(results):
+		results_panel.set_results(results)
+	)
 
 	var test_glob := glob_line_edit.text
 	Vest.__.LocalSettings.test_glob = test_glob
