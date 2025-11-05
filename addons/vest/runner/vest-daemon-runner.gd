@@ -61,7 +61,7 @@ func _run_with_params(params: VestCLI.Params) -> VestResult.Suite:
 		_peer.poll()
 		if _peer.get_status() != StreamPeerTCP.STATUS_CONNECTED:
 			break
-		
+
 		if _peer.get_available_bytes() <= 0:
 			# No data, wait some more
 			continue

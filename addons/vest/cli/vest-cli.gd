@@ -55,6 +55,7 @@ class Params:
 
 		match only_mode:
 			Vest.__.ONLY_DISABLED: result.append("--no-only")
+			Vest.__.ONLY_AUTO: result.append("--auto-only")
 			Vest.__.ONLY_ENABLED: result.append("--only")
 
 		return result
@@ -77,6 +78,7 @@ class Params:
 			elif arg == "--vest-host": result.host = val
 			elif arg == "--no-only": result.only_mode = Vest.__.ONLY_DISABLED
 			elif arg == "--only": result.only_mode = Vest.__.ONLY_ENABLED
+			elif arg == "--auto-only": result.only_mode = Vest.__.ONLY_AUTO
 
 		return result
 

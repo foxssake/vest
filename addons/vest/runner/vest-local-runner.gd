@@ -78,6 +78,8 @@ func _run_suite_at(result: VestResult.Suite, path: String, only_mode: int = Vest
 		Vest.__.ONLY_AUTO: run_only = suite.has_only()
 		Vest.__.ONLY_ENABLED: run_only = true
 
+	print("Only mode: %s -> %s" % [only_mode, run_only])
+
 	await test._begin(test_instance)
 	result = await _run_suite(result, suite, test, run_only)
 	await test._finish(test)
@@ -93,7 +95,7 @@ func _run_case(case: VestDefs.Case, test_instance: VestTest, run_only: bool, is_
 	await test_instance._begin(case)
 	await case.callback.call()
 	await test_instance._finish(case)
-	
+
 	on_partial_result.emit(_result_buffer)
 
 	return test_instance._get_result()

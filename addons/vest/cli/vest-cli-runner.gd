@@ -37,7 +37,7 @@ func _run_tests(params: VestCLI.Params) -> VestResult.Suite:
 	runner.on_partial_result.connect(func(result: VestResult.Suite):
 		if _peer != null and Vest.time() - last_send > send_interval:
 			last_send = Vest.time()
-			print(last_send, " >>> ", result._to_wire())
+#			print(last_send, " >>> ", result._to_wire())
 			_peer.put_var(result._to_wire(), true)
 	)
 
