@@ -19,6 +19,7 @@ func run(params: VestCLI.Params) -> int:
 	var results := await _run_tests(params)
 	_report(params, results)
 	_send_results_over_network(params, results)
+	print("Final result: ", results)
 
 	_disconnect()
 
@@ -31,9 +32,12 @@ func run(params: VestCLI.Params) -> int:
 
 func _run_tests(params: VestCLI.Params) -> VestResult.Suite:
 	var runner := VestLocalRunner.new()
+	var send_interval := 0.05
+	var last_send := Vest.time() - send_interval
 	runner.on_partial_result.connect(func(result: VestResult.Suite):
-		if _peer != null:
-			print(">>> ", result._to_wire())
+		if _peer != null and Vest.time() - last_send > send_interval:
+			last_send = Vest.time()
+			print(last_send, " >>> ", result._to_wire())
 			_peer.put_var(result._to_wire(), true)
 	)
 
@@ -77,6 +81,7 @@ func _connect(params: VestCLI.Params):
 		push_warning("Connection failed! Socket status: %d" % [peer.get_status()])
 		return
 
+	peer.set_no_delay(true)
 	_peer = peer
 
 func _disconnect():

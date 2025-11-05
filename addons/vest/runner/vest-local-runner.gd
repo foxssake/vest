@@ -2,6 +2,7 @@ extends "res://addons/vest/runner/vest-base-runner.gd"
 class_name VestLocalRunner
 
 var _result_buffer: VestResult.Suite
+var _is_running_glob := false
 
 ## Run a test script
 func run_script(script: Script, only_mode: int = Vest.__.ONLY_DEFAULT) -> VestResult.Suite:
@@ -14,7 +15,6 @@ func run_script(script: Script, only_mode: int = Vest.__.ONLY_DEFAULT) -> VestRe
 		return null
 	var test := test_instance as VestTest
 
-	var results: VestResult.Suite = null
 	var suite = await test._get_suite()
 
 	var run_only := false
@@ -23,42 +23,44 @@ func run_script(script: Script, only_mode: int = Vest.__.ONLY_DEFAULT) -> VestRe
 		Vest.__.ONLY_AUTO: run_only = suite.has_only()
 		Vest.__.ONLY_ENABLED: run_only = true
 
+	var result := VestResult.Suite.new()
+	if not _is_running_glob:
+		_result_buffer = result
+	else:
+		result = _result_buffer
+
 	await test._begin(test_instance)
-	_result_buffer = VestResult.Suite.new()
-	results = await _run_suite(_result_buffer, suite, test, run_only)
+	result = await _run_suite(result, suite, test, run_only)
 	await test._finish(test)
 
 	test.free()
 
-	return results
+	return result
 
 ## Run test scripts matching glob
 ## [br][br]
 ## See [method String.match]
 func run_glob(glob: String, only_mode: int = Vest.__.ONLY_DEFAULT) -> VestResult.Suite:
-	var suite := VestDefs.Suite.new()
-	suite.name = "Glob suite \"%s\"" % [glob]
+	_is_running_glob = true
+	_result_buffer = VestResult.Suite.new()
+	_result_buffer.suite = VestDefs.Suite.new()
+	_result_buffer.suite.name = "Glob suite \"%s\"" % [glob]
 
 	for test_file in Vest.glob(glob):
-		var subsuite := await _gather_script_at(test_file)
-		if subsuite:
-			suite.suites.append(subsuite)
+		var suite_result := VestResult.Suite.new()
+		_result_buffer.subsuites.append(suite_result)
 
-	var run_only := false
-	match only_mode:
-		Vest.__.ONLY_DISABLED: run_only = false
-		Vest.__.ONLY_AUTO: run_only = suite.has_only()
-		Vest.__.ONLY_ENABLED: run_only = true
-
-	var wrapper_instance := VestTest.new()
-	_result_buffer = VestResult.Suite.new()
-	_run_suite(_result_buffer, suite, wrapper_instance, run_only)
+		var result := await _run_suite_at(suite_result, test_file, only_mode)
+		if not result:
+			_result_buffer.subsuites.erase(suite_result)
+	_is_running_glob = false
 
 	return _result_buffer
 
-func _gather_script_at(path: String) -> VestDefs.Suite:
+# TODO: Refactor
+func _run_suite_at(result: VestResult.Suite, path: String, only_mode: int = Vest.__.ONLY_DEFAULT) -> VestResult.Suite:
 	var test_script := load(path)
-	
+
 	if not test_script or not test_script is Script:
 		return null
 
@@ -68,7 +70,21 @@ func _gather_script_at(path: String) -> VestDefs.Suite:
 		return null
 	var test := test_instance as VestTest
 
-	return await test._get_suite()
+	var suite = await test._get_suite()
+
+	var run_only := false
+	match only_mode:
+		Vest.__.ONLY_DISABLED: run_only = false
+		Vest.__.ONLY_AUTO: run_only = suite.has_only()
+		Vest.__.ONLY_ENABLED: run_only = true
+
+	await test._begin(test_instance)
+	result = await _run_suite(result, suite, test, run_only)
+	await test._finish(test)
+
+	test.free()
+
+	return result
 
 func _run_case(case: VestDefs.Case, test_instance: VestTest, run_only: bool, is_parent_only: bool = false) -> VestResult.Case:
 	if run_only and not case.is_only and not is_parent_only:
