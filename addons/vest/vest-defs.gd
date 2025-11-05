@@ -23,12 +23,24 @@ class Suite:
 	## Nested test suites contained in the suite
 	var suites: Array[VestDefs.Suite] = []
 
+	## If true, only this group of tests should run
+	var is_only: bool = false
+
 	## The resource path to the script that defined the suite
 	var definition_file: String = ""
 
 	## The line number of the suite definition. [br]
 	## Set to -1 for undetermined.
 	var definition_line: int = -1
+
+	## Return true if either this suite, one of its cases, or one of its
+	## subsuites is marked as only.
+	func has_only() -> bool:
+		if is_only:
+			return true
+
+		return cases.any(func(it): return it.is_only) or\
+			suites.any(func(it): return it.has_only())
 
 	## Get the number of test cases in the suite.[br]
 	## Includes the number of test cases in the suite, and recursively sums up
@@ -53,6 +65,9 @@ class Suite:
 class Case:
 	## Test case description, displayed in reports
 	var description: String = ""
+
+	## If true, only this test should run
+	var is_only: bool = false
 
 	## The method called to run the test case
 	var callback: Callable

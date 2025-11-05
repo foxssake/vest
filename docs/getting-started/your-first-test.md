@@ -41,16 +41,18 @@ result of an operation. See [Assertions].
 ## Running tests
 
 Use the [*vest* UI] to run your tests, by pressing the
-![Run](../assets/ui/run.svg) Run button.
+![Run](../assets/ui/run.svg) Run button. To run only the currently open test
+class, press ++f7++.
 
 ![vest UI](../assets/vest-ui.png)
 
 The test results will show up in the results panel.
 
 If something doesn't work as expected, use the ![Debug](../assets/ui/debug.svg)
-Debug button after setting breakpoints in your code.
+Debug button after setting breakpoints in your code. To debug the currently
+open test class, press ++ctrl+f7++.
 
-You can also run tests using [editor commands].
+For more details on the keyboard shortcuts, see the [editor commands].
 
 With your first test done, head over to the *User Guide* for more info on what
 *vest* can do.

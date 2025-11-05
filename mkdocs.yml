@@ -46,5 +46,6 @@ nav:
     - 'user-guide/custom-types.md'
     - 'user-guide/project-settings.md'
     - 'user-guide/running-from-ui.md'
+    - 'user-guide/running-tests-selectively.md'
     - 'user-guide/running-from-cli.md'
     - 'user-guide/running-on-ci.md'

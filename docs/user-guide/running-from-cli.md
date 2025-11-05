@@ -57,6 +57,13 @@ After the script, optional parameters can be specified for *vest*.
 :   Specify the output file for saving the test report. The report will be
     printed to STDOUT if not specified.
 
+`--only`
+:   Only run marked tests. If no tests are marked, no tests will be ran. See
+    [Running tests selectively].
+
+`--no-only`
+:   Ignore `only` flags and run all tests. See [Running tests selectively].
+
 `--vest-host`
 :   *Internal only*. Specifies the host to connect to for sending test results.
 
@@ -64,3 +71,4 @@ After the script, optional parameters can be specified for *vest*.
 :   *Internal only*. Specifies the port to use for sending test results.
 
 [Godot's command line support]: https://docs.godotengine.org/en/latest/tutorials/editor/command_line_tutorial.html
+[Running tests selectively]: ./running-tests-selectively.md

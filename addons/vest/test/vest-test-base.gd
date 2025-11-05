@@ -10,9 +10,10 @@ signal on_case_finish(case: VestDefs.Case)
 signal on_suite_finish(case: VestDefs.Case)
 signal on_finish()
 
-func define(name: String, callback: Callable) -> VestDefs.Suite:
+func define(name: String, callback: Callable, is_only: bool = false) -> VestDefs.Suite:
 	var suite = VestDefs.Suite.new()
 	suite.name = name
+	suite.is_only = is_only
 	_define_stack.push_back(suite)
 
 	var userland_loc := _find_userland_stack_location()
@@ -27,9 +28,13 @@ func define(name: String, callback: Callable) -> VestDefs.Suite:
 
 	return suite
 
-func test(description: String, callback: Callable) -> void:
+func define_only(name: String, callback: Callable) -> VestDefs.Suite:
+	return await define(name, callback, true)
+
+func test(description: String, callback: Callable, is_only: bool = false) -> void:
 	var case_def := VestDefs.Case.new()
 	case_def.description = description
+	case_def.is_only = is_only
 	case_def.callback = callback
 
 	var userland_loc := _find_userland_stack_location()
@@ -37,6 +42,9 @@ func test(description: String, callback: Callable) -> void:
 	case_def.definition_line = userland_loc[1]
 
 	_define_stack.back().cases.push_back(case_def)
+
+func test_only(description: String, callback: Callable) -> void:
+	await test(description, callback, true)
 
 func benchmark(name: String, callback: Callable) -> VestDefs.Benchmark:
 	var result := VestDefs.Benchmark.new()

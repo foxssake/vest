@@ -9,7 +9,7 @@ Button/colors/icon_normal_color = Color(1, 1, 1, 0.501961)
 Button/colors/icon_pressed_color = Color(1, 1, 1, 1)
 
 [node name="Visibility Popup" type="PopupPanel"]
-size = Vector2i(128, 179)
+size = Vector2i(128, 249)
 visible = true
 theme = SubResource("Theme_l01ra")
 script = ExtResource("1_21m7j")
@@ -18,7 +18,7 @@ script = ExtResource("1_21m7j")
 offset_left = 4.0
 offset_top = 4.0
 offset_right = 124.0
-offset_bottom = 175.0
+offset_bottom = 245.0
 
 [node name="Statuses Container" type="VBoxContainer" parent="Buttons Container"]
 unique_name_in_owner = true

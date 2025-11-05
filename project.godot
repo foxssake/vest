@@ -33,3 +33,4 @@ import/blender/enabled=false
 [vest]
 
 sources_root="res://src/"
+new_test_location=2

@@ -58,7 +58,7 @@ func run_all(is_debug: bool = false):
 	# Render individual results
 	ingest_results(results, test_duration)
 
-func run_script(script: Script, is_debug: bool = false) -> void:
+func run_script(script: Script, is_debug: bool = false, only_mode: int = Vest.__.ONLY_AUTO) -> void:
 	Vest._register_scene_tree(get_tree())
 	var runner := VestDaemonRunner.new()
 
@@ -68,9 +68,9 @@ func run_script(script: Script, is_debug: bool = false) -> void:
 	var test_start := Vest.time()
 	var results: VestResult.Suite
 	if not is_debug:
-		results = await runner.run_script(script)
+		results = await runner.run_script(script, only_mode)
 	else:
-		results = await runner.with_debug().run_script(script)
+		results = await runner.with_debug().run_script(script, only_mode)
 
 	var test_duration := Vest.time() - test_start
 
@@ -134,7 +134,7 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 		item.set_text(0, what.suite.name)
 		item.set_text(1, what.get_aggregate_status_string().capitalize())
 
-		item.set_icon(0, get_status_icon(what))
+		item.set_icon(0, VestUI.get_status_icon(what))
 		item.set_icon_max_width(0, VestUI.get_icon_size())
 
 		tree.item_activated.connect(func():
@@ -156,7 +156,7 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 		item.set_text(1, what.get_status_string().capitalize())
 		item.collapsed = what.status == VestResult.TEST_PASS
 
-		item.set_icon(0, get_status_icon(what))
+		item.set_icon(0, VestUI.get_status_icon(what))
 		item.set_icon_max_width(0, VestUI.get_icon_size())
 
 		_render_data(what, tree, item)
@@ -174,7 +174,7 @@ func _render_summary(results: VestResult.Suite, test_duration: float):
 	else:
 		summary_label.text = "Ran %d tests" % [results.size()]
 	summary_icon.visible = true
-	summary_icon.texture = get_status_icon(results)
+	summary_icon.texture = VestUI.get_status_icon(results)
 	summary_icon.custom_minimum_size = Vector2i.ONE * VestUI.get_icon_size() # TODO: Check
 
 func _render_data(case: VestResult.Case, tree: Tree, parent: TreeItem):
