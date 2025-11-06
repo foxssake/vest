@@ -26,9 +26,14 @@ While each element has its tooltip or description, here's an overview:
     Useful for getting quick feedback while implementing tests.
 
 ![Filter results](../assets/ui/visibility.svg) Filter results
-:   Opens a menu to specify which tests to display in the results.
+:   Opens a menu to specify which tests to display in the results. The icon
+    changes into a closed eye if no results are displayed due to the filtering.
 
     Useful for drilling down into results, e.g. showing only failed tests.
+
+![Expand / collapse](../assets/ui/expand.svg) Expand / collapse results
+:   Expands or collapses all test results recursively. If there's at least one
+    collapsed item, this button will expand the results.
 
 ![Refresh mixins](../assets/ui/refresh.svg) Refresh mixins
 :   Vest's `VestTest` class is generated from multiple *mixin* classes. In case

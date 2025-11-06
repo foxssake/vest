@@ -9,6 +9,7 @@ func test_emit_performance():
 	)\
 		.measure_value(&"value")\
 		.with_iterations(10_000)\
+		.with_batch_size(2_000)\
 		.run()
 
 	benchmark("Single metric, multiple measurements", func(emit: Callable):
@@ -19,6 +20,7 @@ func test_emit_performance():
 		.measure_value(&"value")\
 		.measure_value(&"value")\
 		.with_iterations(10_000)\
+		.with_batch_size(2_000)\
 		.run()
 
 	benchmark("Multiple metrics, multiple measurements", func(emit: Callable):
@@ -32,4 +34,5 @@ func test_emit_performance():
 		.measure_value(&"3")\
 		.measure_value(&"4")\
 		.with_iterations(10_000)\
+		.with_batch_size(2_000)\
 		.run()

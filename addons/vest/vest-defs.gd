@@ -246,10 +246,10 @@ class Benchmark:
 		var batch_threshold := 0.001 # 1ms
 		if avg_batch_time <= batch_threshold and _enable_builtin_measures:
 			Vest.message((
-				"Benchmark \"%s\" has run with an average of %.6fms per batch. " +
+				"Benchmark \"%s\" has run with an average of %s per batch. " +
 				"This is probably faster than what can be reliably measured. " +
 				"To avoid this warning, increase the batch size to at least %s.") %
-				[name, avg_batch_time * 1000., ceil(_batch_size * batch_threshold / avg_batch_time * 1.1)]
+				[name, VestUI.format_duration(avg_batch_time), ceil(_batch_size * batch_threshold / avg_batch_time * 1.1)]
 			)
 
 		return self
@@ -321,9 +321,9 @@ class Benchmark:
 		# Add builtin measures
 		if _enable_builtin_measures:
 			result["iterations"] = _iterations
-			result["duration"] = "%.4fms" % [_duration * 1000.0]
+			result["duration"] = VestUI.format_duration(_duration)
 			result["iters/sec"] = get_iters_per_sec()
-			result["average iteration time"] = "%.4fms" % [get_avg_iteration_time() * 1000.0]
+			result["average iteration time"] = VestUI.format_duration(get_avg_iteration_time())
 
 		# Add benchmark data
 		result["name"] = name

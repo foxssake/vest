@@ -11,6 +11,8 @@ var visibility_popup: VestUI.VisibilityPopup
 
 var _results: VestResult.Suite = null
 
+signal on_collapse_changed()
+
 func get_results() -> VestResult.Suite:
 	return _results
 
@@ -31,6 +33,44 @@ func set_spinner(text: String, icon: Texture2D = null, animated: bool = true) ->
 		_animation_player.play("spin")
 	else:
 		_animation_player.stop()
+
+func collapse() -> void:
+	var root := _tree.get_root()
+	if not root: return
+
+	for item in root.get_children():
+		item.set_collapsed_recursive(true)
+
+func expand() -> void:
+	var root := _tree.get_root()
+	if not root: return
+
+	for item in root.get_children():
+		item.set_collapsed_recursive(false)
+
+func toggle_collapsed() -> void:
+	if is_any_collapsed():
+		expand()
+	else:
+		collapse()
+
+func is_any_collapsed() -> bool:
+	var at := _tree.get_root()
+	var queue := [] as Array[TreeItem]
+
+	while at:
+		queue.append_array(at.get_children())
+
+		if at.collapsed:
+			return true
+		at = queue.pop_back()
+
+	return false
+
+func _ready():
+	_tree.item_collapsed.connect(func(_item):
+		on_collapse_changed.emit()
+	)
 
 func _clear():
 	_tree.clear()
