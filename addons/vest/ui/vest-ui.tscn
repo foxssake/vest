@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bp8g7j7774mwi"]
+[gd_scene load_steps=15 format=3 uid="uid://bp8g7j7774mwi"]
 
 [ext_resource type="Script" path="res://addons/vest/ui/vest-ui.gd" id="1_cct3x"]
 [ext_resource type="Texture2D" uid="uid://r4y6ihamgino" path="res://addons/vest/icons/run.svg" id="2_q3lni"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bmqjme87oq3xx" path="res://addons/vest/icons/pass.svg" id="6_mef67"]
 [ext_resource type="Texture2D" uid="uid://c711af0y1s2ct" path="res://addons/vest/icons/run-save.svg" id="6_wy3v7"]
 [ext_resource type="Texture2D" uid="uid://bpyua1ic4p47h" path="res://addons/vest/icons/visibility.svg" id="6_xkbs5"]
+[ext_resource type="Texture2D" uid="uid://sx0233b14cll" path="res://addons/vest/icons/expand.svg" id="9_hg4sy"]
 [ext_resource type="Texture2D" uid="uid://csfyamlc15vp0" path="res://addons/vest/icons/spinner.svg" id="10_7lh4k"]
 [ext_resource type="PackedScene" uid="uid://dbgbcglqh42ya" path="res://addons/vest/ui/visibility-popup.tscn" id="13_72bup"]
 
@@ -113,6 +114,14 @@ expand_icon = true
 unique_name_in_owner = true
 visible = false
 
+[node name="Expand Toggle Button" type="Button" parent="VBoxContainer/Bottom Line/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "      "
+icon = ExtResource("9_hg4sy")
+icon_alignment = 1
+expand_icon = true
+
 [node name="VSeparator3" type="VSeparator" parent="VBoxContainer/Bottom Line"]
 layout_mode = 2
 
@@ -124,6 +133,7 @@ size_flags_horizontal = 3
 [node name="Test Summary Icon" type="TextureRect" parent="VBoxContainer/Bottom Line/Run Summary"]
 unique_name_in_owner = true
 visible = false
+custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 size_flags_vertical = 4
 texture = ExtResource("6_mef67")
@@ -134,7 +144,6 @@ stretch_mode = 4
 unique_name_in_owner = true
 custom_minimum_size = Vector2(220, 0)
 layout_mode = 2
-text = "Ready"
 
 [node name="Progress Indicator" type="HBoxContainer" parent="VBoxContainer/Bottom Line"]
 unique_name_in_owner = true
@@ -159,6 +168,7 @@ offset_right = 16.0
 offset_bottom = 16.5
 grow_horizontal = 2
 grow_vertical = 2
+rotation = 2.9185
 pivot_offset = Vector2(16, 16)
 texture = ExtResource("10_7lh4k")
 expand_mode = 5

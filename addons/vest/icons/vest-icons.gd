@@ -23,3 +23,5 @@ const lightbulb: Texture2D = preload("res://addons/vest/icons/lightbulb.svg")
 
 const visible: Texture2D = preload("res://addons/vest/icons/visibility.svg")
 const hidden: Texture2D = preload("res://addons/vest/icons/hidden.svg")
+const expand: Texture2D = preload("res://addons/vest/icons/expand.svg")
+const collapse: Texture2D = preload("res://addons/vest/icons/collapse.svg")

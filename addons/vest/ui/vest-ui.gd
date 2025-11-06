@@ -11,6 +11,8 @@ const ResultsPanel := preload("res://addons/vest/ui/results-panel.gd")
 @onready var filter_results_button := %"Filter Results Button" as Button
 @onready var visibility_popup := %"Visibility Popup" as VisibilityPopup
 @onready var clear_button := %"Clear Button" as Button
+@onready var expand_toggle_button := %"Expand Toggle Button" as Button
+
 @onready var refresh_mixins_button := %"Refresh Mixins Button" as Button
 @onready var results_panel := %"Results Panel" as ResultsPanel
 @onready var summary_label := %"Tests Summary Label" as Label
@@ -135,6 +137,17 @@ func _ready():
 			filter_results_button.icon = Vest.Icons.hidden
 		else:
 			filter_results_button.icon = Vest.Icons.visible
+	)
+
+	results_panel.on_collapse_changed.connect(func():
+		if (results_panel.is_any_collapsed()):
+			expand_toggle_button.icon = Vest.Icons.expand
+		else:
+			expand_toggle_button.icon = Vest.Icons.collapse
+	)
+
+	expand_toggle_button.pressed.connect(func():
+		results_panel.toggle_collapsed()
 	)
 
 	_instance = self
