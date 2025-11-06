@@ -58,6 +58,8 @@ func _run_with_params(params: VestCLI.Params) -> VestResult.Suite:
 	var results = null
 
 	while true:
+		await Vest.sleep()
+
 		_peer.poll()
 		if _peer.get_status() != StreamPeerTCP.STATUS_CONNECTED:
 			break
@@ -70,8 +72,6 @@ func _run_with_params(params: VestCLI.Params) -> VestResult.Suite:
 		if message is Dictionary:
 			results = message
 			on_partial_result.emit(VestResult.Suite._from_wire(results))
-
-		await Vest.sleep(0.1)
 
 	# TODO: Uhhh...
 	_stop()
