@@ -2,8 +2,7 @@
 extends PopupPanel
 
 @onready var _container := %"Statuses Container" as Control
-@onready var _all_button := %"All Button" as Button
-@onready var _none_button := %"None Button" as Button
+@onready var _toggle_button := %"Toggle Button" as Button
 
 var _visibilities: Dictionary = {}
 
@@ -12,6 +11,13 @@ signal on_change()
 func get_visibility_for(status: int) -> bool:
 	return _visibilities.get(status, true)
 
+func is_empty() -> bool:
+	# Return true if all visibilites are set to false
+	for status in _visibilities:
+		if _visibilities[status]:
+			return false
+	return true
+
 func _init() -> void:
 	# Default visibility to true
 	for status in range(VestResult.TEST_MAX):
@@ -19,18 +25,12 @@ func _init() -> void:
 
 func _ready() -> void:
 	_render()
-	_all_button.pressed.connect(_show_all)
-	_none_button.pressed.connect(_hide_all)
+	_toggle_button.pressed.connect(_toggle_all)
 
-func _show_all() -> void:
+func _toggle_all() -> void:
+	var visibility := is_empty()
 	for status in _visibilities.keys():
-		_visibilities[status] = true
-	_render()
-	on_change.emit()
-
-func _hide_all() -> void:
-	for status in _visibilities.keys():
-		_visibilities[status] = false
+		_visibilities[status] = visibility
 	_render()
 	on_change.emit()
 
@@ -60,3 +60,11 @@ func _render() -> void:
 		var status := _visibilities.keys()[idx] as int
 		var checkbox := _container.get_child(idx) as CheckBox
 		checkbox.set_pressed_no_signal(_visibilities[status])
+
+	# Update toggle button
+	if is_empty():
+		_toggle_button.text = "All"
+		_toggle_button.icon = Vest.Icons.visible
+	else:
+		_toggle_button.text = "None"
+		_toggle_button.icon = Vest.Icons.hidden

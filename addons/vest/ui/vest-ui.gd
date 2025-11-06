@@ -123,13 +123,18 @@ func _ready():
 	debug_button.pressed.connect(func(): run_all(true))
 
 	filter_results_button.pressed.connect(func():
-		visibility_popup.position = filter_results_button.get_screen_position()
+		visibility_popup.position = filter_results_button.get_screen_position() + Vector2.RIGHT * filter_results_button.size.x
 		visibility_popup.show()
 	)
 
 	visibility_popup.on_change.connect(func():
 		clear_results()
-		results_panel.set_results(_results) # TODO: Filter
+		results_panel.set_results(_results)
+		
+		if visibility_popup.is_empty():
+			filter_results_button.icon = Vest.Icons.hidden
+		else:
+			filter_results_button.icon = Vest.Icons.visible
 	)
 
 	_instance = self
