@@ -191,7 +191,7 @@ text = "Test glob:"
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-text = "res://examples/*.test.gd"
+text = "res://tests/*.test.gd"
 
 [node name="VSeparator4" type="VSeparator" parent="VBoxContainer/Bottom Line"]
 layout_mode = 2
