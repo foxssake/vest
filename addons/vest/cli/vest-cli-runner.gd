@@ -32,12 +32,8 @@ func run(params: VestCLI.Params) -> int:
 
 func _run_tests(params: VestCLI.Params) -> VestResult.Suite:
 	var runner := VestLocalRunner.new()
-	var send_interval := 0.05
-	var last_send := Vest.time() - send_interval
 	runner.on_partial_result.connect(func(result: VestResult.Suite):
-		if _peer != null and Vest.time() - last_send > send_interval:
-			last_send = Vest.time()
-#			print(last_send, " >>> ", result._to_wire())
+		if _peer != null:
 			_peer.put_var(result._to_wire(), true)
 	)
 

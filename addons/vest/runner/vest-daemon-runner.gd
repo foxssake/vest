@@ -73,7 +73,6 @@ func _run_with_params(params: VestCLI.Params) -> VestResult.Suite:
 			results = message
 			on_partial_result.emit(VestResult.Suite._from_wire(results))
 
-	# TODO: Uhhh...
 	_stop()
 
 	if results == null:
