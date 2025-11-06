@@ -104,7 +104,7 @@ func suite():
 
 class CustomContainer:
 	var _values: Array
-	
+
 	func _init(p_values: Array):
 		_values = p_values.duplicate()
 
