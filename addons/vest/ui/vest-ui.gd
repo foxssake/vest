@@ -71,6 +71,8 @@ func run_all(is_debug: bool = false):
 	ingest_results(results, test_duration)
 
 func run_script(script: Script, is_debug: bool = false, only_mode: int = Vest.__.ONLY_AUTO) -> void:
+	if not get_tree():
+		push_warning("UI has no tree!")
 	Vest._register_scene_tree(get_tree())
 	var runner := VestDaemonRunner.new()
 

@@ -198,6 +198,11 @@ static func glob(pattern: String, max_iters: int = 131072) -> Array[String]:
 
 	return results
 
+## Returns a [SceneTree]. May be used for tests requiring more complex node
+## setups.
+static func get_tree() -> SceneTree:
+	return _scene_tree
+
 static func _clear_messages():
 	_messages.clear()
 
