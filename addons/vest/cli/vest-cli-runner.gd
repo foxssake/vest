@@ -33,7 +33,10 @@ func _run_tests(params: VestCLI.Params) -> VestResult.Suite:
 	var runner := VestLocalRunner.new()
 	runner.on_partial_result.connect(func(result: VestResult.Suite):
 		if _peer != null:
-			_peer.put_var(result._to_wire(), true)
+			if result != null:
+				_peer.put_var(result._to_wire(), true)
+			else:
+				_peer.put_var(result, true)
 	)
 
 	var results: VestResult.Suite
