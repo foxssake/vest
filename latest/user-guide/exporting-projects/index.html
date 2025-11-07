@@ -8,13 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://foxssake.github.io/vest/latest/user-guide/testing-in-the-scene-tree/">
+        <link rel="canonical" href="https://foxssake.github.io/vest/latest/user-guide/exporting-projects/">
       
       
-        <link rel="prev" href="../printing-custom-messages/">
+        <link rel="prev" href="../project-settings/">
       
       
-        <link rel="next" href="../custom-types/">
+        <link rel="next" href="../running-from-ui/">
       
       
       <link rel="icon" href="../../assets/vest-favicon.png">
@@ -22,7 +22,7 @@
     
     
       
-        <title>Testing in the scene tree - vest</title>
+        <title>Exporting projects - vest</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#testing-in-the-scene-tree" class="md-skip">
+        <a href="#exporting-projects" class="md-skip">
           Skip to content
         </a>
       
@@ -113,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Testing in the scene tree
+              Exporting projects
             
           </span>
         </div>
@@ -571,19 +571,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../testing-in-the-scene-tree/" class="md-nav__link">
         
   
   
@@ -594,7 +585,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -650,10 +640,32 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../exporting-projects/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Exporting projects
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -664,6 +676,35 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#avoiding-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Avoiding errors
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -788,6 +829,23 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#avoiding-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Avoiding errors
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -802,74 +860,24 @@
 
 
 
-<h1 id="testing-in-the-scene-tree">Testing in the scene tree</h1>
-<p>For certain heavier tests, you may want to put nodes into a scene tree and test
-their interactions.</p>
-<p>For this purpose, <em>vest</em> exposes a <a href="https://docs.godotengine.org/en/stable/classes/class_scenetree.html">SceneTree</a> that can be used for testing.
-You can access it by calling <code>Vest.get_tree()</code>.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">define()</label><label for="__tabbed_1_2">methods</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="k">extends</span><span class="w"> </span><span class="n">VestTest</span>
-
-<span class="k">func</span><span class="w"> </span><span class="n">get_suite_name</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="p">:</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;SceneTree&quot;</span>
-
-<span class="k">func</span><span class="w"> </span><span class="n">suite</span><span class="p">():</span>
-<span class="w">  </span><span class="n">test</span><span class="p">(</span><span class="s2">&quot;node should vanish&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">():</span>
-<span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">TemporaryNode</span><span class="o">.</span><span class="n">new</span><span class="p">()</span>
-<span class="w">    </span><span class="n">Vest</span><span class="o">.</span><span class="n">get_tree</span><span class="p">()</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
-
-<span class="w">    </span><span class="n">await</span><span class="w"> </span><span class="n">Vest</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="w">    </span><span class="n">expect</span><span class="p">(</span><span class="n">is_instance_valid</span><span class="p">(</span><span class="n">node</span><span class="p">))</span>
-
-<span class="w">    </span><span class="n">await</span><span class="w"> </span><span class="n">Vest</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="w">    </span><span class="n">expect_not</span><span class="p">(</span><span class="n">is_instance_valid</span><span class="p">(</span><span class="n">node</span><span class="p">))</span>
-<span class="w">  </span><span class="p">)</span>
-
-<span class="k">class</span><span class="w"> </span><span class="n">TemporaryNode</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="n">Node</span><span class="p">:</span>
-<span class="w">  </span><span class="k">var</span><span class="w"> </span><span class="n">lifetime</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span>
-
-<span class="w">  </span><span class="k">func</span><span class="w"> </span><span class="n">_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
-<span class="w">    </span><span class="n">lifetime</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="n">delta</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">lifetime</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">0.</span><span class="p">:</span>
-<span class="w">      </span><span class="n">queue_free</span><span class="p">()</span>
-</code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="k">extends</span><span class="w"> </span><span class="n">VestTest</span>
-
-<span class="k">func</span><span class="w"> </span><span class="n">get_suite_name</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="p">:</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;SceneTree&quot;</span>
-
-<span class="k">func</span><span class="w"> </span><span class="n">test_node_should_vanish</span><span class="p">():</span>
-<span class="w">  </span><span class="k">var</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">TemporaryNode</span><span class="o">.</span><span class="n">new</span><span class="p">()</span>
-<span class="w">  </span><span class="n">Vest</span><span class="o">.</span><span class="n">get_tree</span><span class="p">()</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
-
-<span class="w">  </span><span class="n">await</span><span class="w"> </span><span class="n">Vest</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="w">  </span><span class="n">expect</span><span class="p">(</span><span class="n">is_instance_valid</span><span class="p">(</span><span class="n">node</span><span class="p">))</span>
-
-<span class="w">  </span><span class="n">await</span><span class="w"> </span><span class="n">Vest</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="w">  </span><span class="n">expect_not</span><span class="p">(</span><span class="n">is_instance_valid</span><span class="p">(</span><span class="n">node</span><span class="p">))</span>
-
-<span class="k">class</span><span class="w"> </span><span class="n">TemporaryNode</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="n">Node</span><span class="p">:</span>
-<span class="w">  </span><span class="k">var</span><span class="w"> </span><span class="n">lifetime</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span>
-
-<span class="w">  </span><span class="k">func</span><span class="w"> </span><span class="n">_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
-<span class="w">    </span><span class="n">lifetime</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="n">delta</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">lifetime</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">0.</span><span class="p">:</span>
-<span class="w">      </span><span class="n">queue_free</span><span class="p">()</span>
-</code></pre></div>
-</div>
-</div>
-</div>
-<p>Do note that for now, this scene tree is not exclusive to your tests, it may
-have other nodes in it. It is best to only clean up nodes created by the test,
-and nothing else.</p>
-<p>The main point of cleanup is not to avoid memory leaks - the nodes will be
-freed once the test runner exists. The main reason for cleaning up nodes is to
-not influence other tests. This way, you don't violate the <a href="https://software-tester.io/apply-first-principles-for-test-automation/">FIRST principles</a>,
-specifically the tests being <em>independent</em>.</p>
+<h1 id="exporting-projects">Exporting projects</h1>
+<p>The functionalities that <em>vest</em> provides are useful during development, but are
+not needed during gameplay. Thus, it makes sense to exclude <em>vest</em> when
+exporting your Godot project. Doing so saves file size, bandwidth, and may
+slightly improve startup time.</p>
+<p>To do so, open <em>Project</em> &gt; <em>Export...</em>, and then navigate to the <em>Resources</em>
+tab on your selected export preset.</p>
+<p><img alt="Export settings" src="../../assets/export-settings.png" /></p>
+<p>The above example demonstrates one way to exclude <em>vest</em> from your final build.
+In general, it is good practice to only export resources needed by the game.
+The example also excludes script templates and test suites from the build.</p>
+<h2 id="avoiding-errors">Avoiding errors</h2>
+<p>In general, <em>always</em> make sure to test your build before submitting or
+uploading it to your chosen platform.</p>
+<p>To avoid issues stemming from unresolved references, make sure to only
+reference <code>Vest</code>, and other classes provided by <em>vest</em>, in your tests. Doing so
+ensures that excluding <em>vest</em> and your tests from the build won't result in any
+issues.</p>
 
 
 
