@@ -10,6 +10,7 @@ var visibility_popup: VestUI.VisibilityPopup
 @onready var _animation_player := $PanelContainer/Spinner/AnimationPlayer as AnimationPlayer
 
 var _results: VestResult.Suite = null
+var _search_string: String = ""
 
 signal on_collapse_changed()
 
@@ -19,6 +20,14 @@ func get_results() -> VestResult.Suite:
 func set_results(results: VestResult.Suite) -> void:
 	if _results != results:
 		_results = results
+		_render()
+
+func get_search_string() -> String:
+	return _search_string
+
+func set_search_string(search_string: String) -> void:
+	if _search_string != search_string:
+		_search_string = search_string
 		_render()
 
 func clear() -> void:
@@ -83,8 +92,12 @@ func _render():
 	if _results != null:
 		_render_result(_results, _tree)
 
-func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
+func _render_result(what: Object, tree: Tree, parent_result: Variant = null, parent: TreeItem = null):
 	if what is VestResult.Suite:
+		# Skip if suite doesn't match the search string
+		if not _match_search(_search_string, what, parent_result):
+			return
+
 		# Skip if no statuses match the visibility filter
 		if not what.get_unique_statuses()\
 			.any(func(status): return visibility_popup.get_visibility_for(status)):
@@ -102,10 +115,14 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 		)
 
 		for subsuite in what.subsuites:
-			_render_result(subsuite, tree, item)
+			_render_result(subsuite, tree, what, item)
 		for case in what.cases:
-			_render_result(case, tree, item)
+			_render_result(case, tree, what, item)
 	elif what is VestResult.Case:
+		# Skip if case doesn't match the search string
+		if not _match_search(_search_string, what, parent_result):
+			return
+
 		if not visibility_popup.get_visibility_for(what.status):
 			# Case not visible, skip
 			return
@@ -198,3 +215,33 @@ func _render_data(case: VestResult.Case, tree: Tree, parent: TreeItem):
 
 func _navigate(file: String, line: int):
 	Vest._get_editor_interface().edit_script(load(file), line)
+
+func _match_search(needle: String, haystack: Variant, parent: Variant = null) -> bool:
+	if not needle:
+		return true
+
+	if haystack is VestResult.Suite:
+		var suite := haystack as VestResult.Suite
+		if VestUI.fuzzy_score(needle, suite.suite.name) > 1.0:
+			return true
+
+		for case in suite.cases:
+			if _match_search(needle, case, suite):
+				return true
+		for subsuite in suite.subsuites:
+			if _match_search(needle, subsuite, suite):
+				return true
+
+		return false
+	elif haystack is VestResult.Case:
+		var case := haystack as VestResult.Case
+
+		if VestUI.fuzzy_score(needle, case.case.description) > 1.0:
+			return true
+		if parent != null and parent is VestResult.Suite:
+			return VestUI.fuzzy_score(needle, parent.suite.name) > 1.0
+		else:
+			return false
+	else:
+		push_warning("Matching unknown item: %s" % [haystack])
+		return true
