@@ -137,7 +137,10 @@ func _filter_search(results: VestResult.Suite, needle: String) -> void:
 
 		scores[at] = VestUI.fuzzy_score(needle, at.suite.name)
 		for case in at.cases:
-			scores[case] = VestUI.fuzzy_score(needle, case.case.description)
+			scores[case] = maxf(
+				VestUI.fuzzy_score(needle, case.case.description),
+				VestUI.fuzzy_score(needle, case.case.method_name)
+			)
 
 		at = queue.pop_back() as VestResult.Suite
 
