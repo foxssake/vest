@@ -918,6 +918,12 @@ requirements about the results. This latter part is done using <em>assertions</e
 considered <em>passing</em>. If any of the assertions fail, the test case is also
 considered <em>failing</em>.</p>
 <p>Checking for equality is not the only available assertion.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Contrary to other languages, GDScript doesn't have exceptions. This means
+that when <em>vest</em> encounters a failed assertion, the test will keep running.
+However, <em>vest</em> will record all the failed assertions.</p>
+</div>
 <h2 id="expectations-and-assertions">Expectations and assertions</h2>
 <p>There's two styles available for writing assertions - the <code>expect()</code> methods,
 and the <code>assert_that()</code> fluent API.</p>
