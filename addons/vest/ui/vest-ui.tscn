@@ -143,6 +143,7 @@ layout_mode = 2
 
 [node name="Run Summary" type="HBoxContainer" parent="VBoxContainer/Bottom Line"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -163,7 +164,6 @@ layout_mode = 2
 
 [node name="Progress Indicator" type="HBoxContainer" parent="VBoxContainer/Bottom Line"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -217,7 +217,7 @@ text = "Test glob:"
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-text = "res://tests/*.test.gd"
+text = "res://examples/*.test.gd"
 
 [node name="VSeparator4" type="VSeparator" parent="VBoxContainer/Bottom Line"]
 layout_mode = 2
