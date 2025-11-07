@@ -46,6 +46,7 @@ nav:
     - 'user-guide/testing-in-the-scene-tree.md'
     - 'user-guide/custom-types.md'
     - 'user-guide/project-settings.md'
+    - 'user-guide/exporting-projects.md'
     - 'user-guide/running-from-ui.md'
     - 'user-guide/running-tests-selectively.md'
     - 'user-guide/running-from-cli.md'
