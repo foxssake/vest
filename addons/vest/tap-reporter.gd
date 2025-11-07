@@ -55,7 +55,10 @@ static func _report_case(test_id: int, case: VestResult.Case, lines: PackedStrin
 		yaml_data["severity"] = "fail"
 		yaml_data["assert_source"] = case.assert_file
 		yaml_data["assert_line"] = case.assert_line
-	if case.message: yaml_data["message"] = case.message
+	if not case.messages.is_empty():
+		yaml_data["message"] = case.messages[0]
+		if case.messages.size() > 1:
+			yaml_data["messages"] = case.messages
 	if case.data: yaml_data["data"] = case.data
 
 	if not yaml_data.is_empty():

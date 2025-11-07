@@ -30,6 +30,8 @@ class CustomData:
 			return false
 		if not (other is CustomData):
 			return false
+		if typeof(_value) != typeof(other._value):
+			return false
 		return other._value == _value
 
 	func _to_vest():

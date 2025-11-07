@@ -39,6 +39,11 @@ considered *failing*.
 
 Checking for equality is not the only available assertion.
 
+!!!note
+    Contrary to other languages, GDScript doesn't have exceptions. This means
+    that when *vest* encounters a failed assertion, the test will keep running.
+    However, *vest* will record all the failed assertions.
+
 ## Expectations and assertions
 
 There's two styles available for writing assertions - the `expect()` methods,

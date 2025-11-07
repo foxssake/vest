@@ -222,14 +222,14 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 func _render_data(case: VestResult.Case, tree: Tree, parent: TreeItem):
 	var data := case.data.duplicate()
 
-	if case.message:
+	for message in case.messages:
 		var item := tree.create_item(parent)
-		item.set_text(0, case.message)
+		item.set_text(0, message)
 
 		tree.item_activated.connect(func():
 			if tree.get_selected() == item:
 				# TODO: popup_dialog()
-				add_child(VestMessagePopup.of(case.message).window)
+				add_child(VestMessagePopup.of(message).window)
 		)
 
 	if data == null or data.is_empty():
