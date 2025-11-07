@@ -882,6 +882,15 @@ is modified and saved.</p>
 changes into a closed eye if no results are displayed due to the filtering.</p>
 <p>Useful for drilling down into results, e.g. showing only failed tests.</p>
 </dd>
+<dt><img alt="Search results" src="../../assets/ui/search.svg" /> Search results</dt>
+<dd>
+<p>Allows fuzzy searching for test suites and cases. For test cases, it also
+considers the original method name, if available ( e.g. <code>test_addition()</code>
+). To prefer the method name in your search, append <code>()</code> at the end of the
+query.</p>
+<p>Upon losing focus, the input field is hidden if no search string is
+specified.</p>
+</dd>
 <dt><img alt="Expand / collapse" src="../../assets/ui/expand.svg" /> Expand / collapse results</dt>
 <dd>Expands or collapses all test results recursively. If there's at least one
 collapsed item, this button will expand the results.</dd>
