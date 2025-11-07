@@ -99,8 +99,8 @@ class Case:
 	## The resulting status of the test run.
 	var status: int = TEST_VOID
 
-	## The message attached to this result.
-	var message: String = ""
+	# The messages attached to this result
+	var messages: Array[String] = []
 
 	## Custom data attached to this result.
 	var data: Dictionary = {}
@@ -120,7 +120,7 @@ class Case:
 		return {
 			"case": case._to_wire(),
 			"status": status,
-			"message": message,
+			"messages": messages.duplicate(),
 			"data": Vest.__.Serializer.serialize(data),
 			"assert_file": assert_file,
 			"assert_line": assert_line
@@ -131,7 +131,7 @@ class Case:
 
 		result.case = VestDefs.Case._from_wire(p_data["case"])
 		result.status = p_data["status"]
-		result.message = p_data["message"]
+		result.messages.assign(p_data["messages"])
 		result.data = p_data["data"]
 		result.assert_file = p_data["assert_file"]
 		result.assert_line = p_data["assert_line"]
