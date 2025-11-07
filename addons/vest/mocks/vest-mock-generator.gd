@@ -41,7 +41,7 @@ func generate_mock_source(script: Script) -> String:
 
 		mock_source.append(
 			("func %s(%s):\n" +
-			"\treturn __vest_mock_handler._handle(%s, [%s])\n\n") %
+			"\treturn __vest_mock_handler._handle(self.%s, [%s])\n\n") %
 			[method_name, arg_def_string, method_name, arg_def_string]
 		)
 
