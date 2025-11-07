@@ -134,7 +134,7 @@ func _ready():
 	visibility_popup.on_change.connect(func():
 		clear_results()
 		results_panel.set_results(_results)
-		
+
 		if visibility_popup.is_empty():
 			filter_results_button.icon = Vest.Icons.hidden
 		else:

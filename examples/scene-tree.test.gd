@@ -7,10 +7,10 @@ func suite():
 	test("node should vanish", func():
 		var node := TemporaryNode.new()
 		Vest.get_tree().root.add_child(node)
-		
+
 		await Vest.sleep(0.5)
 		expect(is_instance_valid(node))
-		
+
 		await Vest.sleep(0.5)
 		expect_not(is_instance_valid(node))
 	)
@@ -18,10 +18,10 @@ func suite():
 func test_node_should_vanish():
 	var node := TemporaryNode.new()
 	Vest.get_tree().root.add_child(node)
-	
+
 	await Vest.sleep(0.5)
 	expect(is_instance_valid(node))
-	
+
 	await Vest.sleep(0.5)
 	expect_not(is_instance_valid(node))
 
