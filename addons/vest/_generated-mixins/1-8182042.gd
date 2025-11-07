@@ -66,7 +66,7 @@ func _get_suite() -> VestDefs.Suite:
 			var callback := func(): await call(method["name"])
 			var is_only := _is_only(method_name)
 
-			test(test_name, callback, is_only)
+			test(test_name, callback, is_only, method_name)
 
 		for method in parametric_methods:
 			var method_name := method["name"] as String
@@ -91,7 +91,8 @@ func _get_suite() -> VestDefs.Suite:
 				test(
 					"%s#%d %s" % [test_name, i+1, params[i]],
 					func(): await callv(method["name"], params[i]),
-					is_only
+					is_only,
+					method_name
 				)
 	)
 

@@ -31,11 +31,12 @@ func define(name: String, callback: Callable, is_only: bool = false) -> VestDefs
 func define_only(name: String, callback: Callable) -> VestDefs.Suite:
 	return await define(name, callback, true)
 
-func test(description: String, callback: Callable, is_only: bool = false) -> void:
+func test(description: String, callback: Callable, is_only: bool = false, method_name: String = "") -> void:
 	var case_def := VestDefs.Case.new()
 	case_def.description = description
 	case_def.is_only = is_only
 	case_def.callback = callback
+	case_def.method_name = method_name
 
 	var userland_loc := _find_userland_stack_location()
 	case_def.definition_file = userland_loc[0]
@@ -43,8 +44,8 @@ func test(description: String, callback: Callable, is_only: bool = false) -> voi
 
 	_define_stack.back().cases.push_back(case_def)
 
-func test_only(description: String, callback: Callable) -> void:
-	await test(description, callback, true)
+func test_only(description: String, callback: Callable, method_name: String = "") -> void:
+	await test(description, callback, true, method_name)
 
 func benchmark(name: String, callback: Callable) -> VestDefs.Benchmark:
 	var result := VestDefs.Benchmark.new()

@@ -12,6 +12,8 @@ const ResultsPanel := preload("res://addons/vest/ui/results-panel.gd")
 @onready var visibility_popup := %"Visibility Popup" as VisibilityPopup
 @onready var clear_button := %"Clear Button" as Button
 @onready var expand_toggle_button := %"Expand Toggle Button" as Button
+@onready var search_button := %"Search Button" as Button
+@onready var search_input := %"Search Input" as LineEdit
 
 @onready var refresh_mixins_button := %"Refresh Mixins Button" as Button
 @onready var results_panel := %"Results Panel" as ResultsPanel
@@ -152,6 +154,20 @@ func _ready():
 		results_panel.toggle_collapsed()
 	)
 
+	search_button.pressed.connect(func():
+		search_input.show()
+		search_input.grab_focus()
+	)
+
+	search_input.focus_exited.connect(func():
+		if not search_input.text and get_viewport().gui_get_focus_owner() != search_button:
+			search_input.hide()
+	, CONNECT_DEFERRED)
+
+	search_input.text_changed.connect(func(text: String):
+		results_panel.set_search_string(text)
+	)
+
 	_instance = self
 
 func _render_summary(results: VestResult.Suite, test_duration: float):
@@ -195,3 +211,15 @@ static func format_duration(duration: float) -> String:
 		return "%.2fms" % [duration * 1000.]
 	else:
 		return "%.2fµs" % [duration * 1000_000.0]
+
+static func fuzzy_score(needle: String, haystack: String) -> float:
+	var ineedle := needle.to_lower()
+	var ihaystack := haystack.to_lower()
+	return ineedle.similarity(ihaystack) + float(ineedle.is_subsequence_of(ihaystack))
+
+static func fuzzy_match(needle: String, haystack: String) -> bool:
+	return fuzzy_score(needle, haystack) > 0.0
+
+static func fuzzy_sorter(needle: String) -> Callable:
+	return func(a, b):
+		return fuzzy_score(needle, a) < fuzzy_score(needle, b)
