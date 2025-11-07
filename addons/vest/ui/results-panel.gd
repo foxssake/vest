@@ -183,7 +183,7 @@ func _check_visibility(what: Variant) -> bool:
 		push_warning("Checking visibility for unknown item: %s" % [what])
 		return true
 
-func _render_result(what: Object, tree: Tree, parent_result: Variant = null, parent: TreeItem = null):
+func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 	if what is VestResult.Suite:
 		var item := tree.create_item(parent)
 		item.set_text(0, what.suite.name)
@@ -198,9 +198,9 @@ func _render_result(what: Object, tree: Tree, parent_result: Variant = null, par
 		)
 
 		for subsuite in what.subsuites:
-			_render_result(subsuite, tree, what, item)
+			_render_result(subsuite, tree, item)
 		for case in what.cases:
-			_render_result(case, tree, what, item)
+			_render_result(case, tree, item)
 	elif what is VestResult.Case:
 		var item := tree.create_item(parent)
 		item.set_text(0, what.case.description)
