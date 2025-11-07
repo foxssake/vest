@@ -160,9 +160,9 @@ func _ready():
 	)
 
 	search_input.focus_exited.connect(func():
-		if not search_input.text:
+		if not search_input.text and get_viewport().gui_get_focus_owner() != search_button:
 			search_input.hide()
-	)
+	, CONNECT_DEFERRED)
 
 	search_input.text_changed.connect(func(text: String):
 		results_panel.set_search_string(text)

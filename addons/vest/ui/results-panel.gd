@@ -97,15 +97,23 @@ func _render():
 		_render_result(_render_results, _tree)
 
 func _filter_visibility(results: VestResult.Suite) -> void:
+	var cases_to_remove := []
+	var suites_to_remove := []
+
 	for case in results.cases:
 		if not _check_visibility(case):
-			results.cases.erase(case) # TODO: Does this break?
+			cases_to_remove.append(case)
 
 	for subsuite in results.subsuites:
 		if not _check_visibility(subsuite):
-			results.subsuites.erase(subsuite)
+			suites_to_remove.append(subsuite)
 		else:
 			_filter_visibility(subsuite)
+
+	for case in cases_to_remove:
+		results.cases.erase(case)
+	for subsuite in suites_to_remove:
+		results.subsuites.erase(subsuite)
 
 func _filter_search(results: VestResult.Suite, needle: String) -> void:
 	if not needle:
@@ -128,15 +136,12 @@ func _filter_search(results: VestResult.Suite, needle: String) -> void:
 			leaves.append(at)
 
 		scores[at] = VestUI.fuzzy_score(needle, at.suite.name)
-		print("Score(%s): %.2f" % [at.suite.name, scores[at]])
 		for case in at.cases:
 			scores[case] = VestUI.fuzzy_score(needle, case.case.description)
-			print("Score(%s): %.2f" % [case.case.description, scores[case]])
 
 		at = queue.pop_back() as VestResult.Suite
 
 	# Propagate best scores from leaves
-	print("Leaves: %s" % [leaves.map(func(it): return it.suite.name)])
 	for leaf in leaves:
 		at = leaf
 		
@@ -144,25 +149,19 @@ func _filter_search(results: VestResult.Suite, needle: String) -> void:
 		var best_score := scores[at] as float
 		for case in at.cases:
 			best_score = maxf(best_score, scores[case])
-		print("Best(%s): %.2f ( %s )" % [at.suite.name, best_score, at.cases.map(func(it): return scores[it])])
 		
 		# Propagate upwards in tree
 		while at:
 			scores[at] = maxf(scores[at], best_score)
 			best_score = maxf(best_score, scores[at])
-			print("Propagate(%s): %.2f, proceed %.2f" % [at.suite.name, scores[at], best_score])
 			at = parents.get(at, null)
 	
 	# Remove results that don't match the search string
 	at = results
 	queue.clear()
 	while at:
-		for case in at.cases:
-			if scores[case] <= 0.0:
-				at.cases.erase(case) # TODO: Does this break?
-		for subsuite in at.subsuites:
-			if scores[subsuite] <= 0.0:
-				at.subsuites.erase(subsuite) # TODO: Does this break?
+		at.cases.sort_custom(func(a, b): return scores[a] > scores[b])
+		at.subsuites.sort_custom(func(a, b): return scores[a] > scores[b])
 
 		queue.append_array(at.subsuites)
 		at = queue.pop_back()
@@ -288,30 +287,3 @@ func _render_data(case: VestResult.Case, tree: Tree, parent: TreeItem):
 
 func _navigate(file: String, line: int):
 	Vest._get_editor_interface().edit_script(load(file), line)
-
-func _match_search(needle: String, haystack: Variant, parent: Variant = null) -> bool:
-	if haystack is VestResult.Suite:
-		var suite := haystack as VestResult.Suite
-		if VestUI.fuzzy_score(needle, suite.suite.name) > 1.0:
-			return true
-
-		for case in suite.cases:
-			if _match_search(needle, case, suite):
-				return true
-		for subsuite in suite.subsuites:
-			if _match_search(needle, subsuite, suite):
-				return true
-
-		return false
-	elif haystack is VestResult.Case:
-		var case := haystack as VestResult.Case
-
-		if VestUI.fuzzy_score(needle, case.case.description) > 1.0:
-			return true
-		if parent != null and parent is VestResult.Suite:
-			return VestUI.fuzzy_score(needle, parent.suite.name) > 1.0
-		else:
-			return false
-	else:
-		push_warning("Matching unknown item: %s" % [haystack])
-		return true

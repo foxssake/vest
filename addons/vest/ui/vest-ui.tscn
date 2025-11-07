@@ -115,14 +115,6 @@ expand_icon = true
 unique_name_in_owner = true
 visible = false
 
-[node name="Expand Toggle Button" type="Button" parent="VBoxContainer/Bottom Line/Buttons"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "      "
-icon = ExtResource("9_hg4sy")
-icon_alignment = 1
-expand_icon = true
-
 [node name="Search Button" type="Button" parent="VBoxContainer/Bottom Line/Buttons"]
 unique_name_in_owner = true
 layout_mode = 2
@@ -138,12 +130,19 @@ custom_minimum_size = Vector2(192, 0)
 layout_mode = 2
 placeholder_text = "Search..."
 
+[node name="Expand Toggle Button" type="Button" parent="VBoxContainer/Bottom Line/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "      "
+icon = ExtResource("9_hg4sy")
+icon_alignment = 1
+expand_icon = true
+
 [node name="VSeparator3" type="VSeparator" parent="VBoxContainer/Bottom Line"]
 layout_mode = 2
 
 [node name="Run Summary" type="HBoxContainer" parent="VBoxContainer/Bottom Line"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -164,6 +163,7 @@ layout_mode = 2
 
 [node name="Progress Indicator" type="HBoxContainer" parent="VBoxContainer/Bottom Line"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -217,7 +217,7 @@ text = "Test glob:"
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-text = "res://examples/*.test.gd"
+text = "res://tests/*.test.gd"
 
 [node name="VSeparator4" type="VSeparator" parent="VBoxContainer/Bottom Line"]
 layout_mode = 2
