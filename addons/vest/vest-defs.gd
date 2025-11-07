@@ -65,7 +65,7 @@ class Suite:
 class Case:
 	## Test case description, displayed in reports
 	var description: String = ""
-	
+
 	## The method defining the test case - empty if defined via [method VestTest.test]
 	var method_name: String = ""
 

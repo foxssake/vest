@@ -23,4 +23,3 @@ func suite():
 
 		expect_equal(pattern.substitute("assert.gd"), "assert.test.gd")
 	)
-

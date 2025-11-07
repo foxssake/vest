@@ -147,18 +147,18 @@ func _filter_search(results: VestResult.Suite, needle: String) -> void:
 	# Propagate best scores from leaves
 	for leaf in leaves:
 		at = leaf
-		
+
 		# Calculate best score for leaf
 		var best_score := scores[at] as float
 		for case in at.cases:
 			best_score = maxf(best_score, scores[case])
-		
+
 		# Propagate upwards in tree
 		while at:
 			scores[at] = maxf(scores[at], best_score)
 			best_score = maxf(best_score, scores[at])
 			at = parents.get(at, null)
-	
+
 	# Remove results that don't match the search string
 	at = results
 	queue.clear()
