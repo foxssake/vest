@@ -71,6 +71,8 @@ func run_all(is_debug: bool = false):
 	ingest_results(results, test_duration)
 
 func run_script(script: Script, is_debug: bool = false, only_mode: int = Vest.__.ONLY_AUTO) -> void:
+	if not get_tree():
+		push_warning("UI has no tree!")
 	Vest._register_scene_tree(get_tree())
 	var runner := VestDaemonRunner.new()
 
@@ -132,7 +134,7 @@ func _ready():
 	visibility_popup.on_change.connect(func():
 		clear_results()
 		results_panel.set_results(_results)
-		
+
 		if visibility_popup.is_empty():
 			filter_results_button.icon = Vest.Icons.hidden
 		else:
