@@ -31,6 +31,15 @@ While each element has its tooltip or description, here's an overview:
 
     Useful for drilling down into results, e.g. showing only failed tests.
 
+![Search results](../assets/ui/search.svg) Search results
+:   Allows fuzzy searching for test suites and cases. For test cases, it also
+    considers the original method name, if available ( e.g. `test_addition()`
+    ). To prefer the method name in your search, append `()` at the end of the
+    query.
+
+    Upon losing focus, the input field is hidden if no search string is
+    specified.
+
 ![Expand / collapse](../assets/ui/expand.svg) Expand / collapse results
 :   Expands or collapses all test results recursively. If there's at least one
     collapsed item, this button will expand the results.

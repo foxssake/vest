@@ -10,6 +10,8 @@ var visibility_popup: VestUI.VisibilityPopup
 @onready var _animation_player := $PanelContainer/Spinner/AnimationPlayer as AnimationPlayer
 
 var _results: VestResult.Suite = null
+var _render_results: VestResult.Suite = null
+var _search_string: String = ""
 
 signal on_collapse_changed()
 
@@ -19,6 +21,14 @@ func get_results() -> VestResult.Suite:
 func set_results(results: VestResult.Suite) -> void:
 	if _results != results:
 		_results = results
+		_render()
+
+func get_search_string() -> String:
+	return _search_string
+
+func set_search_string(search_string: String) -> void:
+	if _search_string != search_string:
+		_search_string = search_string
 		_render()
 
 func clear() -> void:
@@ -81,14 +91,100 @@ func _clear():
 func _render():
 	_clear()
 	if _results != null:
-		_render_result(_results, _tree)
+		_render_results = VestResult.Suite._from_wire(_results._to_wire()) # HACK: Duplicate
+		_filter_visibility(_render_results)
+		_filter_search(_render_results, _search_string)
+		_render_result(_render_results, _tree)
+
+func _filter_visibility(results: VestResult.Suite) -> void:
+	var cases_to_remove := []
+	var suites_to_remove := []
+
+	for case in results.cases:
+		if not _check_visibility(case):
+			cases_to_remove.append(case)
+
+	for subsuite in results.subsuites:
+		if not _check_visibility(subsuite):
+			suites_to_remove.append(subsuite)
+		else:
+			_filter_visibility(subsuite)
+
+	for case in cases_to_remove:
+		results.cases.erase(case)
+	for subsuite in suites_to_remove:
+		results.subsuites.erase(subsuite)
+
+func _filter_search(results: VestResult.Suite, needle: String) -> void:
+	if not needle:
+		# Search string empty, do nothing
+		return
+
+	var scores := {}
+	var parents := {}
+	var at := results
+	var queue: Array[VestResult.Suite] = []
+	var leaves: Array[VestResult.Suite] = []
+
+	# Calculate scores
+	while at:
+		for subsuite in at.subsuites:
+			queue.append(subsuite)
+			parents[subsuite] = at
+
+		if at.subsuites.is_empty():
+			leaves.append(at)
+
+		scores[at] = VestUI.fuzzy_score(needle, at.suite.name)
+		for case in at.cases:
+			scores[case] = maxf(
+				VestUI.fuzzy_score(needle, case.case.description),
+				VestUI.fuzzy_score(needle, case.case.method_name + "()")
+			)
+
+		at = queue.pop_back() as VestResult.Suite
+
+	# Propagate best scores from leaves
+	for leaf in leaves:
+		at = leaf
+
+		# Calculate best score for leaf
+		var best_score := scores[at] as float
+		for case in at.cases:
+			best_score = maxf(best_score, scores[case])
+
+		# Propagate upwards in tree
+		while at:
+			scores[at] = maxf(scores[at], best_score)
+			best_score = maxf(best_score, scores[at])
+			at = parents.get(at, null)
+
+	# Remove results that don't match the search string
+	at = results
+	queue.clear()
+	while at:
+		at.cases.sort_custom(func(a, b): return scores[a] > scores[b])
+		at.subsuites.sort_custom(func(a, b): return scores[a] > scores[b])
+
+		queue.append_array(at.subsuites)
+		at = queue.pop_back()
+
+func _check_visibility(what: Variant) -> bool:
+	if what is VestResult.Case:
+		var case := what as VestResult.Case
+		return visibility_popup.get_visibility_for(case.status)
+	elif what is VestResult.Suite:
+		var suite := what as VestResult.Suite
+		for status in suite.get_unique_statuses():
+			if visibility_popup.get_visibility_for(status):
+				return true
+		return false
+	else:
+		push_warning("Checking visibility for unknown item: %s" % [what])
+		return true
 
 func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 	if what is VestResult.Suite:
-		# Skip if no statuses match the visibility filter
-		if not what.get_unique_statuses()\
-			.any(func(status): return visibility_popup.get_visibility_for(status)):
-			return
 		var item := tree.create_item(parent)
 		item.set_text(0, what.suite.name)
 		item.set_text(1, what.get_aggregate_status_string().capitalize())
@@ -106,10 +202,6 @@ func _render_result(what: Object, tree: Tree, parent: TreeItem = null):
 		for case in what.cases:
 			_render_result(case, tree, item)
 	elif what is VestResult.Case:
-		if not visibility_popup.get_visibility_for(what.status):
-			# Case not visible, skip
-			return
-
 		var item := tree.create_item(parent)
 		item.set_text(0, what.case.description)
 		item.set_text(1, what.get_status_string().capitalize())

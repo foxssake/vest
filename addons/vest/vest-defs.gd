@@ -66,6 +66,9 @@ class Case:
 	## Test case description, displayed in reports
 	var description: String = ""
 
+	## The method defining the test case - empty if defined via [method VestTest.test]
+	var method_name: String = ""
+
 	## If true, only this test should run
 	var is_only: bool = false
 
@@ -85,6 +88,7 @@ class Case:
 	func _to_wire() -> Dictionary:
 		return {
 			"description": description,
+			"method_name": method_name,
 			"definition_file": definition_file,
 			"definition_line": definition_line
 		}
@@ -93,6 +97,7 @@ class Case:
 		var result := Case.new()
 
 		result.description = data["description"]
+		result.method_name = data["method_name"]
 		result.definition_file = data["definition_file"]
 		result.definition_line = data["definition_line"]
 
