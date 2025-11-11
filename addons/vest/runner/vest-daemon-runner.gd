@@ -41,7 +41,7 @@ func _run_with_params(params: VestCLI.Params) -> VestResult.Suite:
 		return null
 
 	# Start process
-	params.host = "0.0.0.0"
+	params.host = "127.0.0.1"
 	params.port = _port
 	if not _is_debug_run:
 		VestCLI.run(params)
