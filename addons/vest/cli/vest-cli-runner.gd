@@ -65,7 +65,7 @@ func _connect(params: VestCLI.Params):
 	var host := params.host
 	var port := params.port
 
-	if not host: host = "0.0.0.0"
+	if not host: host = "127.0.0.1"
 	if port == -1: port = 54932
 
 	var peer := StreamPeerTCP.new()

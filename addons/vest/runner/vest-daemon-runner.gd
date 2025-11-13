@@ -41,7 +41,7 @@ func _run_with_params(params: VestCLI.Params) -> VestResult.Suite:
 		return null
 
 	# Start process
-	params.host = "0.0.0.0"
+	params.host = "127.0.0.1"
 	params.port = _port
 	if not _is_debug_run:
 		VestCLI.run(params)
@@ -93,10 +93,10 @@ func _start(port: int = -1):
 	if port < 0:
 		for i in range(32):
 			port = randi_range(49152, 65535)
-			if _server.listen(port) == OK:
+			if _server.listen(port, "127.0.0.1") == OK:
 				break
 	else:
-		_server.listen(port)
+		_server.listen(port, "127.0.0.1")
 	_port = port
 
 	if not _server.is_listening():
