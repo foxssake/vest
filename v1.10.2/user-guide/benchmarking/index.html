@@ -1,0 +1,1479 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://foxssake.github.io/vest/v1.10.2/user-guide/benchmarking/">
+      
+      
+        <link rel="prev" href="../mocks/">
+      
+      
+        <link rel="next" href="../capturing-signals/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/vest-favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Benchmarking - vest</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/mkdocs_puml/puml.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#benchmarking" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="vest" class="md-header__button md-logo" aria-label="vest" data-md-component="logo">
+      
+  <img src="../../assets/vest-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            vest
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Benchmarking
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="vest" class="md-nav__button md-logo" aria-label="vest" data-md-component="logo">
+      
+  <img src="../../assets/vest-logo.png" alt="logo">
+
+    </a>
+    vest
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/installing-vest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installing vest
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/your-first-test/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Your first test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    User Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../writing-tests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Writing tests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../test-outcomes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Test outcomes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../assertions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Assertions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../editor-commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Editor commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../parameterized-tests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Parameterized tests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lifecycle-hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lifecycle hooks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mocks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mocks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benchmarking
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benchmarking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#specifying-the-benchmark" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Specifying the benchmark
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#batched-running-for-microbenchmarks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Batched running for microbenchmarks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inspecting-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inspecting results
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#custom-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Custom metrics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Custom metrics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#emitting-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Emitting metrics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#specifying-measurements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Specifying measurements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementing-custom-measurements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementing custom measurements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inspecting-measurements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inspecting measurements
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../capturing-signals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Capturing signals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../coroutines/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Coroutines
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../printing-custom-messages/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Printing custom messages
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../testing-in-the-scene-tree/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing in the scene tree
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../custom-types/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Custom types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../project-settings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project Settings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../exporting-projects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exporting projects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../running-from-ui/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Running from the UI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../running-tests-selectively/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Running tests selectively
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../running-from-cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Running from CLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../running-on-ci/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Running on CI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#specifying-the-benchmark" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Specifying the benchmark
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#batched-running-for-microbenchmarks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Batched running for microbenchmarks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inspecting-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inspecting results
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#custom-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Custom metrics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Custom metrics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#emitting-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Emitting metrics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#specifying-measurements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Specifying measurements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementing-custom-measurements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementing custom measurements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inspecting-measurements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inspecting measurements
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="benchmarking">Benchmarking</h1>
+<p><em>Vest</em> can also serve as a benchmark runner. Benchmarks can help you find the
+most performant implementation of a particular feature, or making sure its
+performance meets your criteria.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">define()</label><label for="__tabbed_1_2">methods</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="k">extends</span><span class="w"> </span><span class="n">VestTest</span>
+
+<span class="k">func</span><span class="w"> </span><span class="n">get_suite_name</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="p">:</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;Benchmarks&quot;</span>
+
+<span class="k">func</span><span class="w"> </span><span class="n">suite</span><span class="p">():</span>
+<span class="w">  </span><span class="n">test</span><span class="p">(</span><span class="s2">&quot;Random ID generation&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">():</span>
+<span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">length</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="mi">16</span>
+<span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">charset</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;abcdefghijklmnopqrstuvwxyz0123456789&quot;</span>
+
+<span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">concat</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">benchmark</span><span class="p">(</span><span class="s2">&quot;String concatenation&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">(</span><span class="n">__</span><span class="p">):</span>
+<span class="w">      </span><span class="k">var</span><span class="w"> </span><span class="n">_id</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+<span class="w">      </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">):</span>
+<span class="w">        </span><span class="n">_id</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">charset</span><span class="p">[</span><span class="nb">randi</span><span class="p">()</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">charset</span><span class="o">.</span><span class="n">length</span><span class="p">()]</span>
+<span class="w">    </span><span class="p">)</span><span class="o">.</span><span class="n">with_batch_size</span><span class="p">(</span><span class="mi">10</span><span class="n">_000</span><span class="p">)</span><span class="o">.</span><span class="n">with_iterations</span><span class="p">(</span><span class="mi">100</span><span class="n">_000</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+<span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">rangemap</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">benchmark</span><span class="p">(</span><span class="s2">&quot;Range mapping&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">(</span><span class="n">__</span><span class="p">):</span>
+<span class="w">      </span><span class="k">var</span><span class="w"> </span><span class="n">_id</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+<span class="w">        </span><span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">)</span>
+<span class="w">          </span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">func</span><span class="p">(</span><span class="n">__</span><span class="p">):</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">charset</span><span class="p">[</span><span class="nb">randi</span><span class="p">()</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">charset</span><span class="o">.</span><span class="n">length</span><span class="p">()])</span>
+<span class="w">        </span><span class="p">)</span>
+<span class="w">    </span><span class="p">)</span><span class="o">.</span><span class="n">with_batch_size</span><span class="p">(</span><span class="mi">10</span><span class="n">_000</span><span class="p">)</span><span class="o">.</span><span class="n">with_iterations</span><span class="p">(</span><span class="mi">100</span><span class="n">_000</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+<span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">psa</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">benchmark</span><span class="p">(</span><span class="s2">&quot;PackedStringArray&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">(</span><span class="n">__</span><span class="p">):</span>
+<span class="w">      </span><span class="k">var</span><span class="w"> </span><span class="n">chars</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="nb nb-Type">PackedStringArray</span><span class="p">()</span>
+<span class="w">      </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">):</span>
+<span class="w">        </span><span class="n">chars</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">charset</span><span class="p">[</span><span class="nb">randi</span><span class="p">()</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">charset</span><span class="o">.</span><span class="n">length</span><span class="p">()])</span>
+<span class="w">      </span><span class="k">var</span><span class="w"> </span><span class="n">_id</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">chars</span><span class="p">)</span>
+<span class="w">    </span><span class="p">)</span><span class="o">.</span><span class="n">with_batch_size</span><span class="p">(</span><span class="mi">10</span><span class="n">_000</span><span class="p">)</span><span class="o">.</span><span class="n">with_iterations</span><span class="p">(</span><span class="mi">100</span><span class="n">_000</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+<span class="w">    </span><span class="n">expect</span><span class="p">(</span><span class="n">concat</span><span class="o">.</span><span class="n">get_iters_per_sec</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">100</span><span class="n">_000</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Concatenation was too slow!&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">expect</span><span class="p">(</span><span class="n">rangemap</span><span class="o">.</span><span class="n">get_iters_per_sec</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">100</span><span class="n">_000</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Rangemapping was too slow!&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">expect</span><span class="p">(</span><span class="n">psa</span><span class="o">.</span><span class="n">get_iters_per_sec</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">100</span><span class="n">_000</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;PackedStringArray was too slow!&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="k">extends</span><span class="w"> </span><span class="n">VestTest</span>
+
+<span class="k">func</span><span class="w"> </span><span class="n">get_suite_name</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="p">:</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;Benchmarks&quot;</span>
+
+<span class="k">func</span><span class="w"> </span><span class="n">test_random_id_generation</span><span class="p">():</span>
+<span class="w">  </span><span class="k">var</span><span class="w"> </span><span class="n">length</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="mi">16</span>
+<span class="w">  </span><span class="k">var</span><span class="w"> </span><span class="n">charset</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;abcdefghijklmnopqrstuvwxyz0123456789&quot;</span>
+
+<span class="w">  </span><span class="k">var</span><span class="w"> </span><span class="n">concat</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">benchmark</span><span class="p">(</span><span class="s2">&quot;String concatenation&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">(</span><span class="n">__</span><span class="p">):</span>
+<span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">_id</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">):</span>
+<span class="w">      </span><span class="n">_id</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">charset</span><span class="p">[</span><span class="nb">randi</span><span class="p">()</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">charset</span><span class="o">.</span><span class="n">length</span><span class="p">()]</span>
+<span class="w">  </span><span class="p">)</span><span class="o">.</span><span class="n">with_batch_size</span><span class="p">(</span><span class="mi">10</span><span class="n">_000</span><span class="p">)</span><span class="o">.</span><span class="n">with_iterations</span><span class="p">(</span><span class="mi">100</span><span class="n">_000</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+<span class="w">  </span><span class="k">var</span><span class="w"> </span><span class="n">rangemap</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">benchmark</span><span class="p">(</span><span class="s2">&quot;Range mapping&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">(</span><span class="n">__</span><span class="p">):</span>
+<span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">_id</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+<span class="w">      </span><span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">)</span>
+<span class="w">        </span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">func</span><span class="p">(</span><span class="n">__</span><span class="p">):</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">charset</span><span class="p">[</span><span class="nb">randi</span><span class="p">()</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">charset</span><span class="o">.</span><span class="n">length</span><span class="p">()])</span>
+<span class="w">      </span><span class="p">)</span>
+<span class="w">  </span><span class="p">)</span><span class="o">.</span><span class="n">with_batch_size</span><span class="p">(</span><span class="mi">10</span><span class="n">_000</span><span class="p">)</span><span class="o">.</span><span class="n">with_iterations</span><span class="p">(</span><span class="mi">100</span><span class="n">_000</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+<span class="w">  </span><span class="k">var</span><span class="w"> </span><span class="n">psa</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">benchmark</span><span class="p">(</span><span class="s2">&quot;PackedStringArray&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">(</span><span class="n">__</span><span class="p">):</span>
+<span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">chars</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="nb nb-Type">PackedStringArray</span><span class="p">()</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">):</span>
+<span class="w">      </span><span class="n">chars</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">charset</span><span class="p">[</span><span class="nb">randi</span><span class="p">()</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">charset</span><span class="o">.</span><span class="n">length</span><span class="p">()])</span>
+<span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">_id</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">chars</span><span class="p">)</span>
+<span class="w">  </span><span class="p">)</span><span class="o">.</span><span class="n">with_batch_size</span><span class="p">(</span><span class="mi">10</span><span class="n">_000</span><span class="p">)</span><span class="o">.</span><span class="n">with_iterations</span><span class="p">(</span><span class="mi">100</span><span class="n">_000</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+<span class="w">  </span><span class="n">expect</span><span class="p">(</span><span class="n">concat</span><span class="o">.</span><span class="n">get_iters_per_sec</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">100</span><span class="n">_000</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Concatenation was too slow!&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="n">expect</span><span class="p">(</span><span class="n">rangemap</span><span class="o">.</span><span class="n">get_iters_per_sec</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">100</span><span class="n">_000</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Rangemapping was too slow!&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="n">expect</span><span class="p">(</span><span class="n">psa</span><span class="o">.</span><span class="n">get_iters_per_sec</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">100</span><span class="n">_000</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;PackedStringArray was too slow!&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<h2 id="specifying-the-benchmark">Specifying the benchmark</h2>
+<p>To begin specifying a benchmark, call <code>benchmark()</code> with a name and callable to
+run. You can apply limits on how long or how many times to run the callable
+with <code>.with_duration()</code> or <code>.with_iterations()</code>. If no limits are specified,
+the benchmark is only ran once.</p>
+<p>With the limits in place, call <code>.run()</code> to perform the benchmark.</p>
+<h2 id="batched-running-for-microbenchmarks">Batched running for microbenchmarks</h2>
+<p>When the benchmarked code is small, simple, or in general runs really fast, it
+might be difficult to measure. The underlying hardware might not have the
+necessary precision for measuring the runtime in this case.</p>
+<p>To fix that, <em>vest</em> can run the benchmarked code in <em>batches</em>. So, instead of
+running the code one time and measuring that, it runs the code many times, and
+measures the full runtime of that batch. This is then repeated until the
+maximum duration or iteration count is reached.</p>
+<p>To specify the batch size, call <code>.with_batch_size()</code> on the benchmark object.</p>
+<h2 id="inspecting-results">Inspecting results</h2>
+<p>The specified benchmark is returned as an object, that can be inspected. This
+can be useful in many situations, including custom reporting and asserting for
+key performance metrics.</p>
+<h2 id="custom-metrics">Custom metrics</h2>
+<p>Aside from pure performance, <em>vest</em> can measure arbitrary custom values in
+tests. This is done by emitting named <em>metrics</em>. These <em>metrics</em> are then
+processed into the specified <em>measurements</em> by <em>vest</em>.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">define()</label><label for="__tabbed_2_2">methods</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="k">extends</span><span class="w"> </span><span class="n">VestTest</span>
+
+<span class="k">func</span><span class="w"> </span><span class="n">get_suite_name</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="p">:</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;Benchmarks&quot;</span>
+
+<span class="k">func</span><span class="w"> </span><span class="n">suite</span><span class="p">():</span>
+<span class="w">  </span><span class="n">test</span><span class="p">(</span><span class="s2">&quot;Array serialization&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">():</span>
+<span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">buffer</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">StreamPeerBuffer</span><span class="o">.</span><span class="n">new</span><span class="p">()</span>
+
+<span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">benchmark</span><span class="p">(</span><span class="s2">&quot;Array&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">(</span><span class="n">emit</span><span class="p">:</span><span class="w"> </span><span class="n">Callable</span><span class="p">):</span>
+<span class="w">      </span><span class="n">buffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="w">      </span><span class="n">buffer</span><span class="o">.</span><span class="n">put_var</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">])</span>
+<span class="w">      </span><span class="n">emit</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="o">&amp;</span><span class="s2">&quot;Size&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">buffer</span><span class="o">.</span><span class="n">get_size</span><span class="p">())</span>
+<span class="w">    </span><span class="p">)</span>\
+<span class="w">      </span><span class="o">.</span><span class="n">without_builtin_measures</span><span class="p">()</span>\
+<span class="w">      </span><span class="o">.</span><span class="n">measure_value</span><span class="p">(</span><span class="o">&amp;</span><span class="s2">&quot;Size&quot;</span><span class="p">)</span>\
+<span class="w">      </span><span class="o">.</span><span class="n">once</span><span class="p">()</span>
+
+<span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">packed_array</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">benchmark</span><span class="p">(</span><span class="s2">&quot;PackedInt32Array&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">(</span><span class="n">emit</span><span class="p">):</span>
+<span class="w">      </span><span class="n">buffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="w">      </span><span class="n">buffer</span><span class="o">.</span><span class="n">put_var</span><span class="p">(</span><span class="nb nb-Type">PackedInt32Array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">]))</span>
+<span class="w">      </span><span class="n">emit</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="o">&amp;</span><span class="s2">&quot;Size&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">buffer</span><span class="o">.</span><span class="n">get_size</span><span class="p">())</span>
+<span class="w">    </span><span class="p">)</span>\
+<span class="w">      </span><span class="o">.</span><span class="n">without_builtin_measures</span><span class="p">()</span>\
+<span class="w">      </span><span class="o">.</span><span class="n">measure_value</span><span class="p">(</span><span class="o">&amp;</span><span class="s2">&quot;Size&quot;</span><span class="p">)</span>\
+<span class="w">      </span><span class="o">.</span><span class="n">once</span><span class="p">()</span>
+
+<span class="w">    </span><span class="n">expect</span><span class="p">(</span><span class="n">array</span><span class="o">.</span><span class="n">get_measurement</span><span class="p">(</span><span class="o">&amp;</span><span class="s2">&quot;Size&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="s2">&quot;value&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">80</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Array too large!&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">expect</span><span class="p">(</span><span class="n">packed_array</span><span class="o">.</span><span class="n">get_measurement</span><span class="p">(</span><span class="o">&amp;</span><span class="s2">&quot;Size&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="s2">&quot;value&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">80</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;PackedArray too large!&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="k">extends</span><span class="w"> </span><span class="n">VestTest</span>
+
+<span class="k">func</span><span class="w"> </span><span class="n">get_suite_name</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="p">:</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;Benchmarks&quot;</span>
+
+<span class="k">func</span><span class="w"> </span><span class="n">test_array_serialization</span><span class="p">():</span>
+<span class="w">  </span><span class="k">var</span><span class="w"> </span><span class="n">buffer</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">StreamPeerBuffer</span><span class="o">.</span><span class="n">new</span><span class="p">()</span>
+
+<span class="w">  </span><span class="k">var</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">benchmark</span><span class="p">(</span><span class="s2">&quot;Array&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">(</span><span class="n">emit</span><span class="p">:</span><span class="w"> </span><span class="n">Callable</span><span class="p">):</span>
+<span class="w">    </span><span class="n">buffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="w">    </span><span class="n">buffer</span><span class="o">.</span><span class="n">put_var</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">])</span>
+<span class="w">    </span><span class="n">emit</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="o">&amp;</span><span class="s2">&quot;Size&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">buffer</span><span class="o">.</span><span class="n">get_size</span><span class="p">())</span>
+<span class="w">  </span><span class="p">)</span>\
+<span class="w">    </span><span class="o">.</span><span class="n">without_builtin_measures</span><span class="p">()</span>\
+<span class="w">    </span><span class="o">.</span><span class="n">measure_value</span><span class="p">(</span><span class="o">&amp;</span><span class="s2">&quot;Size&quot;</span><span class="p">)</span>\
+<span class="w">    </span><span class="o">.</span><span class="n">once</span><span class="p">()</span>
+
+<span class="w">  </span><span class="k">var</span><span class="w"> </span><span class="n">packed_array</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">benchmark</span><span class="p">(</span><span class="s2">&quot;PackedInt32Array&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">(</span><span class="n">emit</span><span class="p">):</span>
+<span class="w">    </span><span class="n">buffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="w">    </span><span class="n">buffer</span><span class="o">.</span><span class="n">put_var</span><span class="p">(</span><span class="nb nb-Type">PackedInt32Array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">]))</span>
+<span class="w">    </span><span class="n">emit</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="o">&amp;</span><span class="s2">&quot;Size&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">buffer</span><span class="o">.</span><span class="n">get_size</span><span class="p">())</span>
+<span class="w">  </span><span class="p">)</span>\
+<span class="w">    </span><span class="o">.</span><span class="n">without_builtin_measures</span><span class="p">()</span>\
+<span class="w">    </span><span class="o">.</span><span class="n">measure_value</span><span class="p">(</span><span class="o">&amp;</span><span class="s2">&quot;Size&quot;</span><span class="p">)</span>\
+<span class="w">    </span><span class="o">.</span><span class="n">once</span><span class="p">()</span>
+
+<span class="w">  </span><span class="n">expect</span><span class="p">(</span><span class="n">array</span><span class="o">.</span><span class="n">get_measurement</span><span class="p">(</span><span class="o">&amp;</span><span class="s2">&quot;Size&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="s2">&quot;value&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">80</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Array too large!&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="n">expect</span><span class="p">(</span><span class="n">packed_array</span><span class="o">.</span><span class="n">get_measurement</span><span class="p">(</span><span class="o">&amp;</span><span class="s2">&quot;Size&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="s2">&quot;value&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">80</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;PackedArray too large!&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If the built-in measurements are not needed for your test, call
+<code>.without_builtin_measures()</code> on your benchmark.</p>
+</div>
+<h3 id="emitting-metrics">Emitting metrics</h3>
+<p>Every benchmark function receives a special parameter - the <code>emit()</code> Callable.
+Inside the benchmark, this can be called to emit custom metrics during testing.</p>
+<p>Metrics are <code>StringName</code>s, since they are usually hard-coded and take on a
+limited set of values.</p>
+<p>To emit a custom metric value, call the method with the metric name and the
+value to emit:</p>
+<div class="highlight"><pre><span></span><code><span class="n">emit</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="o">&amp;</span><span class="s2">&quot;Metric name&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">15.0</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="specifying-measurements">Specifying measurements</h3>
+<p>In order to turn these custom metric values into reportable data, they are
+processed using <em>measurements</em>. Each measurement processes the incoming metric
+values differently.</p>
+<p>Each measurement has a name, which are specified next to the method.</p>
+<dl>
+<dt><code>.measure_value()</code> ⇒ <code>value</code></dt>
+<dd>Retain the last emitted value of the specified metric. Useful for metrics
+  that are emitted only once.</dd>
+<dt><code>.measure_average()</code> ⇒ <code>average</code></dt>
+<dd>Calculate the average of the emitted values.</dd>
+<dt><code>.measure_max()</code> ⇒ <code>max</code></dt>
+<dd>Retain the largest of the emitted values.</dd>
+<dt><code>.measure_min()</code> ⇒ <code>min</code></dt>
+<dd>Retain the smallest of the emitted values.</dd>
+<dt><code>.measure_sum()</code> ⇒ <code>sum</code></dt>
+<dd>Retain the sum of the emitted values.</dd>
+</dl>
+<h3 id="implementing-custom-measurements">Implementing custom measurements</h3>
+<p>If the built-in measurements are not enough, you can implement your own, custom
+measurements as well.</p>
+<p>To do so, create a class that extends the <code>VestMeasure</code> class and implement its
+methods flagged with <em>override</em> in its docs. Take a median measure for example:</p>
+<div class="highlight"><pre><span></span><code><span class="k">extends</span><span class="w"> </span><span class="n">VestMeasure</span>
+<span class="k">class_name</span><span class="w"> </span><span class="n">MedianMeasure</span>
+
+<span class="c1">## Measures the median of a metric.</span>
+
+<span class="k">var</span><span class="w"> </span><span class="n">_values</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">Array</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[]</span>
+<span class="k">var</span><span class="w"> </span><span class="n">_count</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="k">var</span><span class="w"> </span><span class="n">_is_sorted</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">bool</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">false</span>
+
+<span class="k">func</span><span class="w"> </span><span class="n">get_measure_name</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="p">:</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;median&quot;</span>
+
+<span class="k">func</span><span class="w"> </span><span class="n">get_value</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Variant</span><span class="p">:</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">_values</span><span class="o">.</span><span class="n">is_empty</span><span class="p">():</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nb nb-Type">null</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">_is_sorted</span><span class="p">:</span>
+<span class="w">        </span><span class="n">_values</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="w">        </span><span class="n">_is_sorted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">true</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">_values</span><span class="p">[</span><span class="n">_values</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span>
+
+<span class="k">func</span><span class="w"> </span><span class="n">ingest</span><span class="p">(</span><span class="n">value</span><span class="p">:</span><span class="w"> </span><span class="n">Variant</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">void</span><span class="p">:</span>
+<span class="w">    </span><span class="n">_is_sorted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">false</span>
+<span class="w">    </span><span class="n">_values</span><span class="o">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</code></pre></div>
+<p>Once that's done, call <code>.with_measure()</code> on your benchmark, passing in an
+instance of your custom measurement class:</p>
+<div class="highlight"><pre><span></span><code><span class="k">var</span><span class="w"> </span><span class="n">rng</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">benchmark</span><span class="p">(</span><span class="s2">&quot;Random values&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">func</span><span class="p">(</span><span class="n">emit</span><span class="p">:</span><span class="w"> </span><span class="n">Callable</span><span class="p">):</span>
+<span class="w">  </span><span class="n">emit</span><span class="p">(</span><span class="o">&amp;</span><span class="s2">&quot;Random&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">randf</span><span class="p">())</span>
+<span class="p">)</span>\
+<span class="w">  </span><span class="o">.</span><span class="n">with_measure</span><span class="p">(</span><span class="n">MedianMeasure</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="o">&amp;</span><span class="s2">&quot;Random&quot;</span><span class="p">))</span>\
+<span class="w">  </span><span class="o">.</span><span class="n">with_iterations</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>\
+<span class="w">  </span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</code></pre></div>
+<p>This new measurement will show up in the test report.</p>
+<h3 id="inspecting-measurements">Inspecting measurements</h3>
+<p>Each measurement has a name, as specified in the previous chapters. Query the
+measured value ( as it appears in the report ) by combining the metric and
+measurement names:</p>
+<div class="highlight"><pre><span></span><code><span class="n">rng</span><span class="o">.</span><span class="n">get_measurement</span><span class="p">(</span><span class="o">&amp;</span><span class="s2">&quot;Random&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="s2">&quot;median&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>This returns a value that can be inspected and asserted against like any other
+numeric value.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="../../assets/mkdocs_puml/puml.js"></script>
+      
+    
+  </body>
+</html>
