@@ -93,7 +93,7 @@ func _start(port: int = -1):
 	if port < 0:
 		for i in range(32):
 			port = randi_range(49152, 65535)
-			if _server.listen(port) == OK:
+			if _server.listen(port, "127.0.0.1") == OK:
 				break
 	else:
 		_server.listen(port)
