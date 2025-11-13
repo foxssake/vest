@@ -96,7 +96,7 @@ func _start(port: int = -1):
 			if _server.listen(port, "127.0.0.1") == OK:
 				break
 	else:
-		_server.listen(port)
+		_server.listen(port, "127.0.0.1")
 	_port = port
 
 	if not _server.is_listening():
