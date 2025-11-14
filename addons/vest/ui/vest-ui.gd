@@ -204,7 +204,7 @@ static func get_status_icon(what: Variant) -> Texture2D:
 
 static func format_duration(duration: float) -> String:
 	if duration > 60.:
-		return "%.2fmin" % duration
+		return "%.2fmin" % [duration / 60.]
 	elif duration > 1.:
 		return "%.2fs" % duration
 	elif duration > 0.001:
